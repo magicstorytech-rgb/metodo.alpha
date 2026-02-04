@@ -43,7 +43,12 @@
         .guarantee-box { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin: 20px 0; border: 1px dashed #444; }
         .guarantee-badge { width: 50px; margin-right: 15px; }
         .guarantee-text { text-align: left; font-size: 12px; line-height: 1.3; }
-        .instruction-image { max-width: 100%; border-radius: 12px; margin: 20px 0; border: 1px solid var(--border); }
+        .instruction-image { max-width: 100%; border-radius: 12px; margin: 15px 0; border: 1px solid var(--border); }
+        
+        /* Otimizações para a tela de introdução em mobile */
+        #s-pre-start .headline { font-size: 20px; margin-bottom: 10px; }
+        #s-pre-start .sub-headline { font-size: 13px; margin-bottom: 15px; }
+        #s-pre-start .instruction-step { font-size: 14px; margin-bottom: 10px; font-weight: 700; }
     </style>
 </head>
 <body>
@@ -54,8 +59,8 @@
             <h1 class="headline">PARA CONTINUAR, ABRA NO SEU NAVEGADOR</h1>
             <p class="sub-headline" style="line-height: 1.5;">Sua avaliação só funcionará corretamente se você seguir os 2 passos abaixo:</p>
             
-            <p style="margin-bottom: 15px; font-weight: 700;">1. Clique nos 3 pontos no canto superior direito (&#8942;)</p>
-            <p style="margin-bottom: 20px; font-weight: 700;">2. Depois, clique em "Abrir no navegador"</p>
+            <p class="instruction-step">1. Clique nos 3 pontos no canto superior direito (&#8942;)</p>
+            <p class="instruction-step" style="margin-bottom: 15px;">2. Depois, clique em "Abrir no navegador"</p>
 
             <img src="https://i.im.ge/2026/02/05/eL3yMY.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-.webp" alt="Instrução visual para abrir no navegador" class="instruction-image">
             
@@ -223,7 +228,7 @@
 
         window.finish = () => { 
             update(ref(db, 'sessions/'+sid), { status: 'checkout_clicked' }); 
-            window.location.href = `https://pay.wiapy.com/mm3kNpGy6Q?utm_source=${sid}&external_id=${sid}`; 
+            window.location.href = `https://pay.wiapy.com/J4RuA1jmJ?utm_source=${sid}&external_id=${sid}`; 
         };
 
         function render(  ) {
