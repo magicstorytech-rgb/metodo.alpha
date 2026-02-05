@@ -14,9 +14,8 @@
         .headline { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 15px; line-height: 1.2; text-transform: uppercase; }
         .sub-headline { font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 20px; }
         .video-container { position: relative; background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 25px; border: 1px solid var(--border); width: 100%; }
-        .btn-next { background: var(--primary); color: white; border: none; padding: 22px; border-radius: 14px; font-weight: 900; cursor: pointer; width: 100%; font-size: 20px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
+        .btn-next { background: var(--primary); color: white; border: none; padding: 22px; border-radius: 14px; font-weight: 900; cursor: pointer; width: 100%; font-size: 20px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); display: block; text-decoration: none; text-align: center; }
         .btn-next:hover { transform: scale(1.02); }
-        .btn-next:disabled { background: #555; color: #999; cursor: not-allowed; box-shadow: none; }
         .screen { display: none; }
         .screen.active { display: block; }
         .progress-bar { height: 4px; background: var(--border); border-radius: 10px; margin-bottom: 30px; overflow: hidden; }
@@ -24,7 +23,6 @@
         .options-grid { display: grid; gap: 12px; margin-bottom: 25px; }
         .option-btn { background: var(--card); border: 2px solid var(--border); color: var(--text); padding: 16px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
         .option-btn:hover { border-color: var(--primary); background: rgba(239, 68, 68, 0.1); }
-        .urgency-badge { background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; padding: 10px 15px; border-radius: 50px; display: inline-block; margin-bottom: 20px; font-weight: 900; color: #22c55e; font-size: 12px; }
         .carousel { width: 100%; height: 250px; background: #000; border-radius: 15px; margin: 15px 0; overflow: hidden; position: relative; border: 1px solid var(--border); }
         .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; display: flex; align-items: center; justify-content: center; }
         .slide.active { opacity: 1; }
@@ -43,31 +41,12 @@
         .guarantee-box { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin: 20px 0; border: 1px dashed #444; }
         .guarantee-badge { width: 50px; margin-right: 15px; }
         .guarantee-text { text-align: left; font-size: 12px; line-height: 1.3; }
-        .instruction-image { max-width: 100%; border-radius: 12px; margin: 15px 0; border: 1px solid var(--border); }
-        
-        #s-pre-start .headline { font-size: 20px; margin-bottom: 10px; }
-        #s-pre-start .sub-headline { font-size: 13px; margin-bottom: 15px; }
-        #s-pre-start .instruction-step { font-size: 14px; margin-bottom: 10px; font-weight: 700; }
     </style>
 </head>
 <body>
     <div class="quiz-card">
-        <!-- Tela 0: Tela de Instrução -->
-        <div id="s-pre-start" class="screen active">
-            <div class="fixed-header">PASSO IMPORTANTE</div>
-            <h1 class="headline">PARA CONTINUAR, ABRA NO SEU NAVEGADOR</h1>
-            <p class="sub-headline" style="line-height: 1.5;">Sua avaliação só funcionará corretamente se você seguir os 2 passos abaixo:</p>
-            
-            <p class="instruction-step">1. Clique nos 3 pontos no canto superior direito (&#8942;)</p>
-            <p class="instruction-step" style="margin-bottom: 15px;">2. Depois, clique em "Abrir no navegador"</p>
-
-            <img src="https://i.im.ge/2026/02/05/eL3yMY.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-.webp" alt="Instrução visual para abrir no navegador" class="instruction-image">
-            
-            <button id="pre-start-button" class="btn-next" onclick="next()" disabled>INICIAR DIAGNÓSTICO</button>
-        </div>
-
         <!-- Tela 1: Mini VSL Wistia -->
-        <div id="s-0" class="screen">
+        <div id="s-0" class="screen active">
             <div class="fixed-header">PROTOCOLO TRIPE - REVELADO</div>
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
@@ -77,40 +56,17 @@
                 <style>wistia-player[media-id='q600dov5tx']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/q600dov5tx/swatch'); display: block; filter: blur(5px); padding-top:178.06%; }</style> 
                 <wistia-player media-id="q600dov5tx" aspect="0.5616224648985959"></wistia-player>
             </div>
-            <button id="vsl-button" class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
+            <button id="vsl-button" class="btn-next" onclick="window.next()">REVELAR O SEGREDO</button>
         </div>
 
-        <!-- Tela 2: Modal de Autoridade -->
-        <div id="s-1" class="screen">
-            <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
-            <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">CLIQUE AGORA PARA FAZER SUA AVALIAÇÃO GRATUITA</h2>
-            <div class="urgency-badge"><span id="online-count-val">147</span> HOMENS ONLINE AGORA</div>
-            <div class="carousel" id="authority-carousel">
-                <div class="slide active">
-                    <img src="https://protocolotripe.online/wp-content/uploads/2026/01/55db78_0079baf30d6c485581fa2291d62c7d25_mv2.jpg">
-                    <div class="slide-caption">PACIENTE M. SOUZA: +5.8cm (VALIDADO)</div>
-                </div>
-                <div class="slide">
-                    <img src="https://protocolotripe.online/wp-content/uploads/2026/01/154c4e_580c204a6f9b42caa1d9e689de18d065_mv2.jpg">
-                    <div class="slide-caption">PACIENTE R. OLIVEIRA: +4.9cm (VALIDADO)</div>
-                </div>
-                <div class="slide">
-                    <img src="https://protocolotripe.online/wp-content/uploads/2026/01/images.png">
-                    <div class="slide-caption">ESTUDO CLÍNICO: EXPANSÃO TECIDUAL ATIVA</div>
-                </div>
-            </div>
-            <p style="color: var(--muted);" id="loading-text">Carregando avaliação gratuita...</p>
-            <button class="btn-next" onclick="next()" id="start-quiz-btn" disabled>INICIAR AVALIAÇÃO AGORA</button>
-        </div>
-
-        <!-- Tela 3: Quiz Profissional (15 Perguntas) -->
+        <!-- Tela 2: Quiz Profissional (15 Perguntas) -->
         <div id="s-2" class="screen">
             <div class="fixed-header">AVALIAÇÃO CLÍNICA - ETAPA <span id="q-num">1</span>/15</div>
             <div class="progress-bar"><div class="progress-fill" id="p-fill"></div></div>
             <div id="q-box"></div>
         </div>
 
-        <!-- Tela 4: Processamento de Resultados -->
+        <!-- Tela 3: Processamento de Resultados -->
         <div id="s-3" class="screen">
             <div class="fixed-header">SISTEMA DE DIAGNÓSTICO AVANÇADO</div>
             <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">ANALISANDO DADOS BIOMÉTRICOS...</h2>
@@ -144,7 +100,7 @@
             </div>
         </div>
 
-        <!-- Tela 5: Bloco de Oferta Final -->
+        <!-- Tela 4: Bloco de Oferta Final -->
         <div id="s-4" class="screen">
             <div class="fixed-header">ACESSO LIBERADO AO PROTOCOLO</div>
             <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 10px;">SEU PLANO PERSONALIZADO ESTÁ PRONTO!</h2>
@@ -167,22 +123,23 @@
                 </div>
             </div>
 
-            <button class="btn-next" onclick="finish()" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</button>
+            <a id="checkout-link" href="#" class="btn-next" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</a>
             <p style="font-size: 10px; color: var(--muted); margin-top: 15px;">Compra 100% Segura e Sigilosa</p>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, doc, setDoc, updateDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getDatabase, ref, set, update, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js';
 
         const firebaseConfig = {
-            apiKey: "AIzaSyB-GPkmK_iNQuu_96NsWBEmnZA1LhiSRR4",
-            authDomain: "alytics-metodo-alpha.firebaseapp.com",
-            projectId: "alytics-metodo-alpha",
-            storageBucket: "alytics-metodo-alpha.firebasestorage.app",
-            messagingSenderId: "389989039442",
-            appId: "1:389989039442:web:e897945ffbfe52da210e8b"
+            apiKey: "AIzaSyCrUYYLb_9p4QUq1JLqQUwWEx-GgWEoTxQ",
+            authDomain: "funil-tripe-v10.firebaseapp.com",
+            databaseURL: "https://funil-tripe-v10-default-rtdb.firebaseio.com",
+            projectId: "funil-tripe-v10",
+            storageBucket: "funil-tripe-v10.firebasestorage.app",
+            messagingSenderId: "872809369468",
+            appId: "1:872809369468:web:e372a48b9654739098def9"
         };
 
         const QUESTIONS = [
@@ -204,93 +161,60 @@
         ];
 
         const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        let step = 'pre-start', qIdx = 0, stepStartTime = 0;
+        const db = getDatabase(app);
+        const sid = 's_' + Date.now();
+        let step = 0, qIdx = 0, stepStartTime = 0, avgHesitation = 0, hesitationCount = 0;
 
-        async function trackEvent(eventName, data = {}) {
-            try {
-                await updateDoc(doc(db, 'sessions', sid), {
-                    [`events.${eventName}`]: serverTimestamp(),
-                    lastActivity: serverTimestamp(),
-                    ...data
-                });
-            } catch (error) {
-                console.error('Erro ao rastrear:', error);
-            }
-        }
+        const CHECKOUT_URL = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`;
 
-        window.next = async () => {
-            if (step === 'pre-start') { 
-                step = 0; 
-                await trackEvent('instruction_completed', { currentStep: 'vsl' });
-            }
-            else if (step === 0) { 
-                step = 1; 
-                await trackEvent('vsl_clicked', { currentStep: 'modal_authority' });
-                startModalDelay(); 
-            }
-            else if (step === 1) { 
-                step = 2; 
-                await trackEvent('quiz_started', { currentStep: 'quiz', quizProgress: 1 });
+        window.next = () => {
+            if (step === 0) { 
+                step = 2; // Pula direto para o Quiz (s-2)
+                update(ref(db, 'sessions/'+sid), { status: 'vsl_clicked' }); 
             }
             else if (step === 2) { 
                 if (qIdx < 14) { 
                     qIdx++; 
                 } else { 
                     step = 3; 
-                    await trackEvent('quiz_completed', { currentStep: 'processing' });
                     startProcessing(); 
                 } 
             }
             render();
         };
 
-        window.sel = async (id, val) => {
+        window.sel = (id, val) => {
             const hesitation = Date.now() - stepStartTime;
-            await trackEvent(`quiz_answer_${qIdx + 1}`, {
-                [`answers.${id}`]: val,
-                quizProgress: qIdx + 1,
-                [`hesitation.q${qIdx + 1}`]: hesitation
-            });
+            avgHesitation = (avgHesitation * hesitationCount + hesitation) / (hesitationCount + 1);
+            hesitationCount++;
+            update(ref(db, 'sessions/'+sid), { [id]: val, currentStep: qIdx + 1, avgHesitation: avgHesitation });
             window.next();
         };
 
-        window.finish = async () => { 
-            await trackEvent('checkout_clicked', { 
-                currentStep: 'checkout_redirect',
-                checkoutUrl: 'https://pay.wiapy.com/elbyXqblP2'
-            }); 
-            setTimeout(() => {
-                window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
-            }, 300);
-        };
+        function setupTikTokBypass() {
+            const link = document.getElementById('checkout-link');
+            link.addEventListener('click', () => {
+                update(ref(db, 'sessions/'+sid), { status: 'checkout_clicked' });
+            });
+            link.href = CHECKOUT_URL;
+        }
 
         function render() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('s-' + step).classList.add('active');
+            const currentScreen = document.getElementById('s-' + step);
+            if (currentScreen) currentScreen.classList.add('active');
+            
             if (step === 2) {
                 const q = QUESTIONS[qIdx];
                 document.getElementById('q-num').textContent = qIdx + 1;
                 document.getElementById('p-fill').style.width = ((qIdx+1)/15*100) + '%';
-                document.getElementById('q-box').innerHTML = `<div style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">${q.t}</div><div class="options-grid">${q.o.map((o, i) => `<button class="option-btn" onclick="sel('${q.id}', ${i})">${o}</button>`).join('')}</div>`;
+                document.getElementById('q-box').innerHTML = `
+                    <div style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">${q.t}</div>
+                    <div class="options-grid">
+                        ${q.o.map((o, i) => `<button class="option-btn" onclick="window.sel('${q.id}', ${i})">${o}</button>`).join('')}
+                    </div>`;
                 stepStartTime = Date.now();
             }
-        }
-
-        function startModalDelay() {
-            let sIdx = 0; 
-            const slides = document.querySelectorAll('#authority-carousel .slide');
-            const interval = setInterval(() => { 
-                slides.forEach(s => s.classList.remove('active')); 
-                sIdx = (sIdx + 1) % slides.length; 
-                slides[sIdx].classList.add('active'); 
-            }, 2000);
-            setTimeout(() => { 
-                clearInterval(interval); 
-                document.getElementById('loading-text').textContent = "Avaliação carregada!"; 
-                document.getElementById('start-quiz-btn').disabled = false; 
-            }, 5000);
         }
 
         function startProcessing() {
@@ -299,89 +223,46 @@
             const interval = setInterval(() => { 
                 slides.forEach(s => s.classList.remove('active')); 
                 sIdx = (sIdx + 1) % slides.length; 
-                slides[sIdx].classList.add('active'); 
+                if (slides[sIdx]) slides[sIdx].classList.add('active'); 
             }, 2000);
             
             setTimeout(() => { 
-                document.getElementById('pb-1').style.width = '100%'; 
-                document.getElementById('pb-1').classList.add('complete');
-                document.getElementById('st-1').innerText = 'VALIDADO'; 
-                document.getElementById('st-1').classList.add('complete');
-                document.getElementById('st-2').innerText = 'PROCESSANDO';
+                const pb1 = document.getElementById('pb-1');
+                const st1 = document.getElementById('st-1');
+                const st2 = document.getElementById('st-2');
+                if (pb1) { pb1.style.width = '100%'; pb1.classList.add('complete'); }
+                if (st1) { st1.innerText = 'VALIDADO'; st1.classList.add('complete'); }
+                if (st2) { st2.innerText = 'PROCESSANDO'; }
             }, 2500);
 
             setTimeout(() => { 
-                document.getElementById('pb-2').style.width = '100%'; 
-                document.getElementById('pb-2').classList.add('complete');
-                document.getElementById('st-2').innerText = 'VALIDADO'; 
-                document.getElementById('st-2').classList.add('complete');
-                document.getElementById('st-3').innerText = 'PROCESSANDO';
+                const pb2 = document.getElementById('pb-2');
+                const st2 = document.getElementById('st-2');
+                const st3 = document.getElementById('st-3');
+                if (pb2) { pb2.style.width = '100%'; pb2.classList.add('complete'); }
+                if (st2) { st2.innerText = 'VALIDADO'; st2.classList.add('complete'); }
+                if (st3) { st3.innerText = 'PROCESSANDO'; }
             }, 5000);
 
             setTimeout(() => { 
-                document.getElementById('pb-3').style.width = '100%'; 
-                document.getElementById('pb-3').classList.add('complete');
-                document.getElementById('st-3').innerText = 'COMPATÍVEL'; 
-                document.getElementById('st-3').classList.add('complete');
+                const pb3 = document.getElementById('pb-3');
+                const st3 = document.getElementById('st-3');
+                if (pb3) { pb3.style.width = '100%'; pb3.classList.add('complete'); }
+                if (st3) { st3.innerText = 'COMPATÍVEL'; st3.classList.add('complete'); }
             }, 7500);
 
             setTimeout(() => { 
                 clearInterval(interval); 
                 step = 4; 
                 render(); 
-                trackEvent('processing_completed', { currentStep: 'offer' });
             }, 9000);
         }
 
-        setInterval(() => {
-            const el = document.getElementById('online-count-val');
-            if(el) {
-                const current = parseInt(el.innerText);
-                const change = Math.floor(Math.random() * 6) - 2; 
-                el.innerText = Math.max(135, Math.min(172, current + change));
-            }
-        }, 3500);
-
-        setInterval(async () => {
-            try {
-                await updateDoc(doc(db, 'sessions', sid), {
-                    lastActivity: serverTimestamp(),
-                    currentStep: step
-                });
-            } catch (error) {
-                console.error('Heartbeat error:', error);
-            }
-        }, 30000);
-
-        async function init() { 
+        function init() { 
             render(); 
-            try {
-                await setDoc(doc(db, 'sessions', sid), {
-                    sessionId: sid,
-                    enteredAt: serverTimestamp(),
-                    lastActivity: serverTimestamp(),
-                    currentStep: 'pre-start',
-                    status: 'active',
-                    userAgent: navigator.userAgent,
-                    screenWidth: window.innerWidth,
-                    screenHeight: window.innerHeight,
-                    events: {},
-                    answers: {},
-                    hesitation: {}
-                });
-                console.log('Sessão criada:', sid);
-            } catch (error) {
-                console.error('Erro ao criar sessão:', error);
-            }
-            
-            setTimeout(() => {
-                const preStartButton = document.getElementById('pre-start-button');
-                if (preStartButton) {
-                    preStartButton.disabled = false;
-                }
-            }, 4000);
+            setupTikTokBypass();
+            set(ref(db, 'sessions/'+sid), { enteredAt: serverTimestamp(), status: 'vsl_viewed', currentStep: 0 }); 
         }
-        
         init();
     </script>
 </body>
