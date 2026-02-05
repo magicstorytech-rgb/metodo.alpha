@@ -43,31 +43,42 @@
         .guarantee-box { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin: 20px 0; border: 1px dashed #444; }
         .guarantee-badge { width: 50px; margin-right: 15px; }
         .guarantee-text { text-align: left; font-size: 12px; line-height: 1.3; }
-        .instruction-image { max-width: 100%; border-radius: 12px; margin: 15px 0; border: 1px solid var(--border); }
-        
-        #s-pre-start .headline { font-size: 20px; margin-bottom: 10px; }
-        #s-pre-start .sub-headline { font-size: 13px; margin-bottom: 15px; }
-        #s-pre-start .instruction-step { font-size: 14px; margin-bottom: 10px; font-weight: 700; }
+
+        /* Estilos para o botão Hotmart */
+        .hotmart-button-wrapper {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hotmart-fb {
+            display: inline-block !important;
+            background: var(--primary) !important;
+            color: white !important;
+            padding: 22px 30px !important;
+            border-radius: 14px !important;
+            font-weight: 900 !important;
+            font-size: 16px !important;
+            text-transform: uppercase !important;
+            border: none !important;
+            cursor: pointer !important;
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3) !important;
+            transition: all 0.3s !important;
+            text-decoration: none !important;
+            width: 100% !important;
+            text-align: center !important;
+        }
+
+        .hotmart-fb:hover {
+            transform: scale(1.02) !important;
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4) !important;
+        }
     </style>
 </head>
 <body>
     <div class="quiz-card">
-        <!-- Tela 0: Tela de Instrução -->
-        <div id="s-pre-start" class="screen active">
-            <div class="fixed-header">PASSO IMPORTANTE</div>
-            <h1 class="headline">PARA CONTINUAR, ABRA NO SEU NAVEGADOR</h1>
-            <p class="sub-headline" style="line-height: 1.5;">Sua avaliação só funcionará corretamente se você seguir os 2 passos abaixo:</p>
-            
-            <p class="instruction-step">1. Clique nos 3 pontos no canto superior direito (&#8942;)</p>
-            <p class="instruction-step" style="margin-bottom: 15px;">2. Depois, clique em "Abrir no navegador"</p>
-
-            <img src="https://i.im.ge/2026/02/05/eL3yMY.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-.webp" alt="Instrução visual para abrir no navegador" class="instruction-image">
-            
-            <button id="pre-start-button" class="btn-next" onclick="next()" disabled>INICIAR DIAGNÓSTICO</button>
-        </div>
-
-        <!-- Tela 1: Mini VSL Wistia -->
-        <div id="s-0" class="screen">
+        <!-- Tela 0: Mini VSL Wistia (SEM INSTRUÇÃO - COMEÇA AQUI) -->
+        <div id="s-0" class="screen active">
             <div class="fixed-header">PROTOCOLO TRIPE - REVELADO</div>
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
@@ -80,7 +91,7 @@
             <button id="vsl-button" class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
 
-        <!-- Tela 2: Modal de Autoridade -->
+        <!-- Tela 1: Modal de Autoridade -->
         <div id="s-1" class="screen">
             <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
             <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">CLIQUE AGORA PARA FAZER SUA AVALIAÇÃO GRATUITA</h2>
@@ -103,14 +114,14 @@
             <button class="btn-next" onclick="next()" id="start-quiz-btn" disabled>INICIAR AVALIAÇÃO AGORA</button>
         </div>
 
-        <!-- Tela 3: Quiz Profissional (15 Perguntas) -->
+        <!-- Tela 2: Quiz Profissional (15 Perguntas) -->
         <div id="s-2" class="screen">
             <div class="fixed-header">AVALIAÇÃO CLÍNICA - ETAPA <span id="q-num">1</span>/15</div>
             <div class="progress-bar"><div class="progress-fill" id="p-fill"></div></div>
             <div id="q-box"></div>
         </div>
 
-        <!-- Tela 4: Processamento de Resultados -->
+        <!-- Tela 3: Processamento de Resultados -->
         <div id="s-3" class="screen">
             <div class="fixed-header">SISTEMA DE DIAGNÓSTICO AVANÇADO</div>
             <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">ANALISANDO DADOS BIOMÉTRICOS...</h2>
@@ -144,7 +155,7 @@
             </div>
         </div>
 
-        <!-- Tela 5: Bloco de Oferta Final -->
+        <!-- Tela 4: Bloco de Oferta Final com Hotmart Widget -->
         <div id="s-4" class="screen">
             <div class="fixed-header">ACESSO LIBERADO AO PROTOCOLO</div>
             <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 10px;">SEU PLANO PERSONALIZADO ESTÁ PRONTO!</h2>
@@ -167,10 +178,29 @@
                 </div>
             </div>
 
-            <button class="btn-next" onclick="finish()" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</button>
+            <!-- WIDGET HOTMART AQUI -->
+            <div class="hotmart-button-wrapper">
+                <a onclick="return false;" href="https://pay.hotmart.com/D38386013M?off=1aqf9l6i" class="hotmart-fb hotmart__button-checkout" id="hotmart-btn">GARANTIR MEU ACESSO AGORA</a>
+            </div>
+
             <p style="font-size: 10px; color: var(--muted); margin-top: 15px;">Compra 100% Segura e Sigilosa</p>
         </div>
     </div>
+
+    <!-- Script do Hotmart Widget -->
+    <script type="text/javascript">
+        function importHotmart(){ 
+            var imported = document.createElement('script'); 
+            imported.src = 'https://static.hotmart.com/checkout/widget.min.js'; 
+            document.head.appendChild(imported); 
+            var link = document.createElement('link'); 
+            link.rel = 'stylesheet'; 
+            link.type = 'text/css'; 
+            link.href = 'https://static.hotmart.com/css/hotmart-fb.min.css'; 
+            document.head.appendChild(link);	
+        } 
+        importHotmart(); 
+    </script>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
@@ -206,7 +236,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        let step = 'pre-start', qIdx = 0, stepStartTime = 0;
+        let step = 0, qIdx = 0, stepStartTime = 0;
 
         async function trackEvent(eventName, data = {}) {
             try {
@@ -221,11 +251,7 @@
         }
 
         window.next = async () => {
-            if (step === 'pre-start') { 
-                step = 0; 
-                await trackEvent('instruction_completed', { currentStep: 'vsl' });
-            }
-            else if (step === 0) { 
+            if (step === 0) { 
                 step = 1; 
                 await trackEvent('vsl_clicked', { currentStep: 'modal_authority' });
                 startModalDelay(); 
@@ -256,19 +282,20 @@
             window.next();
         };
 
-        window.finish = async () => { 
-            await trackEvent('checkout_clicked', { 
-                currentStep: 'checkout_redirect',
-                checkoutUrl: 'https://pay.wiapy.com/elbyXqblP2'
-            }); 
-            setTimeout(() => {
-                window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
-            }, 300);
-        };
+        // Rastrear clique no botão Hotmart
+        document.addEventListener('click', async (e) => {
+            if (e.target.id === 'hotmart-btn' || e.target.closest('.hotmart-fb')) {
+                await trackEvent('hotmart_checkout_clicked', { 
+                    currentStep: 'hotmart_checkout',
+                    checkoutUrl: 'https://pay.hotmart.com/D38386013M?off=1aqf9l6i'
+                });
+            }
+        });
 
         function render() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('s-' + step).classList.add('active');
+
             if (step === 2) {
                 const q = QUESTIONS[qIdx];
                 document.getElementById('q-num').textContent = qIdx + 1;
@@ -360,7 +387,7 @@
                     sessionId: sid,
                     enteredAt: serverTimestamp(),
                     lastActivity: serverTimestamp(),
-                    currentStep: 'pre-start',
+                    currentStep: 0,
                     status: 'active',
                     userAgent: navigator.userAgent,
                     screenWidth: window.innerWidth,
@@ -373,13 +400,6 @@
             } catch (error) {
                 console.error('Erro ao criar sessão:', error);
             }
-            
-            setTimeout(() => {
-                const preStartButton = document.getElementById('pre-start-button');
-                if (preStartButton) {
-                    preStartButton.disabled = false;
-                }
-            }, 4000);
         }
         
         init();
