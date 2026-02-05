@@ -74,13 +74,11 @@
             border: 2px solid var(--primary);
             border-radius: 24px;
             padding: 40px 30px;
-            max-width: 500px;
+            max-width: 450px;
             width: 100%;
             text-align: center;
             animation: slideUp 0.4s ease;
             box-shadow: 0 20px 60px rgba(239, 68, 68, 0.4);
-            max-height: 90vh;
-            overflow-y: auto;
         }
         
         @keyframes slideUp {
@@ -89,88 +87,45 @@
         }
         
         .popup-icon {
-            font-size: 64px;
+            font-size: 56px;
             margin-bottom: 20px;
         }
         
         .popup-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #fff;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .popup-message {
             font-size: 15px;
             color: #cbd5e1;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-        
-        .popup-steps {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--primary);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: left;
-        }
-        
-        .popup-step {
-            font-size: 15px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .popup-step:last-child {
-            margin-bottom: 0;
-        }
-        
-        .popup-step-number {
-            background: var(--primary);
-            color: #fff;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 900;
-            flex-shrink: 0;
+            line-height: 1.7;
+            margin-bottom: 30px;
         }
         
         .popup-btn {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 20px;
+            padding: 20px 30px;
             border-radius: 14px;
             font-weight: 900;
             cursor: pointer;
             width: 100%;
-            font-size: 18px;
+            font-size: 17px;
             text-transform: uppercase;
             transition: all 0.3s;
             box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+            letter-spacing: 0.5px;
         }
         
         .popup-btn:hover {
             transform: scale(1.02);
-        }
-        
-        .popup-image {
-            max-width: 100%;
-            max-height: 380px;
-            object-fit: contain;
-            border-radius: 12px;
-            margin: 15px 0;
-            border: 1px solid var(--border);
+            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4);
         }
     </style>
 </head>
@@ -285,23 +240,13 @@
     <!-- Popup de Instrução para Checkout -->
     <div class="popup-overlay" id="checkout-popup">
         <div class="popup-content">
-            <div class="popup-icon">⚠️</div>
-            <div class="popup-title">PASSO IMPORTANTE</div>
+            <div class="popup-icon">💡</div>
+            <div class="popup-title">IMPORTANTE</div>
             <div class="popup-message">
-                <strong>Se aparecer uma mensagem após clicar no botão abaixo</strong>, basta seguir estes 2 passos simples para acessar o checkout com segurança:
+                Caso apareça algum aviso, basta abrir no navegador<br>
+                <span style="font-size: 13px; opacity: 0.7;">(3 pontos ⋮ → Abrir no navegador)</span>
             </div>
-            <div class="popup-steps">
-                <div class="popup-step">
-                    <div class="popup-step-number">1</div>
-                    <div>Clique nos 3 pontos (⋮) no canto superior direito</div>
-                </div>
-                <div class="popup-step">
-                    <div class="popup-step-number">2</div>
-                    <div>Depois, clique em "Abrir no navegador"</div>
-                </div>
-            </div>
-            <img src="https://i.im.ge/2026/02/05/eL3yMY.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-.webp" alt="Instrução visual" class="popup-image">
-            <button class="popup-btn" onclick="goToCheckout()">🔒 ENTENDI, IR PARA O CHECKOUT</button>
+            <button class="popup-btn" onclick="goToCheckout()">CONTINUAR PARA O CHECKOUT →</button>
         </div>
     </div>
 
