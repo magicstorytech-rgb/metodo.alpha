@@ -43,31 +43,137 @@
         .guarantee-box { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin: 20px 0; border: 1px dashed #444; }
         .guarantee-badge { width: 50px; margin-right: 15px; }
         .guarantee-text { text-align: left; font-size: 12px; line-height: 1.3; }
-        .instruction-image { max-width: 100%; border-radius: 12px; margin: 15px 0; border: 1px solid var(--border); }
         
-        #s-pre-start .headline { font-size: 20px; margin-bottom: 10px; }
-        #s-pre-start .sub-headline { font-size: 13px; margin-bottom: 15px; }
-        #s-pre-start .instruction-step { font-size: 14px; margin-bottom: 10px; font-weight: 700; }
+        /* Popup de Instrução */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .popup-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .popup-content {
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.4);
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .popup-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        
+        .popup-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        .popup-message {
+            font-size: 15px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .popup-steps {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .popup-step {
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .popup-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .popup-step-number {
+            background: var(--primary);
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+        
+        .popup-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+        }
+        
+        .popup-btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .popup-image {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
+        }
     </style>
 </head>
 <body>
     <div class="quiz-card">
-        <!-- Tela 0: Tela de Instrução -->
-        <div id="s-pre-start" class="screen active">
-            <div class="fixed-header">PASSO IMPORTANTE</div>
-            <h1 class="headline">PARA CONTINUAR, ABRA NO SEU NAVEGADOR</h1>
-            <p class="sub-headline" style="line-height: 1.5;">Sua avaliação só funcionará corretamente se você seguir os 2 passos abaixo:</p>
-            
-            <p class="instruction-step">1. Clique nos 3 pontos no canto superior direito (&#8942;)</p>
-            <p class="instruction-step" style="margin-bottom: 15px;">2. Depois, clique em "Abrir no navegador"</p>
-
-            <img src="https://i.im.ge/2026/02/05/eL3yMY.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-.webp" alt="Instrução visual para abrir no navegador" class="instruction-image">
-            
-            <button id="pre-start-button" class="btn-next" onclick="next()" disabled>INICIAR DIAGNÓSTICO</button>
-        </div>
-
         <!-- Tela 1: Mini VSL Wistia -->
-        <div id="s-0" class="screen">
+        <div id="s-0" class="screen active">
             <div class="fixed-header">PROTOCOLO TRIPE - REVELADO</div>
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
@@ -167,8 +273,31 @@
                 </div>
             </div>
 
-            <button class="btn-next" onclick="finish()" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</button>
+            <button class="btn-next" onclick="showCheckoutPopup()" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</button>
             <p style="font-size: 10px; color: var(--muted); margin-top: 15px;">Compra 100% Segura e Sigilosa</p>
+        </div>
+    </div>
+
+    <!-- Popup de Instrução para Checkout -->
+    <div class="popup-overlay" id="checkout-popup">
+        <div class="popup-content">
+            <div class="popup-icon">⚠️</div>
+            <div class="popup-title">PASSO IMPORTANTE</div>
+            <div class="popup-message">
+                Para acessar o checkout com segurança e garantir que sua compra seja processada corretamente, siga estes passos:
+            </div>
+            <div class="popup-steps">
+                <div class="popup-step">
+                    <div class="popup-step-number">1</div>
+                    <div>Clique nos 3 pontos (⋮) no canto superior direito</div>
+                </div>
+                <div class="popup-step">
+                    <div class="popup-step-number">2</div>
+                    <div>Depois, clique em "Abrir no navegador"</div>
+                </div>
+            </div>
+            <img src="https://i.im.ge/2026/02/05/eL3yMY.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-.webp" alt="Instrução visual" class="popup-image">
+            <button class="popup-btn" onclick="goToCheckout()">🔒 ENTENDI, IR PARA O CHECKOUT</button>
         </div>
     </div>
 
@@ -206,7 +335,55 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        let step = 'pre-start', qIdx = 0, stepStartTime = 0;
+        let step = 0, qIdx = 0, stepStartTime = 0;
+        let geoData = {};
+
+        async function getGeoLocation() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                return {
+                    city: data.city || 'Desconhecido',
+                    region: data.region || 'Desconhecido',
+                    country: data.country_name || 'Desconhecido',
+                    countryCode: data.country_code || 'XX',
+                    ip: data.ip || 'Desconhecido'
+                };
+            } catch (error) {
+                console.error('Erro ao obter geolocalização:', error);
+                return {
+                    city: 'Desconhecido',
+                    region: 'Desconhecido',
+                    country: 'Desconhecido',
+                    countryCode: 'XX',
+                    ip: 'Desconhecido'
+                };
+            }
+        }
+
+        function getDeviceInfo() {
+            const ua = navigator.userAgent;
+            let deviceType = 'Desktop';
+            let os = 'Desconhecido';
+            let browser = 'Desconhecido';
+
+            if (/Mobile|Android|iPhone|iPad|iPod/i.test(ua)) {
+                deviceType = /iPad/i.test(ua) ? 'Tablet' : 'Mobile';
+            }
+
+            if (/Windows/i.test(ua)) os = 'Windows';
+            else if (/Mac/i.test(ua)) os = 'MacOS';
+            else if (/Linux/i.test(ua)) os = 'Linux';
+            else if (/Android/i.test(ua)) os = 'Android';
+            else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
+
+            if (/Chrome/i.test(ua) && !/Edge|Edg/i.test(ua)) browser = 'Chrome';
+            else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
+            else if (/Firefox/i.test(ua)) browser = 'Firefox';
+            else if (/Edge|Edg/i.test(ua)) browser = 'Edge';
+
+            return { deviceType, os, browser };
+        }
 
         async function trackEvent(eventName, data = {}) {
             try {
@@ -221,11 +398,7 @@
         }
 
         window.next = async () => {
-            if (step === 'pre-start') { 
-                step = 0; 
-                await trackEvent('instruction_completed', { currentStep: 'vsl' });
-            }
-            else if (step === 0) { 
+            if (step === 0) { 
                 step = 1; 
                 await trackEvent('vsl_clicked', { currentStep: 'modal_authority' });
                 startModalDelay(); 
@@ -248,19 +421,32 @@
 
         window.sel = async (id, val) => {
             const hesitation = Date.now() - stepStartTime;
-            await trackEvent(`quiz_answer_${qIdx + 1}`, {
+            const updateData = {
                 [`answers.${id}`]: val,
                 quizProgress: qIdx + 1,
                 [`hesitation.q${qIdx + 1}`]: hesitation
-            });
+            };
+            
+            if (id === 'idade') {
+                updateData.ageRange = QUESTIONS[0].o[val];
+            }
+            
+            await trackEvent(`quiz_answer_${qIdx + 1}`, updateData);
             window.next();
         };
 
-        window.finish = async () => { 
+        window.showCheckoutPopup = async () => {
             await trackEvent('checkout_clicked', { 
-                currentStep: 'checkout_redirect',
+                currentStep: 'checkout_popup_shown',
                 checkoutUrl: 'https://pay.wiapy.com/elbyXqblP2'
-            }); 
+            });
+            document.getElementById('checkout-popup').classList.add('active');
+        };
+
+        window.goToCheckout = async () => {
+            await trackEvent('checkout_popup_accepted', { 
+                currentStep: 'checkout_redirect'
+            });
             setTimeout(() => {
                 window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
             }, 300);
@@ -355,31 +541,63 @@
 
         async function init() { 
             render(); 
+            
+            geoData = await getGeoLocation();
+            const deviceInfo = getDeviceInfo();
+            
             try {
                 await setDoc(doc(db, 'sessions', sid), {
                     sessionId: sid,
                     enteredAt: serverTimestamp(),
                     lastActivity: serverTimestamp(),
-                    currentStep: 'pre-start',
+                    currentStep: 'vsl',
                     status: 'active',
-                    userAgent: navigator.userAgent,
-                    screenWidth: window.innerWidth,
-                    screenHeight: window.innerHeight,
+                    
+                    geo: {
+                        city: geoData.city,
+                        region: geoData.region,
+                        country: geoData.country,
+                        countryCode: geoData.countryCode,
+                        ip: geoData.ip
+                    },
+                    
+                    device: {
+                        type: deviceInfo.deviceType,
+                        os: deviceInfo.os,
+                        browser: deviceInfo.browser,
+                        screenWidth: window.innerWidth,
+                        screenHeight: window.innerHeight,
+                        userAgent: navigator.userAgent
+                    },
+                    
+                    conversion: {
+                        clickedCheckout: false,
+                        enteredCheckout: false
+                    },
+                    
                     events: {},
                     answers: {},
-                    hesitation: {}
+                    hesitation: {},
+                    ageRange: null
                 });
                 console.log('Sessão criada:', sid);
+                console.log('Localização:', geoData);
             } catch (error) {
                 console.error('Erro ao criar sessão:', error);
             }
-            
-            setTimeout(() => {
-                const preStartButton = document.getElementById('pre-start-button');
-                if (preStartButton) {
-                    preStartButton.disabled = false;
+
+            function checkWiapyReturn() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const returned = urlParams.get('returned');
+                
+                if (returned === 'true') {
+                    trackEvent('entered_checkout', {
+                        'conversion.enteredCheckout': true,
+                        currentStep: 'returned_from_checkout'
+                    });
                 }
-            }, 4000);
+            }
+            checkWiapyReturn();
         }
         
         init();
