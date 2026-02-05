@@ -165,18 +165,21 @@
         const sid = 's_' + Date.now();
         let step = 0, qIdx = 0, stepStartTime = 0, avgHesitation = 0, hesitationCount = 0;
 
+        // URL do checkout corrigida para funcionar no TikTok
+        // Usando window.open para abrir em nova aba (funciona melhor no TikTok)
         const CHECKOUT_URL = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`;
 
         window.next = () => {
             if (step === 0) { 
-                step = 2; // Pula direto para o Quiz (s-2)
-                update(ref(db, 'sessions/'+sid), { status: 'vsl_clicked' }); 
+                step = 2;
+                update(ref(db, 'sessions/'+sid), { status: 'vsl_clicked', lastActivity: Date.now() }); 
             }
             else if (step === 2) { 
                 if (qIdx < 14) { 
                     qIdx++; 
                 } else { 
                     step = 3; 
+                    update(ref(db, 'sessions/'+sid), { status: 'quiz_completed', currentStep: 15, lastActivity: Date.now() });
                     startProcessing(); 
                 } 
             }
@@ -187,16 +190,31 @@
             const hesitation = Date.now() - stepStartTime;
             avgHesitation = (avgHesitation * hesitationCount + hesitation) / (hesitationCount + 1);
             hesitationCount++;
-            update(ref(db, 'sessions/'+sid), { [id]: val, currentStep: qIdx + 1, avgHesitation: avgHesitation });
+            update(ref(db, 'sessions/'+sid), { 
+                [id]: val, 
+                currentStep: qIdx + 1, 
+                avgHesitation: avgHesitation,
+                status: 'quiz_started',
+                lastActivity: Date.now()
+            });
             window.next();
         };
 
-        function setupTikTokBypass() {
+        function setupCheckoutLink() {
             const link = document.getElementById('checkout-link');
-            link.addEventListener('click', () => {
-                update(ref(db, 'sessions/'+sid), { status: 'checkout_clicked' });
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Registrar clique no checkout
+                update(ref(db, 'sessions/'+sid), { 
+                    status: 'checkout_clicked',
+                    lastActivity: Date.now()
+                });
+                
+                // Abrir link em nova aba (funciona melhor no TikTok)
+                window.open(CHECKOUT_URL, '_blank');
             });
-            link.href = CHECKOUT_URL;
+            link.href = '#';
         }
 
         function render() {
@@ -253,15 +271,24 @@
 
             setTimeout(() => { 
                 clearInterval(interval); 
-                step = 4; 
+                step = 4;
+                update(ref(db, 'sessions/'+sid), { 
+                    status: 'processing_completed',
+                    lastActivity: Date.now()
+                });
                 render(); 
             }, 9000);
         }
 
         function init() { 
             render(); 
-            setupTikTokBypass();
-            set(ref(db, 'sessions/'+sid), { enteredAt: serverTimestamp(), status: 'vsl_viewed', currentStep: 0 }); 
+            setupCheckoutLink();
+            set(ref(db, 'sessions/'+sid), { 
+                enteredAt: Date.now(),
+                status: 'vsl_viewed', 
+                currentStep: 0,
+                lastActivity: Date.now()
+            }); 
         }
         init();
     </script>
