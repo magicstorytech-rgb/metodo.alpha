@@ -79,6 +79,8 @@
             text-align: center;
             animation: slideUp 0.4s ease;
             box-shadow: 0 20px 60px rgba(239, 68, 68, 0.4);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
         @keyframes slideUp {
@@ -126,6 +128,15 @@
         .popup-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4);
+        }
+        
+        .popup-image {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid var(--border);
         }
     </style>
 </head>
@@ -243,9 +254,11 @@
             <div class="popup-icon">💡</div>
             <div class="popup-title">IMPORTANTE</div>
             <div class="popup-message">
-                Caso apareça algum aviso, basta abrir no navegador<br>
-                <span style="font-size: 13px; opacity: 0.7;">(3 pontos ⋮ → Abrir no navegador)</span>
+                Caso apareça algum aviso:<br><br>
+                <strong>1.</strong> Clique nos 3 pontos no canto superior direito<br>
+                <strong>2.</strong> Depois clique em "Abrir no navegador"
             </div>
+            <img src="https://i.im.ge/2026/02/06/eijP4G.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-1.jpeg" alt="Exemplo" class="popup-image">
             <button class="popup-btn" onclick="goToCheckout()">CONTINUAR PARA O CHECKOUT →</button>
         </div>
     </div>
