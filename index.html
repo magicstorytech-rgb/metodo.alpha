@@ -89,29 +89,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        .popup-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        
-        .popup-close:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
+        /* O botão de fechar foi removido conforme solicitado */
         
         .discount-icon {
             font-size: 56px;
@@ -218,8 +196,6 @@
         <!-- Tela 2: Modal de Autoridade -->
         <div id="s-1" class="screen">
             <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
-            <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">CLIQUE AGORA PARA FAZER SUA AVALIAÇÃO GRATUITA</h2>
-            <div class="urgency-badge"><span id="online-count-val">147</span> HOMENS ONLINE AGORA</div>
             <div class="carousel" id="authority-carousel">
                 <div class="slide active">
                     <img src="https://protocolotripe.online/wp-content/uploads/2026/01/55db78_0079baf30d6c485581fa2291d62c7d25_mv2.jpg">
@@ -310,7 +286,7 @@
     <!-- Popup de Desconto (aparece apenas em navegadores in-app) -->
     <div class="discount-popup-overlay" id="discount-popup">
         <div class="discount-popup-content">
-            <button class="popup-close" onclick="closeDiscountPopup()">✕</button>
+            <!-- Botão de fechar removido conforme solicitado -->
             <div class="discount-icon">🎁</div>
             <div class="discount-title">GANHE 40% DE DESCONTO</div>
             <div class="discount-message">
@@ -441,65 +417,57 @@
             render();
         };
 
-        window.sel = async (id, val) => {
-            const hesitation = Date.now() - stepStartTime;
-            const updateData = {
-                [`answers.${id}`]: val,
-                quizProgress: qIdx + 1,
-                [`hesitation.q${qIdx + 1}`]: hesitation
-            };
-            
-            if (id === 'idade') {
-                updateData.ageRange = QUESTIONS[0].o[val];
-            }
-            
-            await trackEvent(`quiz_answer_${qIdx + 1}`, updateData);
-            window.next();
-        };
-
-        window.finish = async () => { 
-            await trackEvent('checkout_clicked', { 
-                currentStep: 'checkout_redirect',
-                checkoutUrl: 'https://pay.wiapy.com/elbyXqblP2'
-            }); 
-            window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
-        };
-
         function render() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('s-' + step).classList.add('active');
+            window.scrollTo(0, 0);
+
             if (step === 2) {
                 const q = QUESTIONS[qIdx];
-                document.getElementById('q-num').textContent = qIdx + 1;
-                document.getElementById('p-fill').style.width = ((qIdx+1)/15*100) + '%';
-                document.getElementById('q-box').innerHTML = `<div style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">${q.t}</div><div class="options-grid">${q.o.map((o, i) => `<button class="option-btn" onclick="sel('${q.id}', ${i})">${o}</button>`).join('')}</div>`;
-                stepStartTime = Date.now();
+                document.getElementById('q-num').innerText = qIdx + 1;
+                document.getElementById('p-fill').style.width = ((qIdx + 1) / 15 * 100) + '%';
+                document.getElementById('q-box').innerHTML = `
+                    <h2 class="headline" style="font-size: 18px;">${q.t}</h2>
+                    <div class="options-grid">
+                        ${q.o.map(opt => `<button class="option-btn" onclick="answer('${q.id}', '${opt}')">${opt}</button>`).join('')}
+                    </div>
+                `;
             }
         }
 
+        window.answer = async (id, val) => {
+            await updateDoc(doc(db, 'sessions', sid), { [`answers.${id}`]: val });
+            next();
+        };
+
         function startModalDelay() {
-            let sIdx = 0; 
-            const slides = document.querySelectorAll('#authority-carousel .slide');
-            const interval = setInterval(() => { 
-                slides.forEach(s => s.classList.remove('active')); 
-                sIdx = (sIdx + 1) % slides.length; 
-                slides[sIdx].classList.add('active'); 
-            }, 2000);
-            setTimeout(() => { 
-                clearInterval(interval); 
-                document.getElementById('loading-text').textContent = "Avaliação carregada!"; 
-                document.getElementById('start-quiz-btn').disabled = false; 
-            }, 5000);
+            setTimeout(() => {
+                document.getElementById('loading-text').style.display = 'none';
+                document.getElementById('start-quiz-btn').disabled = false;
+            }, 3000);
+            
+            let currentSlide = 0;
+            setInterval(() => {
+                const slides = document.querySelectorAll('#authority-carousel .slide');
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 3000);
         }
 
         function startProcessing() {
-            let sIdx = 0; 
-            const slides = document.querySelectorAll('#depo-carousel .slide');
-            const interval = setInterval(() => { 
-                slides.forEach(s => s.classList.remove('active')); 
-                sIdx = (sIdx + 1) % slides.length; 
-                slides[sIdx].classList.add('active'); 
-            }, 2000);
+            let currentSlide = 0;
+            const interval = setInterval(() => {
+                const slides = document.querySelectorAll('#depo-carousel .slide');
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 2500);
+
+            setTimeout(() => { 
+                document.getElementById('pb-1').style.width = '70%'; 
+                document.getElementById('st-1').innerText = 'PROCESSANDO'; 
+            }, 500);
             
             setTimeout(() => { 
                 document.getElementById('pb-1').style.width = '100%'; 
@@ -680,7 +648,7 @@
             }
         }
 
-        // Fechar popup de desconto
+        // Fechar popup de desconto (Agora associado ao botão "LIBERAR MEU DESCONTO")
         window.closeDiscountPopup = async () => {
             document.getElementById('discount-popup').classList.remove('active');
             markDiscountPopupSeen();
@@ -695,7 +663,7 @@
             });
         };
 
-        // Continuar sem desconto
+        // Continuar sem desconto (Agora associado ao botão "Continuar sem desconto")
         window.continueWithoutDiscount = async () => {
             document.getElementById('discount-popup').classList.remove('active');
             markDiscountPopupSeen();
