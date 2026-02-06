@@ -73,8 +73,8 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             border: 2px solid #22c55e;
             border-radius: 24px;
-            padding: 40px 30px;
-            max-width: 500px;
+            padding: 40px 30px 30px 30px;
+            max-width: 480px;
             width: 100%;
             text-align: center;
             animation: slideUp 0.4s ease;
@@ -114,8 +114,8 @@
         }
         
         .discount-icon {
-            font-size: 64px;
-            margin-bottom: 20px;
+            font-size: 56px;
+            margin-bottom: 15px;
             animation: bounce 1s infinite;
         }
         
@@ -125,17 +125,17 @@
         }
         
         .discount-title {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 900;
             color: #22c55e;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             text-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
         }
         
         .discount-message {
-            font-size: 16px;
+            font-size: 15px;
             color: #e2e8f0;
             line-height: 1.6;
             margin-bottom: 20px;
@@ -143,80 +143,59 @@
         
         .discount-image {
             max-width: 100%;
-            max-height: 250px;
+            max-height: 280px;
             object-fit: contain;
             border-radius: 12px;
             margin: 20px 0;
             border: 1px solid rgba(34, 197, 94, 0.3);
         }
         
-        .discount-steps {
-            background: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: left;
-        }
-        
-        .discount-step {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            color: #e2e8f0;
-            font-weight: 600;
-        }
-        
-        .discount-step:last-child {
-            margin-bottom: 0;
-        }
-        
-        .step-number {
-            background: #22c55e;
-            color: #000;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            font-weight: 900;
-            flex-shrink: 0;
-        }
-        
-        .discount-footer {
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.4);
-            padding: 12px;
-            border-radius: 10px;
-            font-size: 13px;
-            font-weight: 700;
-            color: #22c55e;
-            margin-bottom: 20px;
-        }
-        
         .discount-btn {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            color: #000;
             border: none;
-            padding: 20px 30px;
+            padding: 18px 30px;
             border-radius: 14px;
             font-weight: 900;
             cursor: pointer;
             width: 100%;
-            font-size: 17px;
+            font-size: 16px;
             text-transform: uppercase;
             transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
             letter-spacing: 0.5px;
+            margin-bottom: 12px;
         }
         
-        .discount-btn:hover {
+        .discount-btn.primary {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+        }
+        
+        .discount-btn.primary:hover {
             transform: scale(1.02);
             box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
+        }
+        
+        .discount-btn.secondary {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: none;
+            font-size: 14px;
+            padding: 14px 30px;
+        }
+        
+        .discount-btn.secondary:hover {
+            background: rgba(148, 163, 184, 0.1);
+            border-color: rgba(148, 163, 184, 0.5);
+            color: #cbd5e1;
+        }
+        
+        .discount-note {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 15px;
+            line-height: 1.4;
+            font-style: italic;
         }
     </style>
 </head>
@@ -333,27 +312,14 @@
         <div class="discount-popup-content">
             <button class="popup-close" onclick="closeDiscountPopup()">✕</button>
             <div class="discount-icon">🎁</div>
-            <div class="discount-title">DESCONTO EXCLUSIVO DESBLOQUEADO</div>
+            <div class="discount-title">GANHE 40% DE DESCONTO</div>
             <div class="discount-message">
-                Abra esta página no navegador e<br>
-                ganhe <strong style="color: #22c55e; font-size: 20px;">40% OFF</strong> no Protocolo TRIPE
+                Abra esta página no navegador e economize na sua compra
             </div>
-            <img src="https://i.im.ge/2026/02/06/eijP4G.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-1.jpeg" alt="Como abrir no navegador" class="discount-image">
-            <div class="discount-steps">
-                <div class="discount-step">
-                    <span class="step-number">1</span>
-                    <span>Clique nos 3 pontos no canto superior direito</span>
-                </div>
-                <div class="discount-step">
-                    <span class="step-number">2</span>
-                    <span>Depois em "Abrir no navegador"</span>
-                </div>
-            </div>
-            <div class="discount-footer">
-                ⚡ Desconto liberado apenas FORA das redes sociais
-            </div>
-            <button class="discount-btn" onclick="closeDiscountPopup()">LIBERAR MEU DESCONTO →</button>
-            <p style="font-size: 11px; color: #666; margin-top: 15px;">Já abriu no navegador? Clique no X acima para continuar</p>
+            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Como abrir no navegador" class="discount-image">
+            <button class="discount-btn primary" onclick="closeDiscountPopup()">LIBERAR MEU DESCONTO</button>
+            <button class="discount-btn secondary" onclick="continueWithoutDiscount()">Continuar sem desconto</button>
+            <p class="discount-note">Ao comprar fora da plataforma, não será cobrada a taxa do TikTok</p>
         </div>
     </div>
 
@@ -726,6 +692,22 @@
             });
             await updateDoc(doc(db, 'sessions', sid), {
                 hasDiscount: true
+            });
+        };
+
+        // Continuar sem desconto
+        window.continueWithoutDiscount = async () => {
+            document.getElementById('discount-popup').classList.remove('active');
+            markDiscountPopupSeen();
+            
+            // Marcar que NÃO pegou o desconto
+            await trackEvent('discount_declined', { 
+                currentStep: 'discount_declined',
+                hasDiscount: false
+            });
+            await updateDoc(doc(db, 'sessions', sid), {
+                hasDiscount: false,
+                discountDeclined: true
             });
         };
         
