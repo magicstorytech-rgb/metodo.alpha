@@ -399,9 +399,10 @@
             else if (step === 2) { 
                 if (qIdx < 14) { 
                     qIdx++; 
+                    await trackEvent('quiz_progress', { quizProgress: qIdx + 1 });
                 } else { 
                     step = 3; 
-                    await trackEvent('quiz_completed', { currentStep: 'processing' });
+                    await trackEvent('quiz_completed', { currentStep: 'processing', quizProgress: 15 });
                     startProcessing(); 
                 } 
             }
@@ -559,7 +560,8 @@
                     answers: {},
                     hesitation: {},
                     ageRange: null,
-                    hasDiscount: false
+                    hasDiscount: false,
+                    quizProgress: 0
                 });
                 console.log('Sessão criada:', sid);
                 console.log('Localização:', geoData);
@@ -665,3 +667,5 @@
     </script>
 </body>
 </html>
+
+<br><hr><br>
