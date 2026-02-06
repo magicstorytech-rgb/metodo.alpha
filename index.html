@@ -44,7 +44,7 @@
         .guarantee-badge { width: 50px; margin-right: 15px; }
         .guarantee-text { text-align: left; font-size: 12px; line-height: 1.3; }
         
-        /* Popup de Desconto - MELHORADO */
+        /* Popup de Desconto */
         .discount-popup-overlay {
             display: none;
             position: fixed;
@@ -52,10 +52,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.98);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 10000;
             animation: fadeIn 0.3s ease;
-            backdrop-filter: blur(5px);
         }
         
         .discount-popup-overlay.active {
@@ -72,14 +71,14 @@
         
         .discount-popup-content {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 3px solid #22c55e;
+            border: 2px solid #22c55e;
             border-radius: 24px;
             padding: 40px 30px;
             max-width: 500px;
             width: 100%;
             text-align: center;
             animation: slideUp 0.4s ease;
-            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.4), inset 0 0 30px rgba(34, 197, 94, 0.1);
+            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.4);
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
@@ -90,9 +89,28 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        /* Botão de fechar REMOVIDO - display: none */
         .popup-close {
-            display: none !important;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
         }
         
         .discount-icon {
@@ -107,7 +125,7 @@
         }
         
         .discount-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #22c55e;
             margin-bottom: 15px;
@@ -121,7 +139,6 @@
             color: #e2e8f0;
             line-height: 1.6;
             margin-bottom: 20px;
-            font-weight: 600;
         }
         
         .discount-image {
@@ -135,7 +152,7 @@
         
         .discount-steps {
             background: rgba(34, 197, 94, 0.1);
-            border: 2px solid rgba(34, 197, 94, 0.5);
+            border: 1px solid rgba(34, 197, 94, 0.3);
             border-radius: 12px;
             padding: 20px;
             margin: 20px 0;
@@ -181,17 +198,16 @@
             margin-bottom: 20px;
         }
         
-        /* Botão principal - ÚNICO CTA */
         .discount-btn {
             background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
             color: #000;
             border: none;
-            padding: 24px 30px;
+            padding: 20px 30px;
             border-radius: 14px;
             font-weight: 900;
             cursor: pointer;
             width: 100%;
-            font-size: 18px;
+            font-size: 17px;
             text-transform: uppercase;
             transition: all 0.3s;
             box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
@@ -199,31 +215,8 @@
         }
         
         .discount-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.6);
-        }
-        
-        .discount-btn:active {
-            transform: scale(0.98);
-        }
-        
-        /* Mensagem de instrução - REMOVIDA */
-        .discount-popup-content > p:last-child {
-            display: none !important;
-        }
-        
-        /* Aviso de urgência */
-        .urgency-warning {
-            background: rgba(239, 68, 68, 0.2);
-            border: 2px solid rgba(239, 68, 68, 0.5);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #ff6b6b;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
         }
     </style>
 </head>
@@ -335,47 +328,32 @@
         </div>
     </div>
 
-    <!-- Popup de Desconto MELHORADO - Força abertura no navegador -->
+    <!-- Popup de Desconto (aparece apenas em navegadores in-app) -->
     <div class="discount-popup-overlay" id="discount-popup">
         <div class="discount-popup-content">
-            <!-- Botão de fechar REMOVIDO -->
+            <button class="popup-close" onclick="closeDiscountPopup()">✕</button>
             <div class="discount-icon">🎁</div>
-            <div class="discount-title">DESCONTO EXCLUSIVO DESBLOQUEADO!</div>
-            
-            <div class="urgency-warning">⚠️ Oferta válida apenas FORA das redes sociais</div>
-            
+            <div class="discount-title">DESCONTO EXCLUSIVO DESBLOQUEADO</div>
             <div class="discount-message">
-                Você está visualizando esta página<br>
-                <strong style="color: #22c55e; font-size: 22px; display: block; margin: 10px 0;">DENTRO DO INSTAGRAM/WHATSAPP</strong>
-                Para ganhar seu desconto de<br>
-                <strong style="color: #22c55e; font-size: 20px;">40% OFF</strong>
-                <br><br>
-                <span style="color: #ff6b6b; font-size: 12px; text-transform: uppercase; font-weight: 900;">⚡ VOCÊ PRECISA ABRIR NO NAVEGADOR ⚡</span>
+                Abra esta página no navegador e<br>
+                ganhe <strong style="color: #22c55e; font-size: 20px;">40% OFF</strong> no Protocolo TRIPE
             </div>
-            
             <img src="https://i.im.ge/2026/02/06/eijP4G.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-1.jpeg" alt="Como abrir no navegador" class="discount-image">
-            
             <div class="discount-steps">
                 <div class="discount-step">
                     <span class="step-number">1</span>
-                    <span>Clique nos <strong>3 pontos</strong> (⋯) no canto superior direito</span>
+                    <span>Clique nos 3 pontos no canto superior direito</span>
                 </div>
                 <div class="discount-step">
                     <span class="step-number">2</span>
-                    <span>Selecione <strong>"Abrir no navegador"</strong> ou <strong>"Open in Browser"</strong></span>
-                </div>
-                <div class="discount-step">
-                    <span class="step-number">3</span>
-                    <span>Seu desconto de <strong>40% OFF</strong> será ativado automaticamente!</span>
+                    <span>Depois em "Abrir no navegador"</span>
                 </div>
             </div>
-            
             <div class="discount-footer">
-                ⚡ Desconto liberado apenas FORA das redes sociais - Clique nos 3 pontos agora!
+                ⚡ Desconto liberado apenas FORA das redes sociais
             </div>
-            
-            <!-- ÚNICO BOTÃO CTA - Reforça a ação -->
-            <button class="discount-btn" onclick="openInBrowser()">CLIQUE NOS 3 PONTOS AGORA ↗️</button>
+            <button class="discount-btn" onclick="closeDiscountPopup()">LIBERAR MEU DESCONTO →</button>
+            <p style="font-size: 11px; color: #666; margin-top: 15px;">Já abriu no navegador? Clique no X acima para continuar</p>
         </div>
     </div>
 
@@ -656,6 +634,7 @@
                 console.error('Erro ao criar sessão:', error);
             }
 
+            // Detectar se está em navegador in-app e mostrar popup
             checkAndShowDiscountPopup();
 
             function checkWiapyReturn() {
@@ -676,33 +655,37 @@
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
             
+            // Detectar navegadores in-app comuns
             const inAppPatterns = [
-                /FBAN|FBAV/i,
-                /Instagram/i,
-                /Twitter/i,
-                /Line\//i,
-                /snapchat/i,
-                /TikTok/i,
-                /Bytedance/i,
-                /musical_ly/i,
-                /WhatsApp/i,
-                /Telegram/i,
-                /Pinterest/i,
-                /LinkedIn/i,
-                /Reddit/i,
+                /FBAN|FBAV/i,           // Facebook
+                /Instagram/i,            // Instagram
+                /Twitter/i,              // Twitter
+                /Line\//i,               // Line
+                /snapchat/i,             // Snapchat
+                /TikTok/i,               // TikTok
+                /Bytedance/i,            // TikTok/Bytedance
+                /musical_ly/i,           // TikTok antigo
+                /WhatsApp/i,             // WhatsApp
+                /Telegram/i,             // Telegram
+                /Pinterest/i,            // Pinterest
+                /LinkedIn/i,             // LinkedIn
+                /Reddit/i,               // Reddit
             ];
             
             return inAppPatterns.some(pattern => pattern.test(ua));
         }
 
+        // Verificar se usuário já viu o popup
         function hasSeenDiscountPopup() {
             return localStorage.getItem('discount_popup_seen') === 'true';
         }
 
+        // Marcar que usuário viu o popup
         function markDiscountPopupSeen() {
             localStorage.setItem('discount_popup_seen', 'true');
         }
 
+        // Mostrar popup apenas se estiver em navegador in-app
         function checkAndShowDiscountPopup() {
             const inAppBrowser = isInAppBrowser();
             const alreadySeen = hasSeenDiscountPopup();
@@ -710,6 +693,7 @@
             console.log('In-app browser:', inAppBrowser);
             console.log('Already seen popup:', alreadySeen);
             
+            // Só mostra se estiver em navegador in-app E não tiver visto ainda
             if (inAppBrowser && !alreadySeen) {
                 setTimeout(() => {
                     document.getElementById('discount-popup').classList.add('active');
@@ -719,6 +703,7 @@
                     });
                 }, 500);
             } else if (!inAppBrowser) {
+                // Se já estiver no navegador normal, libera desconto automaticamente
                 trackEvent('opened_in_browser', { 
                     currentStep: 'browser_detected',
                     hasDiscount: true
@@ -729,16 +714,21 @@
             }
         }
 
-        // NOVO: Função para abrir no navegador (apenas reforça a mensagem)
-        window.openInBrowser = async () => {
-            await trackEvent('discount_btn_clicked', { 
-                currentStep: 'discount_action_requested',
-                action: 'open_in_browser'
+        // Fechar popup de desconto
+        window.closeDiscountPopup = async () => {
+            document.getElementById('discount-popup').classList.remove('active');
+            markDiscountPopupSeen();
+            
+            // Marcar que o desconto foi liberado
+            await trackEvent('discount_accepted', { 
+                currentStep: 'discount_unlocked',
+                hasDiscount: true
             });
-            // Mantém o popup visível - o usuário precisa clicar nos 3 pontos manualmente
-            alert('Clique nos 3 pontos (⋯) no canto superior direito e selecione "Abrir no navegador"');
+            await updateDoc(doc(db, 'sessions', sid), {
+                hasDiscount: true
+            });
         };
-
+        
         init();
     </script>
 </body>
