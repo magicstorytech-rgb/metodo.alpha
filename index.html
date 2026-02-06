@@ -44,20 +44,20 @@
         .guarantee-badge { width: 50px; margin-right: 15px; }
         .guarantee-text { text-align: left; font-size: 12px; line-height: 1.3; }
         
-        /* Popup de Instrução */
-        .popup-overlay {
+        /* Popup de Desconto */
+        .discount-popup-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 9999;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
             animation: fadeIn 0.3s ease;
         }
         
-        .popup-overlay.active {
+        .discount-popup-overlay.active {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -69,18 +69,19 @@
             to { opacity: 1; }
         }
         
-        .popup-content {
-            background: var(--card);
-            border: 2px solid var(--primary);
+        .discount-popup-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #22c55e;
             border-radius: 24px;
             padding: 40px 30px;
-            max-width: 450px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
             animation: slideUp 0.4s ease;
-            box-shadow: 0 20px 60px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.4);
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
         }
         
         @keyframes slideUp {
@@ -88,30 +89,118 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        .popup-icon {
-            font-size: 56px;
-            margin-bottom: 20px;
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
         }
         
-        .popup-title {
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .discount-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .discount-title {
             font-size: 22px;
             font-weight: 900;
-            color: #fff;
-            margin-bottom: 20px;
+            color: #22c55e;
+            margin-bottom: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
         }
         
-        .popup-message {
-            font-size: 15px;
-            color: #cbd5e1;
-            line-height: 1.7;
-            margin-bottom: 30px;
+        .discount-message {
+            font-size: 16px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
         
-        .popup-btn {
-            background: var(--primary);
-            color: white;
+        .discount-image {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+        
+        .discount-steps {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .discount-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        
+        .discount-step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            background: #22c55e;
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+        
+        .discount-footer {
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #22c55e;
+            margin-bottom: 20px;
+        }
+        
+        .discount-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #000;
             border: none;
             padding: 20px 30px;
             border-radius: 14px;
@@ -121,22 +210,13 @@
             font-size: 17px;
             text-transform: uppercase;
             transition: all 0.3s;
-            box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
             letter-spacing: 0.5px;
         }
         
-        .popup-btn:hover {
+        .discount-btn:hover {
             transform: scale(1.02);
-            box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4);
-        }
-        
-        .popup-image {
-            max-width: 100%;
-            max-height: 300px;
-            object-fit: contain;
-            border-radius: 12px;
-            margin: 20px 0;
-            border: 1px solid var(--border);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
         }
     </style>
 </head>
@@ -243,23 +323,37 @@
                 </div>
             </div>
 
-            <button class="btn-next" onclick="showCheckoutPopup()" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</button>
+            <button class="btn-next" onclick="finish()" style="margin-top: 10px;">GARANTIR MEU ACESSO AGORA</button>
             <p style="font-size: 10px; color: var(--muted); margin-top: 15px;">Compra 100% Segura e Sigilosa</p>
         </div>
     </div>
 
-    <!-- Popup de Instrução para Checkout -->
-    <div class="popup-overlay" id="checkout-popup">
-        <div class="popup-content">
-            <div class="popup-icon">💡</div>
-            <div class="popup-title">IMPORTANTE</div>
-            <div class="popup-message">
-                Caso apareça algum aviso:<br><br>
-                <strong>1.</strong> Clique nos 3 pontos no canto superior direito<br>
-                <strong>2.</strong> Depois clique em "Abrir no navegador"
+    <!-- Popup de Desconto (aparece apenas em navegadores in-app) -->
+    <div class="discount-popup-overlay" id="discount-popup">
+        <div class="discount-popup-content">
+            <button class="popup-close" onclick="closeDiscountPopup()">✕</button>
+            <div class="discount-icon">🎁</div>
+            <div class="discount-title">DESCONTO EXCLUSIVO DESBLOQUEADO</div>
+            <div class="discount-message">
+                Abra esta página no navegador e<br>
+                ganhe <strong style="color: #22c55e; font-size: 20px;">40% OFF</strong> no Protocolo TRIPE
             </div>
-            <img src="https://i.im.ge/2026/02/06/eijP4G.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-1.jpeg" alt="Exemplo" class="popup-image">
-            <button class="popup-btn" onclick="goToCheckout()">CONTINUAR PARA O CHECKOUT →</button>
+            <img src="https://i.im.ge/2026/02/06/eijP4G.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-1.jpeg" alt="Como abrir no navegador" class="discount-image">
+            <div class="discount-steps">
+                <div class="discount-step">
+                    <span class="step-number">1</span>
+                    <span>Clique nos 3 pontos no canto superior direito</span>
+                </div>
+                <div class="discount-step">
+                    <span class="step-number">2</span>
+                    <span>Depois em "Abrir no navegador"</span>
+                </div>
+            </div>
+            <div class="discount-footer">
+                ⚡ Desconto liberado apenas FORA das redes sociais
+            </div>
+            <button class="discount-btn" onclick="closeDiscountPopup()">LIBERAR MEU DESCONTO →</button>
+            <p style="font-size: 11px; color: #666; margin-top: 15px;">Já abriu no navegador? Clique no X acima para continuar</p>
         </div>
     </div>
 
@@ -397,19 +491,11 @@
             window.next();
         };
 
-        window.showCheckoutPopup = async () => {
+        window.finish = async () => { 
             await trackEvent('checkout_clicked', { 
-                currentStep: 'checkout_popup_shown',
+                currentStep: 'checkout_redirect',
                 checkoutUrl: 'https://pay.wiapy.com/elbyXqblP2'
-            });
-            document.getElementById('checkout-popup').classList.add('active');
-        };
-
-        window.goToCheckout = () => {
-            trackEvent('checkout_popup_accepted', { 
-                currentStep: 'checkout_redirect'
-            });
-            // Redirecionar imediatamente
+            }); 
             window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
         };
 
@@ -539,13 +625,17 @@
                     events: {},
                     answers: {},
                     hesitation: {},
-                    ageRange: null
+                    ageRange: null,
+                    hasDiscount: false
                 });
                 console.log('Sessão criada:', sid);
                 console.log('Localização:', geoData);
             } catch (error) {
                 console.error('Erro ao criar sessão:', error);
             }
+
+            // Detectar se está em navegador in-app e mostrar popup
+            checkAndShowDiscountPopup();
 
             function checkWiapyReturn() {
                 const urlParams = new URLSearchParams(window.location.search);
@@ -560,6 +650,84 @@
             }
             checkWiapyReturn();
         }
+
+        // Detectar navegador in-app (Instagram, TikTok, Facebook, etc)
+        function isInAppBrowser() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Detectar navegadores in-app comuns
+            const inAppPatterns = [
+                /FBAN|FBAV/i,           // Facebook
+                /Instagram/i,            // Instagram
+                /Twitter/i,              // Twitter
+                /Line\//i,               // Line
+                /snapchat/i,             // Snapchat
+                /TikTok/i,               // TikTok
+                /Bytedance/i,            // TikTok/Bytedance
+                /musical_ly/i,           // TikTok antigo
+                /WhatsApp/i,             // WhatsApp
+                /Telegram/i,             // Telegram
+                /Pinterest/i,            // Pinterest
+                /LinkedIn/i,             // LinkedIn
+                /Reddit/i,               // Reddit
+            ];
+            
+            return inAppPatterns.some(pattern => pattern.test(ua));
+        }
+
+        // Verificar se usuário já viu o popup
+        function hasSeenDiscountPopup() {
+            return localStorage.getItem('discount_popup_seen') === 'true';
+        }
+
+        // Marcar que usuário viu o popup
+        function markDiscountPopupSeen() {
+            localStorage.setItem('discount_popup_seen', 'true');
+        }
+
+        // Mostrar popup apenas se estiver em navegador in-app
+        function checkAndShowDiscountPopup() {
+            const inAppBrowser = isInAppBrowser();
+            const alreadySeen = hasSeenDiscountPopup();
+            
+            console.log('In-app browser:', inAppBrowser);
+            console.log('Already seen popup:', alreadySeen);
+            
+            // Só mostra se estiver em navegador in-app E não tiver visto ainda
+            if (inAppBrowser && !alreadySeen) {
+                setTimeout(() => {
+                    document.getElementById('discount-popup').classList.add('active');
+                    trackEvent('discount_popup_shown', { 
+                        currentStep: 'discount_popup',
+                        userAgent: navigator.userAgent
+                    });
+                }, 500);
+            } else if (!inAppBrowser) {
+                // Se já estiver no navegador normal, libera desconto automaticamente
+                trackEvent('opened_in_browser', { 
+                    currentStep: 'browser_detected',
+                    hasDiscount: true
+                });
+                updateDoc(doc(db, 'sessions', sid), {
+                    hasDiscount: true
+                });
+            }
+        }
+
+        // Fechar popup de desconto
+        window.closeDiscountPopup = async () => {
+            document.getElementById('discount-popup').classList.remove('active');
+            markDiscountPopupSeen();
+            
+            // Marcar que o desconto foi liberado
+            await trackEvent('discount_accepted', { 
+                currentStep: 'discount_unlocked',
+                hasDiscount: true
+            });
+            await updateDoc(doc(db, 'sessions', sid), {
+                hasDiscount: true
+            });
+        };
         
         init();
     </script>
