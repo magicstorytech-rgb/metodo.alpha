@@ -89,8 +89,6 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        /* O botão de fechar foi removido conforme solicitado */
-        
         .discount-icon {
             font-size: 56px;
             margin-bottom: 15px;
@@ -120,12 +118,16 @@
         }
         
         .discount-image {
+            width: 100%;
             max-width: 100%;
-            max-height: 280px;
+            height: auto;
+            max-height: 350px;
             object-fit: contain;
             border-radius: 12px;
             margin: 20px 0;
-            border: 1px solid rgba(34, 197, 94, 0.3);
+            border: 2px solid rgba(34, 197, 94, 0.5);
+            display: block;
+            background: #000;
         }
         
         .discount-btn {
@@ -140,17 +142,6 @@
             transition: all 0.3s;
             letter-spacing: 0.5px;
             margin-bottom: 12px;
-        }
-        
-        .discount-btn.primary {
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            color: #000;
-            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
-        }
-        
-        .discount-btn.primary:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
         }
         
         .discount-btn.secondary {
@@ -286,14 +277,14 @@
     <!-- Popup de Desconto (aparece apenas em navegadores in-app) -->
     <div class="discount-popup-overlay" id="discount-popup">
         <div class="discount-popup-content">
-            <!-- Botão de fechar removido conforme solicitado -->
             <div class="discount-icon">🎁</div>
             <div class="discount-title">GANHE 40% DE DESCONTO</div>
             <div class="discount-message">
-                Abra esta página no navegador e economize na sua compra
+                Abra esta página no navegador seguindo o passo a passo abaixo para economizar na sua compra:
             </div>
-            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Como abrir no navegador" class="discount-image">
-            <button class="discount-btn primary" onclick="closeDiscountPopup()">LIBERAR MEU DESCONTO</button>
+            <!-- Imagem do passo a passo -->
+            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Passo a passo: Clique nos 3 pontos e Abrir no Navegador" class="discount-image" onerror="this.src='https://via.placeholder.com/400x600?text=Siga+o+passo+a+passo+no+navegador'">
+            
             <button class="discount-btn secondary" onclick="continueWithoutDiscount()">Continuar sem desconto</button>
             <p class="discount-note">Ao comprar fora da plataforma, não será cobrada a taxa do TikTok</p>
         </div>
@@ -568,7 +559,7 @@
                 console.error('Erro ao criar sessão:', error);
             }
 
-            // Detectar se está em navegador in-app e mostrar popup
+            // Detectar se está em navegador in-app e mostrar popup IMEDIATAMENTE
             checkAndShowDiscountPopup();
 
             function checkWiapyReturn() {
@@ -629,13 +620,12 @@
             
             // Só mostra se estiver em navegador in-app E não tiver visto ainda
             if (inAppBrowser && !alreadySeen) {
-                setTimeout(() => {
-                    document.getElementById('discount-popup').classList.add('active');
-                    trackEvent('discount_popup_shown', { 
-                        currentStep: 'discount_popup',
-                        userAgent: navigator.userAgent
-                    });
-                }, 500);
+                // Removido o setTimeout para abrir junto com a página
+                document.getElementById('discount-popup').classList.add('active');
+                trackEvent('discount_popup_shown', { 
+                    currentStep: 'discount_popup',
+                    userAgent: navigator.userAgent
+                });
             } else if (!inAppBrowser) {
                 // Se já estiver no navegador normal, libera desconto automaticamente
                 trackEvent('opened_in_browser', { 
@@ -648,22 +638,7 @@
             }
         }
 
-        // Fechar popup de desconto (Agora associado ao botão "LIBERAR MEU DESCONTO")
-        window.closeDiscountPopup = async () => {
-            document.getElementById('discount-popup').classList.remove('active');
-            markDiscountPopupSeen();
-            
-            // Marcar que o desconto foi liberado
-            await trackEvent('discount_accepted', { 
-                currentStep: 'discount_unlocked',
-                hasDiscount: true
-            });
-            await updateDoc(doc(db, 'sessions', sid), {
-                hasDiscount: true
-            });
-        };
-
-        // Continuar sem desconto (Agora associado ao botão "Continuar sem desconto")
+        // Continuar sem desconto
         window.continueWithoutDiscount = async () => {
             document.getElementById('discount-popup').classList.remove('active');
             markDiscountPopupSeen();
