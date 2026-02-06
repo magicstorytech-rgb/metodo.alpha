@@ -408,6 +408,14 @@
             render();
         };
 
+        window.finish = async () => { 
+            await trackEvent('checkout_clicked', { 
+                currentStep: 'checkout_redirect',
+                checkoutUrl: 'https://pay.wiapy.com/elbyXqblP2'
+            }); 
+            window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
+        };
+
         function render() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('s-' + step).classList.add('active');
@@ -620,7 +628,6 @@
             
             // Só mostra se estiver em navegador in-app E não tiver visto ainda
             if (inAppBrowser && !alreadySeen) {
-                // Removido o setTimeout para abrir junto com a página
                 document.getElementById('discount-popup').classList.add('active');
                 trackEvent('discount_popup_shown', { 
                     currentStep: 'discount_popup',
