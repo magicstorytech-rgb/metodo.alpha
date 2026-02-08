@@ -170,16 +170,16 @@
 </head>
 <body>
     <div class="quiz-card">
-        <!-- Tela 1: Mini VSL Wistia -->
+        <!-- Tela 1: Mini VSL Corrigida -->
         <div id="s-0" class="screen active">
             <div class="fixed-header">PROTOCOLO TRIPE - REVELADO</div>
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
             <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script>
-                <script src="https://fast.wistia.com/embed/q600dov5tx.js" async type="module"></script>
-                <style>wistia-player[media-id='q600dov5tx']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/q600dov5tx/swatch'); display: block; filter: blur(5px); padding-top:178.06%; }</style> 
-                <wistia-player media-id="q600dov5tx" aspect="0.5616224648985959"></wistia-player>
+                <video width="100%" height="auto" controls poster="https://protocolotripe.online/wp-content/uploads/2026/01/ONTc4COn_thumb.jpg">
+                    <source src="https://metodotripe.shop/wp-content/uploads/2026/01/%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4.mp4" type="video/mp4">
+                    Seu navegador não suporta vídeos HTML5.
+                </video>
             </div>
             <button id="vsl-button" class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
@@ -202,7 +202,7 @@
                 </div>
             </div>
             <p style="color: var(--muted);" id="loading-text">Carregando avaliação gratuita...</p>
-            <button class="btn-next" onclick="next()" id="start-quiz-btn" disabled>INICIAR AVALIAÇÃO AGORA</button>
+            <button id="start-quiz-btn" class="btn-next" onclick="next()" disabled>INICIAR MINHA AVALIAÇÃO</button>
         </div>
 
         <!-- Tela 3: Quiz Profissional (15 Perguntas) -->
@@ -427,7 +427,7 @@
                 document.getElementById('q-num').innerText = qIdx + 1;
                 document.getElementById('p-fill').style.width = ((qIdx + 1) / 15 * 100) + '%';
                 document.getElementById('q-box').innerHTML = `
-                    <h2 class="headline" style="font-size: 18px;">${q.t}</h2>
+                    <h2 class="headline" style="font-size: 18px; margin-bottom: 25px;">${q.t}</h2>
                     <div class="options-grid">
                         ${q.o.map(opt => `<button class="option-btn" onclick="answer('${q.id}', '${opt}')">${opt}</button>`).join('')}
                     </div>
@@ -449,9 +449,11 @@
             let currentSlide = 0;
             setInterval(() => {
                 const slides = document.querySelectorAll('#authority-carousel .slide');
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
+                if(slides.length > 0) {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }
             }, 3000);
         }
 
@@ -459,9 +461,11 @@
             let currentSlide = 0;
             const interval = setInterval(() => {
                 const slides = document.querySelectorAll('#depo-carousel .slide');
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
+                if(slides.length > 0) {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    slides[currentSlide].classList.add('active');
+                }
             }, 2500);
 
             setTimeout(() => { 
@@ -569,7 +573,6 @@
                 console.error('Erro ao criar sessão:', error);
             }
 
-            // Detectar se está em navegador in-app e mostrar popup IMEDIATAMENTE
             checkAndShowDiscountPopup();
 
             function checkWiapyReturn() {
@@ -586,49 +589,28 @@
             checkWiapyReturn();
         }
 
-        // Detectar navegador in-app (Instagram, TikTok, Facebook, etc)
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
-            
-            // Detectar navegadores in-app comuns
             const inAppPatterns = [
-                /FBAN|FBAV/i,           // Facebook
-                /Instagram/i,            // Instagram
-                /Twitter/i,              // Twitter
-                /Line\//i,               // Line
-                /snapchat/i,             // Snapchat
-                /TikTok/i,               // TikTok
-                /Bytedance/i,            // TikTok/Bytedance
-                /musical_ly/i,           // TikTok antigo
-                /WhatsApp/i,             // WhatsApp
-                /Telegram/i,             // Telegram
-                /Pinterest/i,            // Pinterest
-                /LinkedIn/i,             // LinkedIn
-                /Reddit/i,               // Reddit
+                /FBAN|FBAV/i, /Instagram/i, /Twitter/i, /Line\//i, /snapchat/i, 
+                /TikTok/i, /Bytedance/i, /musical_ly/i, /WhatsApp/i, /Telegram/i, 
+                /Pinterest/i, /LinkedIn/i, /Reddit/i
             ];
-            
             return inAppPatterns.some(pattern => pattern.test(ua));
         }
 
-        // Verificar se usuário já viu o popup
         function hasSeenDiscountPopup() {
             return localStorage.getItem('discount_popup_seen') === 'true';
         }
 
-        // Marcar que usuário viu o popup
         function markDiscountPopupSeen() {
             localStorage.setItem('discount_popup_seen', 'true');
         }
 
-        // Mostrar popup apenas se estiver em navegador in-app
         function checkAndShowDiscountPopup() {
             const inAppBrowser = isInAppBrowser();
             const alreadySeen = hasSeenDiscountPopup();
             
-            console.log('In-app browser:', inAppBrowser);
-            console.log('Already seen popup:', alreadySeen);
-            
-            // Só mostra se estiver em navegador in-app E não tiver visto ainda
             if (inAppBrowser && !alreadySeen) {
                 document.getElementById('discount-popup').classList.add('active');
                 trackEvent('discount_popup_shown', { 
@@ -636,7 +618,6 @@
                     userAgent: navigator.userAgent
                 });
             } else if (!inAppBrowser) {
-                // Se já estiver no navegador normal, libera desconto automaticamente
                 trackEvent('opened_in_browser', { 
                     currentStep: 'browser_detected',
                     hasDiscount: true
@@ -647,12 +628,9 @@
             }
         }
 
-        // Continuar sem desconto
         window.continueWithoutDiscount = async () => {
             document.getElementById('discount-popup').classList.remove('active');
             markDiscountPopupSeen();
-            
-            // Marcar que NÃO pegou o desconto
             await trackEvent('discount_declined', { 
                 currentStep: 'discount_declined',
                 hasDiscount: false
@@ -667,5 +645,3 @@
     </script>
 </body>
 </html>
-
-<br><hr><br>
