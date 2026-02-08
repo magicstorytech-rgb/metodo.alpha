@@ -89,6 +89,30 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
         .discount-icon {
             font-size: 56px;
             margin-bottom: 15px;
@@ -118,16 +142,12 @@
         }
         
         .discount-image {
-            width: 100%;
             max-width: 100%;
-            height: auto;
-            max-height: 350px;
+            max-height: 280px;
             object-fit: contain;
             border-radius: 12px;
             margin: 20px 0;
-            border: 2px solid rgba(34, 197, 94, 0.5);
-            display: block;
-            background: #000;
+            border: 1px solid rgba(34, 197, 94, 0.3);
         }
         
         .discount-btn {
@@ -142,6 +162,17 @@
             transition: all 0.3s;
             letter-spacing: 0.5px;
             margin-bottom: 12px;
+        }
+        
+        .discount-btn.primary {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
+        }
+        
+        .discount-btn.primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
         }
         
         .discount-btn.secondary {
@@ -170,16 +201,16 @@
 </head>
 <body>
     <div class="quiz-card">
-        <!-- Tela 1: Mini VSL Corrigida -->
+        <!-- Tela 1: Mini VSL Wistia -->
         <div id="s-0" class="screen active">
             <div class="fixed-header">PROTOCOLO TRIPE - REVELADO</div>
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
             <div class="video-container">
-                <video width="100%" height="auto" controls poster="https://protocolotripe.online/wp-content/uploads/2026/01/ONTc4COn_thumb.jpg">
-                    <source src="https://metodotripe.shop/wp-content/uploads/2026/01/%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4.mp4" type="video/mp4">
-                    Seu navegador não suporta vídeos HTML5.
-                </video>
+                <script src="https://fast.wistia.com/player.js" async></script>
+                <script src="https://fast.wistia.com/embed/q600dov5tx.js" async type="module"></script>
+                <style>wistia-player[media-id='q600dov5tx']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/q600dov5tx/swatch'); display: block; filter: blur(5px); padding-top:178.06%; }</style> 
+                <wistia-player media-id="q600dov5tx" aspect="0.5616224648985959"></wistia-player>
             </div>
             <button id="vsl-button" class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
@@ -187,6 +218,8 @@
         <!-- Tela 2: Modal de Autoridade -->
         <div id="s-1" class="screen">
             <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
+            <h2 style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">CLIQUE AGORA PARA FAZER SUA AVALIAÇÃO GRATUITA</h2>
+            <div class="urgency-badge"><span id="online-count-val">147</span> HOMENS ONLINE AGORA</div>
             <div class="carousel" id="authority-carousel">
                 <div class="slide active">
                     <img src="https://protocolotripe.online/wp-content/uploads/2026/01/55db78_0079baf30d6c485581fa2291d62c7d25_mv2.jpg">
@@ -202,7 +235,7 @@
                 </div>
             </div>
             <p style="color: var(--muted);" id="loading-text">Carregando avaliação gratuita...</p>
-            <button id="start-quiz-btn" class="btn-next" onclick="next()" disabled>INICIAR MINHA AVALIAÇÃO</button>
+            <button class="btn-next" onclick="next()" id="start-quiz-btn" disabled>INICIAR AVALIAÇÃO AGORA</button>
         </div>
 
         <!-- Tela 3: Quiz Profissional (15 Perguntas) -->
@@ -277,14 +310,14 @@
     <!-- Popup de Desconto (aparece apenas em navegadores in-app) -->
     <div class="discount-popup-overlay" id="discount-popup">
         <div class="discount-popup-content">
+            <button class="popup-close" onclick="closeDiscountPopup()">✕</button>
             <div class="discount-icon">🎁</div>
             <div class="discount-title">GANHE 40% DE DESCONTO</div>
             <div class="discount-message">
-                Abra esta página no navegador seguindo o passo a passo abaixo para economizar na sua compra:
+                Abra esta página no navegador e economize na sua compra
             </div>
-            <!-- Imagem do passo a passo -->
-            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Passo a passo: Clique nos 3 pontos e Abrir no Navegador" class="discount-image" onerror="this.src='https://via.placeholder.com/400x600?text=Siga+o+passo+a+passo+no+navegador'">
-            
+            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Como abrir no navegador" class="discount-image">
+            <button class="discount-btn primary" onclick="closeDiscountPopup()">LIBERAR MEU DESCONTO</button>
             <button class="discount-btn secondary" onclick="continueWithoutDiscount()">Continuar sem desconto</button>
             <p class="discount-note">Ao comprar fora da plataforma, não será cobrada a taxa do TikTok</p>
         </div>
@@ -323,7 +356,13 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        // Gerar ou recuperar sessionId ÚNICO e PERSISTENTE
+        let sid = localStorage.getItem('funil_session_id');
+        if (!sid) {
+            sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('funil_session_id', sid);
+        }
+        console.log('SessionId:', sid);
         let step = 0, qIdx = 0, stepStartTime = 0;
         let geoData = {};
 
@@ -399,14 +438,29 @@
             else if (step === 2) { 
                 if (qIdx < 14) { 
                     qIdx++; 
-                    await trackEvent('quiz_progress', { quizProgress: qIdx + 1 });
                 } else { 
                     step = 3; 
-                    await trackEvent('quiz_completed', { currentStep: 'processing', quizProgress: 15 });
+                    await trackEvent('quiz_completed', { currentStep: 'processing' });
                     startProcessing(); 
                 } 
             }
             render();
+        };
+
+        window.sel = async (id, val) => {
+            const hesitation = Date.now() - stepStartTime;
+            const updateData = {
+                [`answers.${id}`]: val,
+                quizProgress: qIdx + 1,
+                [`hesitation.q${qIdx + 1}`]: hesitation
+            };
+            
+            if (id === 'idade') {
+                updateData.ageRange = QUESTIONS[0].o[val];
+            }
+            
+            await trackEvent(`quiz_answer_${qIdx + 1}`, updateData);
+            window.next();
         };
 
         window.finish = async () => { 
@@ -420,58 +474,38 @@
         function render() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('s-' + step).classList.add('active');
-            window.scrollTo(0, 0);
-
             if (step === 2) {
                 const q = QUESTIONS[qIdx];
-                document.getElementById('q-num').innerText = qIdx + 1;
-                document.getElementById('p-fill').style.width = ((qIdx + 1) / 15 * 100) + '%';
-                document.getElementById('q-box').innerHTML = `
-                    <h2 class="headline" style="font-size: 18px; margin-bottom: 25px;">${q.t}</h2>
-                    <div class="options-grid">
-                        ${q.o.map(opt => `<button class="option-btn" onclick="answer('${q.id}', '${opt}')">${opt}</button>`).join('')}
-                    </div>
-                `;
+                document.getElementById('q-num').textContent = qIdx + 1;
+                document.getElementById('p-fill').style.width = ((qIdx+1)/15*100) + '%';
+                document.getElementById('q-box').innerHTML = `<div style="font-size: 22px; font-weight: 900; margin-bottom: 15px;">${q.t}</div><div class="options-grid">${q.o.map((o, i) => `<button class="option-btn" onclick="sel('${q.id}', ${i})">${o}</button>`).join('')}</div>`;
+                stepStartTime = Date.now();
             }
         }
 
-        window.answer = async (id, val) => {
-            await updateDoc(doc(db, 'sessions', sid), { [`answers.${id}`]: val });
-            next();
-        };
-
         function startModalDelay() {
-            setTimeout(() => {
-                document.getElementById('loading-text').style.display = 'none';
-                document.getElementById('start-quiz-btn').disabled = false;
-            }, 3000);
-            
-            let currentSlide = 0;
-            setInterval(() => {
-                const slides = document.querySelectorAll('#authority-carousel .slide');
-                if(slides.length > 0) {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
-                }
-            }, 3000);
+            let sIdx = 0; 
+            const slides = document.querySelectorAll('#authority-carousel .slide');
+            const interval = setInterval(() => { 
+                slides.forEach(s => s.classList.remove('active')); 
+                sIdx = (sIdx + 1) % slides.length; 
+                slides[sIdx].classList.add('active'); 
+            }, 2000);
+            setTimeout(() => { 
+                clearInterval(interval); 
+                document.getElementById('loading-text').textContent = "Avaliação carregada!"; 
+                document.getElementById('start-quiz-btn').disabled = false; 
+            }, 5000);
         }
 
         function startProcessing() {
-            let currentSlide = 0;
-            const interval = setInterval(() => {
-                const slides = document.querySelectorAll('#depo-carousel .slide');
-                if(slides.length > 0) {
-                    slides[currentSlide].classList.remove('active');
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    slides[currentSlide].classList.add('active');
-                }
-            }, 2500);
-
-            setTimeout(() => { 
-                document.getElementById('pb-1').style.width = '70%'; 
-                document.getElementById('st-1').innerText = 'PROCESSANDO'; 
-            }, 500);
+            let sIdx = 0; 
+            const slides = document.querySelectorAll('#depo-carousel .slide');
+            const interval = setInterval(() => { 
+                slides.forEach(s => s.classList.remove('active')); 
+                sIdx = (sIdx + 1) % slides.length; 
+                slides[sIdx].classList.add('active'); 
+            }, 2000);
             
             setTimeout(() => { 
                 document.getElementById('pb-1').style.width = '100%'; 
@@ -564,8 +598,7 @@
                     answers: {},
                     hesitation: {},
                     ageRange: null,
-                    hasDiscount: false,
-                    quizProgress: 0
+                    hasDiscount: false
                 });
                 console.log('Sessão criada:', sid);
                 console.log('Localização:', geoData);
@@ -573,6 +606,7 @@
                 console.error('Erro ao criar sessão:', error);
             }
 
+            // Detectar se está em navegador in-app e mostrar popup
             checkAndShowDiscountPopup();
 
             function checkWiapyReturn() {
@@ -589,35 +623,59 @@
             checkWiapyReturn();
         }
 
+        // Detectar navegador in-app (Instagram, TikTok, Facebook, etc)
         function isInAppBrowser() {
             const ua = navigator.userAgent || navigator.vendor || window.opera;
+            
+            // Detectar navegadores in-app comuns
             const inAppPatterns = [
-                /FBAN|FBAV/i, /Instagram/i, /Twitter/i, /Line\//i, /snapchat/i, 
-                /TikTok/i, /Bytedance/i, /musical_ly/i, /WhatsApp/i, /Telegram/i, 
-                /Pinterest/i, /LinkedIn/i, /Reddit/i
+                /FBAN|FBAV/i,           // Facebook
+                /Instagram/i,            // Instagram
+                /Twitter/i,              // Twitter
+                /Line\//i,               // Line
+                /snapchat/i,             // Snapchat
+                /TikTok/i,               // TikTok
+                /Bytedance/i,            // TikTok/Bytedance
+                /musical_ly/i,           // TikTok antigo
+                /WhatsApp/i,             // WhatsApp
+                /Telegram/i,             // Telegram
+                /Pinterest/i,            // Pinterest
+                /LinkedIn/i,             // LinkedIn
+                /Reddit/i,               // Reddit
             ];
+            
             return inAppPatterns.some(pattern => pattern.test(ua));
         }
 
+        // Verificar se usuário já viu o popup
         function hasSeenDiscountPopup() {
             return localStorage.getItem('discount_popup_seen') === 'true';
         }
 
+        // Marcar que usuário viu o popup
         function markDiscountPopupSeen() {
             localStorage.setItem('discount_popup_seen', 'true');
         }
 
+        // Mostrar popup apenas se estiver em navegador in-app
         function checkAndShowDiscountPopup() {
             const inAppBrowser = isInAppBrowser();
             const alreadySeen = hasSeenDiscountPopup();
             
+            console.log('In-app browser:', inAppBrowser);
+            console.log('Already seen popup:', alreadySeen);
+            
+            // Só mostra se estiver em navegador in-app E não tiver visto ainda
             if (inAppBrowser && !alreadySeen) {
-                document.getElementById('discount-popup').classList.add('active');
-                trackEvent('discount_popup_shown', { 
-                    currentStep: 'discount_popup',
-                    userAgent: navigator.userAgent
-                });
+                setTimeout(() => {
+                    document.getElementById('discount-popup').classList.add('active');
+                    trackEvent('discount_popup_shown', { 
+                        currentStep: 'discount_popup',
+                        userAgent: navigator.userAgent
+                    });
+                }, 500);
             } else if (!inAppBrowser) {
+                // Se já estiver no navegador normal, libera desconto automaticamente
                 trackEvent('opened_in_browser', { 
                     currentStep: 'browser_detected',
                     hasDiscount: true
@@ -628,9 +686,27 @@
             }
         }
 
+        // Fechar popup de desconto
+        window.closeDiscountPopup = async () => {
+            document.getElementById('discount-popup').classList.remove('active');
+            markDiscountPopupSeen();
+            
+            // Marcar que o desconto foi liberado
+            await trackEvent('discount_accepted', { 
+                currentStep: 'discount_unlocked',
+                hasDiscount: true
+            });
+            await updateDoc(doc(db, 'sessions', sid), {
+                hasDiscount: true
+            });
+        };
+
+        // Continuar sem desconto
         window.continueWithoutDiscount = async () => {
             document.getElementById('discount-popup').classList.remove('active');
             markDiscountPopupSeen();
+            
+            // Marcar que NÃO pegou o desconto
             await trackEvent('discount_declined', { 
                 currentStep: 'discount_declined',
                 hasDiscount: false
