@@ -26,7 +26,6 @@
         .options-grid { display: grid; gap: 12px; margin-bottom: 25px; }
         .option-btn { background: var(--card); border: 2px solid var(--border); color: var(--text); padding: 16px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
         .option-btn:hover { border-color: var(--primary); background: rgba(239, 68, 68, 0.1); }
-        .urgency-badge { background: rgba(34, 197, 94, 0.2); border: 2px solid #22c55e; padding: 10px 15px; border-radius: 50px; display: inline-block; margin-bottom: 20px; font-weight: 900; color: #22c55e; font-size: 12px; }
         .carousel { width: 100%; height: 280px; background: #000; border-radius: 15px; margin: 15px 0; overflow: hidden; position: relative; border: 1px solid var(--border); }
         .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; display: flex; align-items: center; justify-content: center; }
         .slide.active { opacity: 1; }
@@ -55,131 +54,193 @@
         .online-counter { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 700; color: #22c55e; }
         .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        
+        /* Popup de Desconto */
+        .discount-popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+        }
+        
+        .discount-popup-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .discount-popup-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border: 2px solid #22c55e;
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.4);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .discount-icon {
+            font-size: 56px;
+            margin-bottom: 15px;
+        }
+        
+        .discount-title {
+            font-size: 24px;
+            font-weight: 900;
+            color: #22c55e;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
+        }
+        
+        .discount-message {
+            font-size: 15px;
+            color: #e2e8f0;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .discount-image {
+            width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 2px solid rgba(34, 197, 94, 0.5);
+        }
+        
+        .discount-btn {
+            border: none;
+            padding: 18px 30px;
+            border-radius: 14px;
+            font-weight: 900;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+        
+        .discount-btn.secondary {
+            background: transparent;
+            color: #94a3b8;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            font-size: 14px;
+            padding: 14px 30px;
+        }
+        
+        .discount-note {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 15px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <div class="quiz-card">
-        <!-- Tela 1: Mini VSL -->
+        <!-- VSL -->
         <div id="s-0" class="screen active">
             <div class="fixed-header">ALPHA METHOD - REVELADO</div>
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
             <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script><script src="https://fast.wistia.com/embed/0j5gqssmb7.js" async type="module"></script><style>wistia-player[media-id='0j5gqssmb7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0j5gqssmb7/swatch'); display: block; filter: blur(5px); padding-top:178.06%; }</style> <wistia-player media-id="0j5gqssmb7" aspect="0.5616224648985959"></wistia-player>
+                <script src="https://fast.wistia.com/player.js" async></script>
+                <script src="https://fast.wistia.com/embed/0j5gqssmb7.js" async type="module"></script>
+                <style>wistia-player[media-id='0j5gqssmb7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0j5gqssmb7/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }</style>
+                <wistia-player media-id="0j5gqssmb7" aspect="0.5616224648985959"></wistia-player>
             </div>
-            <button id="vsl-button" class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
+            <button class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
 
-        <!-- Tela 2: Modal de Autoridade -->
+        <!-- Modal -->
         <div id="s-1" class="screen">
             <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
-            
-            <div class="online-counter">
-                <div class="online-dot"></div>
-                <span>167 homens online agora</span>
+            <div class="online-counter"><div class="online-dot"></div><span>167 homens online agora</span></div>
+            <div class="carousel" id="carousel">
+                <div class="slide active"><img src="https://i.ibb.co/jP9c3fQx/Whats-App-Image-2024-12-18-at-15-11-46-rcl53qv1p0gr5s3fzr30gvvchnyybvpbhth13gqhj4.jpg"><div class="slide-caption">+5.4cm VALIDADO</div></div>
+                <div class="slide"><img src="https://i.ibb.co/Q38jhcmQ/55db78-0079baf30d6c485581fa2291d62c7d25-mv2.avif"><div class="slide-caption">+5.8cm VALIDADO</div></div>
+                <div class="slide"><img src="https://i.ibb.co/DfM8RZVr/mea-Saa-Tba-Aaaaamh-D-i-LJzfk9u2-QO-ZC1.jpg"><div class="slide-caption">+4.9cm VALIDADO</div></div>
             </div>
-
-            <div class="carousel" id="authority-carousel">
-                <div class="slide active">
-                    <img src="https://i.ibb.co/jP9c3fQx/Whats-App-Image-2024-12-18-at-15-11-46-rcl53qv1p0gr5s3fzr30gvvchnyybvpbhth13gqhj4.jpg">
-                    <div class="slide-caption">PACIENTE J. ALVES: +5.4cm (VALIDADO)</div>
-                </div>
-                <div class="slide">
-                    <img src="https://i.ibb.co/Q38jhcmQ/55db78-0079baf30d6c485581fa2291d62c7d25-mv2.avif">
-                    <div class="slide-caption">PACIENTE M. SOUZA: +5.8cm (VALIDADO)</div>
-                </div>
-                <div class="slide">
-                    <img src="https://i.ibb.co/DfM8RZVr/mea-Saa-Tba-Aaaaamh-D-i-LJzfk9u2-QO-ZC1.jpg">
-                    <div class="slide-caption">PACIENTE R. OLIVEIRA: +4.9cm (VALIDADO)</div>
-                </div>
-            </div>
-            <p style="color: var(--muted);" id="loading-text">Carregando avaliação gratuita...</p>
-            <button id="start-quiz-btn" class="btn-next" onclick="next()" disabled>INICIAR MINHA AVALIAÇÃO</button>
+            <p style="color: var(--muted);" id="loading">Carregando...</p>
+            <button class="btn-next" onclick="next()" id="startBtn" disabled>INICIAR AVALIAÇÃO</button>
         </div>
 
-        <!-- Tela 3: Quiz -->
+        <!-- Quiz -->
         <div id="s-quiz" class="screen">
             <div class="progress-bar-container">
-                <div class="progress-text" id="progress-percent">0% CONCLUÍDO</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress"></div>
-                </div>
+                <div class="progress-text" id="pct">0% CONCLUÍDO</div>
+                <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
             </div>
-            <div id="question-container"></div>
+            <div id="qbox"></div>
         </div>
 
-        <!-- Tela 4: Análise -->
+        <!-- Análise -->
         <div id="s-analysis" class="screen">
-            <div class="fixed-header">SISTEMA DE DIAGNÓSTICO AVANÇADO</div>
-            <h2 class="headline">ANALISANDO DADOS BIOMÉTRICOS...</h2>
-            
+            <div class="fixed-header">DIAGNÓSTICO AVANÇADO</div>
+            <h2 class="headline">ANALISANDO...</h2>
             <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script>
                 <script src="https://fast.wistia.com/embed/oqxmnjb1sa.js" async type="module"></script>
-                <style>wistia-player[media-id='oqxmnjb1sa']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/oqxmnjb1sa/swatch'); display: block; filter: blur(5px); padding-top:100.0%; }</style>
-                <wistia-player id="luan-video" media-id="oqxmnjb1sa" aspect="1.0"></wistia-player>
+                <wistia-player id="vid" media-id="oqxmnjb1sa"></wistia-player>
             </div>
-
             <div class="analysis-item">
-                <div class="analysis-label">
-                    <span>FLUXO SANGUÍNEO CAVERNOSO</span>
-                    <span class="status-tag" id="status-1">PROCESSANDO</span>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-bar-fill" id="bar-1"></div>
-                </div>
+                <div class="analysis-label"><span>FLUXO SANGUÍNEO</span><span class="status-tag" id="s1">PROC</span></div>
+                <div class="progress-container"><div class="progress-bar-fill" id="b1"></div></div>
             </div>
-
             <div class="analysis-item">
-                <div class="analysis-label">
-                    <span>DENSIDADE TECIDUAL</span>
-                    <span class="status-tag" id="status-2">AGUARDANDO</span>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-bar-fill" id="bar-2"></div>
-                </div>
+                <div class="analysis-label"><span>DENSIDADE</span><span class="status-tag" id="s2">AGUARDANDO</span></div>
+                <div class="progress-container"><div class="progress-bar-fill" id="b2"></div></div>
             </div>
-
             <div class="analysis-item">
-                <div class="analysis-label">
-                    <span>COMPATIBILIDADE PROTOCOLO</span>
-                    <span class="status-tag" id="status-3">AGUARDANDO</span>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-bar-fill" id="bar-3"></div>
-                </div>
+                <div class="analysis-label"><span>COMPATIBILIDADE</span><span class="status-tag" id="s3">AGUARDANDO</span></div>
+                <div class="progress-container"><div class="progress-bar-fill" id="b3"></div></div>
             </div>
-
-            <button id="btn-after-analysis" class="btn-next" onclick="goToOffer()" style="display: none; margin-top: 20px;">VER MEU MÉTODO AGORA</button>
+            <button class="btn-next" onclick="goOffer()" id="btnOffer" style="display:none;margin-top:20px">VER MÉTODO</button>
         </div>
 
-        <!-- Tela 5: Oferta -->
+        <!-- Oferta -->
         <div id="s-offer" class="screen">
-            <div class="fixed-header" style="color: var(--primary); font-size: 12px;">ACESSO LIBERADO AO PROTOCOLO</div>
-            <h1 class="headline" style="font-size: 26px;">SEU PLANO PERSONALIZADO ESTÁ PRONTO!</h1>
-            
+            <div class="fixed-header">ACESSO LIBERADO</div>
+            <h1 class="headline" style="font-size:26px">SEU PLANO ESTÁ PRONTO!</h1>
             <div class="benefit-list">
-                <div class="benefit-item"><span>✓</span> AUMENTE O TAMANHO E GROSSURA NATURALMENTE</div>
-                <div class="benefit-item"><span>✓</span> EREÇÕES MAIS DURADOURAS</div>
-                <div class="benefit-item"><span>✓</span> PRIMEIROS RESULTADOS EM 45 DIAS</div>
-                <div class="benefit-item"><span>✓</span> SEM APARELHOS OU REMÉDIOS</div>
-                <div class="benefit-item"><span>✓</span> FAÇA ELA GOZAR 3 VEZES POR NOITE</div>
-                <div class="benefit-item"><span>✓</span> DURE ATÉ 3 HORAS NA CAMA</div>
+                <div class="benefit-item"><span>✓</span> AUMENTE TAMANHO E GROSSURA</div>
+                <div class="benefit-item"><span>✓</span> EREÇÕES DURADOURAS</div>
+                <div class="benefit-item"><span>✓</span> RESULTADOS EM 45 DIAS</div>
+                <div class="benefit-item"><span>✓</span> SEM APARELHOS</div>
+                <div class="benefit-item"><span>✓</span> FAÇA ELA GOZAR 3X</div>
+                <div class="benefit-item"><span>✓</span> DURE ATÉ 3 HORAS</div>
             </div>
-
             <div class="offer-box">
-                <img src="https://i.ibb.co/MDts3gtz/Chat-GPT-Image-3-de-fev-de-2026-16-55-56.png" class="offer-logo" alt="Alpha Method Logo">
+                <img src="https://i.ibb.co/MDts3gtz/Chat-GPT-Image-3-de-fev-de-2026-16-55-56.png" class="offer-logo">
                 <div class="offer-details">
                     <div class="offer-name">ALPHA METHOD</div>
-                    <div class="offer-guarantee">30 DIAS DE GARANTIA</div>
-                    <div class="offer-bonus">+ BÔNUS EXCLUSIVOS INCLUSOS</div>
+                    <div class="offer-guarantee">30 DIAS GARANTIA</div>
+                    <div class="offer-bonus">+ BÔNUS INCLUSOS</div>
                 </div>
             </div>
+            <button class="btn-next" onclick="checkout()">GARANTIR ACESSO AGORA</button>
+            <div class="security-footer">🔒 Compra Segura</div>
+        </div>
+    </div>
 
-            <button class="btn-next" onclick="checkout()">GARANTIR MEU ACESSO AGORA</button>
-            <div class="security-footer">
-                <span>🔒</span> Compra 100% Segura e Sigilosa
-            </div>
+    <!-- Popup Desconto -->
+    <div class="discount-popup-overlay" id="popup">
+        <div class="discount-popup-content">
+            <div class="discount-icon">🎁</div>
+            <div class="discount-title">GANHE 40% DE DESCONTO</div>
+            <div class="discount-message">Abra no navegador para economizar:</div>
+            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" class="discount-image">
+            <button class="discount-btn secondary" onclick="noDiscount()">Continuar sem desconto</button>
+            <p class="discount-note">Sem taxa do TikTok fora da plataforma</p>
         </div>
     </div>
 
@@ -187,132 +248,141 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const firebaseConfig = {
+        const app = initializeApp({
             apiKey: "AIzaSyB-GPkmK_iNQuu_96NsWBEmnZA1LhiSRR4",
             authDomain: "alytics-metodo-alpha.firebaseapp.com",
             projectId: "alytics-metodo-alpha",
             storageBucket: "alytics-metodo-alpha.firebasestorage.app",
             messagingSenderId: "389989039442",
             appId: "1:389989039442:web:e897945ffbfe52da210e8b"
-        };
+        });
 
-        const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const sid = 'sess_' + Math.random().toString(36).substr(2, 9);
-        let step = 0;
-        let geoData = {};
+        let sid = localStorage.getItem('alpha_sid');
+        if (!sid) {
+            sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('alpha_sid', sid);
+        }
 
-        const questions = [
-            { id: 'idade', q: 'Qual sua faixa etária? (Fator de risco vascular)', options: ['18-25', '26-35', '36-45', '46-55', '55+'] },
-            { id: 'rigidez', q: 'Com que frequência você atinge rigidez máxima do pênis?', options: ['Quase nunca', 'Raramente', 'Às vezes', 'Frequentemente', 'Sempre'] },
-            { id: 'manutencao', q: 'Consegue manter a ereção até ejacular?', options: ['Tenho muita dificuldade', 'Às vezes falha', 'Sim, sem problemas'] },
-            { id: 'matinal', q: 'Você acorda com ereção matinal?', options: ['Nunca', 'Raramente', 'Quase todos os dias'] },
-            { id: 'circulacao', q: 'Sente as extremidades (mãos/pés) frias com frequência?', options: ['Sim, constantemente', 'Às vezes', 'Não'] },
-            { id: 'historico', q: 'Você tem histórico de Diabetes ou Pressão Alta?', options: ['Sim, ambos', 'Sim, um deles', 'Não'] },
-            { id: 'tamanho', q: 'Você percebeu alguma redução no tamanho do pênis ao longo dos anos?', options: ['Sim, visível', 'Talvez um pouco', 'Não'] },
-            { id: 'estresse', q: 'Qual seu nível de estresse diário?', options: ['Muito alto', 'Alto', 'Moderado', 'Baixo'] },
-            { id: 'sono', q: 'Quantas horas de sono de qualidade você tem?', options: ['Menos de 5h', '5-6h', '7-8h', 'Mais de 8h'] },
-            { id: 'libido', q: 'Como você avalia seu desejo sexual (libido)?', options: ['Muito baixo', 'Baixo', 'Normal', 'Alto'] },
-            { id: 'vicios', q: 'Você fuma ou consome álcool em excesso?', options: ['Sim, ambos', 'Sim, um deles', 'Não'] },
-            { id: 'medicamentos', q: 'Faz uso contínuo de algum medicamento?', options: ['Sim', 'Não'] },
-            { id: 'exercicio', q: 'Qual sua frequência de exercícios físicos?', options: ['Nunca', '1-2x/semana', '3-4x/semana', 'Diariamente'] },
-            { id: 'recuperacao', q: 'Quanto tempo leva para ter uma segunda ereção?', options: ['Mais de 1 hora', '30 minutos', '10-20 minutos', 'Quase imediato'] },
-            { id: 'prioridade', q: 'Resolver este problema é sua prioridade máxima?', options: ['Sim, urgente', 'Sim, mas posso esperar', 'Apenas curiosidade'] }
+        const qs = [
+            { id: 'idade', q: 'Faixa etária?', o: ['18-25', '26-35', '36-45', '46-55', '55+'] },
+            { id: 'rigidez', q: 'Frequência rigidez máxima?', o: ['Nunca', 'Raro', 'Às vezes', 'Frequente', 'Sempre'] },
+            { id: 'manutencao', q: 'Mantém ereção?', o: ['Dificuldade', 'Às vezes falha', 'Sem problemas'] },
+            { id: 'matinal', q: 'Ereção matinal?', o: ['Nunca', 'Raro', 'Quase sempre'] },
+            { id: 'circulacao', q: 'Extremidades frias?', o: ['Sempre', 'Às vezes', 'Não'] },
+            { id: 'historico', q: 'Diabetes/Pressão?', o: ['Ambos', 'Um deles', 'Não'] },
+            { id: 'tamanho', q: 'Redução tamanho?', o: ['Sim', 'Talvez', 'Não'] },
+            { id: 'estresse', q: 'Estresse?', o: ['Muito alto', 'Alto', 'Moderado', 'Baixo'] },
+            { id: 'sono', q: 'Horas sono?', o: ['<5h', '5-6h', '7-8h', '>8h'] },
+            { id: 'libido', q: 'Desejo sexual?', o: ['Muito baixo', 'Baixo', 'Normal', 'Alto'] },
+            { id: 'vicios', q: 'Fuma/bebe?', o: ['Ambos', 'Um', 'Não'] },
+            { id: 'medicamentos', q: 'Medicamentos?', o: ['Sim', 'Não'] },
+            { id: 'exercicio', q: 'Exercícios?', o: ['Nunca', '1-2x', '3-4x', 'Diário'] },
+            { id: 'recuperacao', q: 'Segunda ereção?', o: ['>1h', '30min', '10-20min', 'Imediato'] },
+            { id: 'prioridade', q: 'Prioridade resolver?', o: ['Urgente', 'Posso esperar', 'Curiosidade'] }
         ];
 
-        let answers = {};
+        let step = 0;
+        let ans = {};
 
-        async function getGeoLocation() { try { const response = await fetch('https://ipapi.co/json/'); return await response.json(); } catch (e) { return { city: 'Desconhecido', region: 'Desconhecido', country: 'Brasil' }; } }
-        function getDeviceInfo() { const ua = navigator.userAgent; let deviceType = "Desktop"; if (/Tablet|iPad/i.test(ua)) deviceType = "Tablet"; else if (/Mobile|Android|iPhone/i.test(ua)) deviceType = "Mobile"; let os = "Outro"; if (/Windows/i.test(ua)) os = "Windows"; else if (/Android/i.test(ua)) os = "Android"; else if (/iPhone|iPad|iPod/i.test(ua)) os = "iOS"; else if (/Mac/i.test(ua)) os = "macOS"; let browser = "Outro"; if (/Chrome/i.test(ua)) browser = "Chrome"; else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = "Safari"; else if (/Firefox/i.test(ua)) browser = "Firefox"; else if (/Edge/i.test(ua)) browser = "Edge"; return { deviceType, os, browser }; }
-        async function trackEvent(eventName, data = {}) { try { await updateDoc(doc(db, 'sessions', sid), { [`events.${eventName}_${Date.now()}`]: { timestamp: serverTimestamp(), ...data } }); } catch (e) { console.error(e); } }
-
+        async function track(e, d = {}) { try { await updateDoc(doc(db, 'sessions', sid), { [`events.${e}`]: serverTimestamp(), lastActivity: serverTimestamp(), ...d }); } catch (err) {} }
+        
         window.next = function() {
-            if (step === 0) {
-                trackEvent('vsl_completed');
-                step = 1;
-                render();
-                startCarousel();
-                setTimeout(() => { document.getElementById('loading-text').style.display = 'none'; document.getElementById('start-quiz-btn').disabled = false; }, 3000);
-            } else if (step === 1) {
-                trackEvent('quiz_started');
-                step = 'quiz';
-                render();
-            }
+            if (step === 0) { track('vsl_done'); step = 1; render(); startCarousel(); setTimeout(() => { document.getElementById('loading').style.display = 'none'; document.getElementById('startBtn').disabled = false; }, 3000); }
+            else if (step === 1) { track('quiz_start'); step = 'quiz'; render(); }
         };
 
         function startCarousel() {
-            let currentSlide = 0;
+            let i = 0;
             const slides = document.querySelectorAll('.slide');
-            setInterval(() => { slides[currentSlide].classList.remove('active'); currentSlide = (currentSlide + 1) % slides.length; slides[currentSlide].classList.add('active'); }, 3000);
+            setInterval(() => { slides[i].classList.remove('active'); i = (i + 1) % slides.length; slides[i].classList.add('active'); }, 3000);
         }
 
-        window.selectOption = function(qIdx, option) {
-            answers[qIdx] = option;
-            trackEvent('question_answered', { question: questions[qIdx].q, answer: option });
-            if (qIdx < questions.length - 1) { renderQuiz(qIdx + 1); } else { step = 'analysis'; render(); startAnalysis(); }
+        window.selectOpt = function(idx, opt) {
+            ans[idx] = opt;
+            track('q_ans', { question: qs[idx].q, answer: opt });
+            if (idx < qs.length - 1) { renderQuiz(idx + 1); } else { step = 'analysis'; render(); startAnalysis(); }
         };
 
-        window.checkout = function() { trackEvent('checkout_clicked'); window.location.href = "https://pay.wiapy.com/elbyXqblP2"; };
-        window.goToOffer = function() { step = 'offer'; render(); trackEvent('analysis_video_completed', { currentStep: 'offer' }); };
+        window.checkout = function() { track('checkout'); window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; };
+        window.goOffer = function() { step = 'offer'; render(); track('offer'); };
 
         function render() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            if (typeof step === 'number') { document.getElementById(`s-${step}`).classList.add('active'); } else { document.getElementById(`s-${step}`).classList.add('active'); if (step === 'quiz') renderQuiz(0); }
+            if (typeof step === 'number') document.getElementById(`s-${step}`).classList.add('active');
+            else { document.getElementById(`s-${step}`).classList.add('active'); if (step === 'quiz') renderQuiz(0); }
             window.scrollTo(0, 0);
         }
 
         function renderQuiz(idx) {
-            const percent = Math.round(((idx) / questions.length) * 100);
-            document.getElementById('progress-percent').innerText = `${percent}% CONCLUÍDO`;
-            document.getElementById('progress').style.width = `${percent}%`;
-            
-            const q = questions[idx];
-            document.getElementById('question-container').innerHTML = `
+            const pct = Math.round((idx / qs.length) * 100);
+            document.getElementById('pct').innerText = `${pct}% CONCLUÍDO`;
+            document.getElementById('prog').style.width = `${pct}%`;
+            const q = qs[idx];
+            document.getElementById('qbox').innerHTML = `
                 <h2 class="headline">${q.q}</h2>
                 <div class="options-grid">
-                    ${q.options.map(opt => `<button class="option-btn" onclick="selectOption(${idx}, '${opt}')">${opt}</button>`).join('')}
+                    ${q.o.map(o => `<button class="option-btn" onclick="selectOpt(${idx}, '${o}')">${o}</button>`).join('')}
                 </div>
             `;
         }
 
         function startAnalysis() {
-            let p1 = 0, p2 = 0, p3 = 0;
+            let p1=0, p2=0, p3=0;
             window._wq = window._wq || [];
-            _wq.push({ id: "oqxmnjb1sa", onReady: function(video) {
-                video.play();
-                video.bind("end", function() { goToOffer(); });
-            }});
-
-            const interval = setInterval(() => {
+            _wq.push({ id: "oqxmnjb1sa", onReady: function(v) { v.play(); v.bind("end", goOffer); }});
+            const t = setInterval(() => {
                 if (p1 < 100) {
-                    p1 += 2; document.getElementById('bar-1').style.width = p1 + '%';
-                    if (p1 === 100) { document.getElementById('status-1').innerText = 'CONCLUÍDO'; document.getElementById('status-1').classList.add('complete'); document.getElementById('bar-1').classList.add('complete'); document.getElementById('status-2').innerText = 'PROCESSANDO'; }
+                    p1 += 2; document.getElementById('b1').style.width = p1 + '%';
+                    if (p1 === 100) { document.getElementById('s1').innerText = 'OK'; document.getElementById('s1').classList.add('complete'); document.getElementById('b1').classList.add('complete'); document.getElementById('s2').innerText = 'PROC'; }
                 } else if (p2 < 100) {
-                    p2 += 1.5; document.getElementById('bar-2').style.width = p2 + '%';
-                    if (p2 >= 100) { document.getElementById('status-2').innerText = 'CONCLUÍDO'; document.getElementById('status-2').classList.add('complete'); document.getElementById('bar-2').classList.add('complete'); document.getElementById('status-3').innerText = 'PROCESSANDO'; }
+                    p2 += 1.5; document.getElementById('b2').style.width = p2 + '%';
+                    if (p2 >= 100) { document.getElementById('s2').innerText = 'OK'; document.getElementById('s2').classList.add('complete'); document.getElementById('b2').classList.add('complete'); document.getElementById('s3').innerText = 'PROC'; }
                 } else if (p3 < 100) {
-                    p3 += 2.5; document.getElementById('bar-3').style.width = p3 + '%';
-                    if (p3 >= 100) { document.getElementById('status-3').innerText = 'CONCLUÍDO'; document.getElementById('status-3').classList.add('complete'); document.getElementById('bar-3').classList.add('complete'); document.getElementById('btn-after-analysis').style.display = 'block'; }
+                    p3 += 2.5; document.getElementById('b3').style.width = p3 + '%';
+                    if (p3 >= 100) { document.getElementById('s3').innerText = 'OK'; document.getElementById('s3').classList.add('complete'); document.getElementById('b3').classList.add('complete'); document.getElementById('btnOffer').style.display = 'block'; }
                 }
-                if (p1 >= 100 && p2 >= 100 && p3 >= 100) clearInterval(interval);
+                if (p1 >= 100 && p2 >= 100 && p3 >= 100) clearInterval(t);
             }, 100);
         }
 
-        setInterval(async () => { try { await updateDoc(doc(db, 'sessions', sid), { lastActivity: serverTimestamp(), currentStep: step }); } catch (error) { console.error('Heartbeat error:', error); } }, 30000);
+        function isInApp() {
+            const ua = navigator.userAgent || '';
+            return /Instagram|TikTok|FBAN|FBAV|snapchat|WhatsApp|Telegram|Pinterest|LinkedIn|Reddit|Bytedance|musical_ly/i.test(ua);
+        }
 
-        async function init() { 
-            render(); 
-            geoData = await getGeoLocation();
-            const deviceInfo = getDeviceInfo();
+        function showPopup() {
+            const seen = localStorage.getItem('alpha_popup_seen');
+            if (isInApp() && !seen) {
+                document.getElementById('popup').classList.add('active');
+                track('popup_shown');
+            } else if (!isInApp()) {
+                track('browser_detected');
+                updateDoc(doc(db, 'sessions', sid), { hasDiscount: true });
+            }
+        }
+
+        window.noDiscount = async function() {
+            document.getElementById('popup').classList.remove('active');
+            localStorage.setItem('alpha_popup_seen', 'true');
+            await track('discount_declined');
+            await updateDoc(doc(db, 'sessions', sid), { hasDiscount: false, discountDeclined: true });
+        };
+
+        setInterval(async () => { try { await updateDoc(doc(db, 'sessions', sid), { lastActivity: serverTimestamp(), currentStep: step }); } catch (err) {} }, 30000);
+
+        async function init() {
+            render();
             try {
                 await setDoc(doc(db, 'sessions', sid), {
                     sessionId: sid, enteredAt: serverTimestamp(), lastActivity: serverTimestamp(), currentStep: 'vsl', status: 'active',
-                    geo: { city: geoData.city, region: geoData.region, country: geoData.country, countryCode: geoData.countryCode, ip: geoData.ip },
-                    device: { type: deviceInfo.deviceType, os: deviceInfo.os, browser: deviceInfo.browser, screenWidth: window.innerWidth, screenHeight: window.innerHeight, userAgent: navigator.userAgent },
+                    geo: { city: 'N/A', region: 'N/A', country: 'N/A' },
+                    device: { type: 'N/A', os: 'N/A', browser: 'N/A' },
                     conversion: { clickedCheckout: false, enteredCheckout: false },
-                    events: {}, answers: {}, hesitation: {}, ageRange: null, hasDiscount: false, quizProgress: 0
+                    events: {}, answers: {}, hasDiscount: false, quizProgress: 0
                 });
-            } catch (error) { console.error('Erro ao criar sessão:', error); }
+            } catch (err) {}
+            showPopup();
         }
 
         init();
