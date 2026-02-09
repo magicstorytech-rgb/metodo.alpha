@@ -30,7 +30,7 @@
         .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; display: flex; align-items: center; justify-content: center; }
         .slide.active { opacity: 1; }
         .slide img { width: 100%; height: 100%; object-fit: contain; }
-        .slide-caption { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 700; color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); text-align: center; z-index: 10; }
+        .slide-caption { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 900; color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); text-align: center; z-index: 10; text-transform: uppercase; }
         .analysis-item { margin-bottom: 20px; text-align: left; }
         .analysis-label { font-size: 12px; font-weight: 700; margin-bottom: 5px; display: flex; justify-content: space-between; }
         .progress-container { width: 100%; height: 12px; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
@@ -51,7 +51,7 @@
         
         .security-footer { font-size: 11px; margin-top: 15px; color: var(--muted); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
 
-        .online-counter { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 700; color: #22c55e; }
+        .online-counter { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 25px; font-size: 13px; font-weight: 900; color: #22c55e; border: 2px solid #22c55e; padding: 10px 25px; border-radius: 50px; text-transform: uppercase; }
         .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
         
@@ -165,14 +165,15 @@
         <!-- Modal -->
         <div id="s-1" class="screen">
             <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
-            <div class="online-counter"><div class="online-dot"></div><span>167 homens online agora</span></div>
+            <h1 class="headline" style="font-size: 28px; margin-bottom: 20px;">CLIQUE AGORA PARA FAZER SUA AVALIAÇÃO GRATUITA</h1>
+            <div class="online-counter"><div class="online-dot"></div><span>161 homens online agora</span></div>
             <div class="carousel" id="carousel">
-                <div class="slide active"><img src="https://i.ibb.co/jP9c3fQx/Whats-App-Image-2024-12-18-at-15-11-46-rcl53qv1p0gr5s3fzr30gvvchnyybvpbhth13gqhj4.jpg"><div class="slide-caption">+5.4cm VALIDADO</div></div>
-                <div class="slide"><img src="https://i.ibb.co/Q38jhcmQ/55db78-0079baf30d6c485581fa2291d62c7d25-mv2.avif"><div class="slide-caption">+5.8cm VALIDADO</div></div>
-                <div class="slide"><img src="https://i.ibb.co/DfM8RZVr/mea-Saa-Tba-Aaaaamh-D-i-LJzfk9u2-QO-ZC1.jpg"><div class="slide-caption">+4.9cm VALIDADO</div></div>
+                <div class="slide active"><img src="https://i.ibb.co/jP9c3fQx/Whats-App-Image-2024-12-18-at-15-11-46-rcl53qv1p0gr5s3fzr30gvvchnyybvpbhth13gqhj4.jpg"><div class="slide-caption">ESTUDO CLÍNICO: EXPANSAO TECIDUAL ATIVA</div></div>
+                <div class="slide"><img src="https://i.ibb.co/Q38jhcmQ/55db78-0079baf30d6c485581fa2291d62c7d25-mv2.avif"><div class="slide-caption">ESTUDO CLÍNICO: EXPANSAO TECIDUAL ATIVA</div></div>
+                <div class="slide"><img src="https://i.ibb.co/DfM8RZVr/mea-Saa-Tba-Aaaaamh-D-i-LJzfk9u2-QO-ZC1.jpg"><div class="slide-caption">ESTUDO CLÍNICO: EXPANSAO TECIDUAL ATIVA</div></div>
             </div>
-            <p style="color: var(--muted);" id="loading">Carregando...</p>
-            <button class="btn-next" onclick="next()" id="startBtn" disabled>INICIAR AVALIAÇÃO</button>
+            <p style="color: var(--muted); font-weight: 700; margin: 15px 0;" id="loading">Preparando sua avaliação...</p>
+            <button class="btn-next" onclick="next()" id="startBtn" disabled>INICIAR AVALIAÇÃO AGORA</button>
         </div>
 
         <!-- Quiz -->
@@ -288,7 +289,18 @@
         async function track(e, d = {}) { try { await updateDoc(doc(db, 'sessions', sid), { [`events.${e}`]: serverTimestamp(), lastActivity: serverTimestamp(), ...d }); } catch (err) {} }
         
         window.next = function() {
-            if (step === 0) { track('vsl_done'); step = 1; render(); startCarousel(); setTimeout(() => { document.getElementById('loading').style.display = 'none'; document.getElementById('startBtn').disabled = false; }, 3000); }
+            if (step === 0) { 
+                track('vsl_done'); 
+                step = 1; 
+                render(); 
+                startCarousel(); 
+                // Aumentado para 8 segundos para dar tempo de ver as fotos
+                setTimeout(() => { 
+                    document.getElementById('loading').innerText = 'Avaliação carregada!'; 
+                    document.getElementById('loading').style.color = '#22c55e';
+                    document.getElementById('startBtn').disabled = false; 
+                }, 8000); 
+            }
             else if (step === 1) { track('quiz_start'); step = 'quiz'; render(); }
         };
 
