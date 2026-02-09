@@ -160,7 +160,7 @@
                 <script src="https://fast.wistia.com/player.js" async></script>
                 <script src="https://fast.wistia.com/embed/0j5gqssmb7.js" async type="module"></script>
                 <style>wistia-player[media-id='0j5gqssmb7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0j5gqssmb7/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }</style>
-                <wistia-player media-id="0j5gqssmb7" aspect="0.5616224648985959"></wistia-player>
+                <wistia-player id="vsl_vid" media-id="0j5gqssmb7" aspect="0.5616224648985959" auto-play="true"></wistia-player>
             </div>
             <button class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
@@ -200,7 +200,7 @@
 
             <div class="video-container">
                 <script src="https://fast.wistia.com/embed/oqxmnjb1sa.js" async type="module"></script>
-                <wistia-player id="vid" media-id="oqxmnjb1sa"></wistia-player>
+                <wistia-player id="vid" media-id="oqxmnjb1sa" auto-play="true"></wistia-player>
             </div>
 
             <div class="analysis-item">
@@ -304,12 +304,12 @@
                 step = 1; 
                 render(); 
                 startCarousel(); 
-                // Aumentado para 8 segundos para dar tempo de ver as fotos
+                // Atraso de 3 segundos para liberar o botão
                 setTimeout(() => { 
                     document.getElementById('loading').innerText = 'Avaliação carregada!'; 
                     document.getElementById('loading').style.color = '#22c55e';
                     document.getElementById('startBtn').disabled = false; 
-                }, 8000); 
+                }, 3000); 
             }
             else if (step === 1) { track('quiz_start'); step = 'quiz'; render(); }
         };
@@ -317,7 +317,7 @@
         function startCarousel() {
             let i = 0;
             const slides = document.querySelectorAll('.slide');
-            setInterval(() => { slides[i].classList.remove('active'); i = (i + 1) % slides.length; slides[i].classList.add('active'); }, 3000);
+            setInterval(() => { slides[i].classList.remove('active'); i = (i + 1) % slides.length; slides[i].classList.add('active'); }, 1000);
         }
 
         window.selectOpt = function(idx, opt) {
@@ -330,9 +330,25 @@
         window.goOffer = function() { step = 'offer'; render(); track('offer'); };
 
         function render() {
+            // Pausa todos os vídeos da Wistia ao mudar de tela
+            window._wq = window._wq || [];
+            _wq.push({ id: "_all", onReady: function(video) {
+                video.pause();
+            }});
+
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            if (typeof step === 'number') document.getElementById(`s-${step}`).classList.add('active');
-            else { document.getElementById(`s-${step}`).classList.add('active'); if (step === 'quiz') renderQuiz(0); }
+            if (typeof step === 'number') {
+                document.getElementById(`s-${step}`).classList.add('active');
+                // Se for a tela 0 (VSL), tenta dar play
+                if (step === 0) {
+                    _wq.push({ id: "vsl_vid", onReady: function(v) { v.play(); }});
+                }
+            }
+            else { 
+                document.getElementById(`s-${step}`).classList.add('active'); 
+                if (step === 'quiz') renderQuiz(0); 
+                // Se for a tela de análise, o startAnalysis já cuida do play
+            }
             window.scrollTo(0, 0);
         }
 
