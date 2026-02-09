@@ -238,7 +238,7 @@
             <div class="discount-icon">🎁</div>
             <div class="discount-title">GANHE 40% DE DESCONTO</div>
             <div class="discount-message">Abra no navegador para economizar:</div>
-            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" class="discount-image">
+            <img src="https://i.ibb.co/mVhZ4Yv5/Whats-App-Image-2026-02-02-at-09-17-58-2-1.webp" class="discount-image">
             <button class="discount-btn secondary" onclick="noDiscount()">Continuar sem desconto</button>
             <p class="discount-note">Sem taxa do TikTok fora da plataforma</p>
         </div>
@@ -264,22 +264,22 @@
             localStorage.setItem('alpha_sid', sid);
         }
 
-        const qs = [
-            { id: 'idade', q: 'Faixa etária?', o: ['18-25', '26-35', '36-45', '46-55', '55+'] },
-            { id: 'rigidez', q: 'Frequência rigidez máxima?', o: ['Nunca', 'Raro', 'Às vezes', 'Frequente', 'Sempre'] },
-            { id: 'manutencao', q: 'Mantém ereção?', o: ['Dificuldade', 'Às vezes falha', 'Sem problemas'] },
-            { id: 'matinal', q: 'Ereção matinal?', o: ['Nunca', 'Raro', 'Quase sempre'] },
-            { id: 'circulacao', q: 'Extremidades frias?', o: ['Sempre', 'Às vezes', 'Não'] },
-            { id: 'historico', q: 'Diabetes/Pressão?', o: ['Ambos', 'Um deles', 'Não'] },
-            { id: 'tamanho', q: 'Redução tamanho?', o: ['Sim', 'Talvez', 'Não'] },
-            { id: 'estresse', q: 'Estresse?', o: ['Muito alto', 'Alto', 'Moderado', 'Baixo'] },
-            { id: 'sono', q: 'Horas sono?', o: ['<5h', '5-6h', '7-8h', '>8h'] },
-            { id: 'libido', q: 'Desejo sexual?', o: ['Muito baixo', 'Baixo', 'Normal', 'Alto'] },
-            { id: 'vicios', q: 'Fuma/bebe?', o: ['Ambos', 'Um', 'Não'] },
-            { id: 'medicamentos', q: 'Medicamentos?', o: ['Sim', 'Não'] },
-            { id: 'exercicio', q: 'Exercícios?', o: ['Nunca', '1-2x', '3-4x', 'Diário'] },
-            { id: 'recuperacao', q: 'Segunda ereção?', o: ['>1h', '30min', '10-20min', 'Imediato'] },
-            { id: 'prioridade', q: 'Prioridade resolver?', o: ['Urgente', 'Posso esperar', 'Curiosidade'] }
+        const QUESTIONS = [
+            { id: 'idade', t: 'Qual sua faixa etária? (Fator de risco vascular)', o: ['18-25', '26-35', '36-45', '46-55', '55+'] },
+            { id: 'rigidez', t: 'Com que frequência você atinge rigidez máxima do pênis?', o: ['Quase nunca', 'Raramente', 'Às vezes', 'Frequentemente', 'Sempre'] },
+            { id: 'manutencao', t: 'Consegue manter a ereção até ejacular?', o: ['Tenho muita dificuldade', 'Às vezes falha', 'Sim, sem problemas'] },
+            { id: 'matinal', t: 'Você acorda com ereção matinal?', o: ['Nunca', 'Raramente', 'Quase todos os dias'] },
+            { id: 'circulacao', t: 'Sente as extremidades (mãos/pés) frias com frequência?', o: ['Sim, constantemente', 'Às vezes', 'Não'] },
+            { id: 'historico', t: 'Você tem histórico de Diabetes ou Pressão Alta?', o: ['Sim, ambos', 'Sim, um deles', 'Não'] },
+            { id: 'tamanho', t: 'Você percebeu alguma redução no tamanho do pênis ao longo dos anos?', o: ['Sim, visível', 'Talvez um pouco', 'Não'] },
+            { id: 'estresse', t: 'Qual seu nível de estresse diário?', o: ['Muito alto', 'Alto', 'Moderado', 'Baixo'] },
+            { id: 'sono', t: 'Quantas horas de sono de qualidade você tem?', o: ['Menos de 5h', '5-6h', '7-8h', 'Mais de 8h'] },
+            { id: 'libido', t: 'Como você avalia seu desejo sexual (libido)?', o: ['Muito baixo', 'Baixo', 'Normal', 'Alto'] },
+            { id: 'vicios', t: 'Você fuma ou consome álcool em excesso?', o: ['Sim, ambos', 'Sim, um deles', 'Não'] },
+            { id: 'medicamentos', t: 'Faz uso contínuo de algum medicamento?', o: ['Sim', 'Não'] },
+            { id: 'exercicio', t: 'Qual sua frequência de exercícios físicos?', o: ['Nunca', '1-2x/semana', '3-4x/semana', 'Diariamente'] },
+            { id: 'recuperacao', t: 'Quanto tempo leva para ter uma segunda ereção?', o: ['Mais de 1 hora', '30 minutos', '10-20 minutos', 'Quase imediato'] },
+            { id: 'prioridade', t: 'Resolver este problema é sua prioridade máxima?', o: ['Sim, urgente', 'Sim, mas posso esperar', 'Apenas curiosidade'] }
         ];
 
         let step = 0;
@@ -300,8 +300,8 @@
 
         window.selectOpt = function(idx, opt) {
             ans[idx] = opt;
-            track('q_ans', { question: qs[idx].q, answer: opt });
-            if (idx < qs.length - 1) { renderQuiz(idx + 1); } else { step = 'analysis'; render(); startAnalysis(); }
+            track('q_ans', { question: QUESTIONS[idx].t, answer: opt });
+            if (idx < QUESTIONS.length - 1) { renderQuiz(idx + 1); } else { step = 'analysis'; render(); startAnalysis(); }
         };
 
         window.checkout = function() { track('checkout'); window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; };
@@ -315,12 +315,12 @@
         }
 
         function renderQuiz(idx) {
-            const pct = Math.round((idx / qs.length) * 100);
+            const pct = Math.round((idx / QUESTIONS.length) * 100);
             document.getElementById('pct').innerText = `${pct}% CONCLUÍDO`;
             document.getElementById('prog').style.width = `${pct}%`;
-            const q = qs[idx];
+            const q = QUESTIONS[idx];
             document.getElementById('qbox').innerHTML = `
-                <h2 class="headline">${q.q}</h2>
+                <h2 class="headline">${q.t}</h2>
                 <div class="options-grid">
                     ${q.o.map(o => `<button class="option-btn" onclick="selectOpt(${idx}, '${o}')">${o}</button>`).join('')}
                 </div>
