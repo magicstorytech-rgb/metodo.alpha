@@ -176,7 +176,7 @@
             <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
             <div class="video-container">
-                <video width="100%" height="auto" controls poster="https://protocolotripe.online/wp-content/uploads/2026/01/ONTc4COn_thumb.jpg">
+                <video id="main-video" width="100%" height="auto" controls poster="https://protocolotripe.online/wp-content/uploads/2026/01/ONTc4COn_thumb.jpg">
                     <source src="https://metodotripe.shop/wp-content/uploads/2026/01/%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4%E3%85%A4.mp4" type="video/mp4">
                     Seu navegador não suporta vídeos HTML5.
                 </video>
@@ -282,9 +282,7 @@
             <div class="discount-message">
                 Abra esta página no navegador seguindo o passo a passo abaixo para economizar na sua compra:
             </div>
-            <!-- Imagem do passo a passo -->
-            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Passo a passo: Clique nos 3 pontos e Abrir no Navegador" class="discount-image" onerror="this.src='https://via.placeholder.com/400x600?text=Siga+o+passo+a+passo+no+navegador'">
-            
+            <img src="https://i.im.ge/2026/02/06/e0jl7p.WhatsApp-Image-2026-02-02-at-09-17-58-2-1-2.jpeg" alt="Passo a passo" class="discount-image">
             <button class="discount-btn secondary" onclick="continueWithoutDiscount()">Continuar sem desconto</button>
             <p class="discount-note">Ao comprar fora da plataforma, não será cobrada a taxa do TikTok</p>
         </div>
@@ -323,7 +321,15 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        
+        // SessionId PERSISTENTE (salvo no localStorage)
+        let sid = localStorage.getItem('funil_session_id');
+        if (!sid) {
+            sid = 's_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('funil_session_id', sid);
+        }
+        console.log('SessionId:', sid);
+        
         let step = 0, qIdx = 0, stepStartTime = 0;
         let geoData = {};
 
@@ -388,6 +394,12 @@
 
         window.next = async () => {
             if (step === 0) { 
+                // PAUSAR O VÍDEO quando sair da tela
+                const video = document.getElementById('main-video');
+                if (video) {
+                    video.pause();
+                }
+                
                 step = 1; 
                 await trackEvent('vsl_clicked', { currentStep: 'modal_authority' });
                 startModalDelay(); 
@@ -503,15 +515,6 @@
                 trackEvent('processing_completed', { currentStep: 'offer' });
             }, 9000);
         }
-
-        setInterval(() => {
-            const el = document.getElementById('online-count-val');
-            if(el) {
-                const current = parseInt(el.innerText);
-                const change = Math.floor(Math.random() * 6) - 2; 
-                el.innerText = Math.max(135, Math.min(172, current + change));
-            }
-        }, 3500);
 
         setInterval(async () => {
             try {
