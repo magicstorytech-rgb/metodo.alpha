@@ -55,21 +55,6 @@
         .online-counter { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 15px; font-size: 13px; font-weight: 700; color: #22c55e; }
         .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
-
-        .discount-popup-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.95); z-index: 10000; animation: fadeIn 0.3s ease; }
-        .discount-popup-overlay.active { display: flex; align-items: center; justify-content: center; padding: 20px; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .discount-popup-content { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); border: 2px solid #22c55e; border-radius: 24px; padding: 40px 30px 30px 30px; max-width: 480px; width: 100%; text-align: center; animation: slideUp 0.4s ease; box-shadow: 0 20px 60px rgba(34, 197, 94, 0.4); max-height: 90vh; overflow-y: auto; position: relative; }
-        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .discount-icon { font-size: 56px; margin-bottom: 15px; animation: bounce 1s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        .discount-title { font-size: 24px; font-weight: 900; color: #22c55e; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 0 2px 10px rgba(34, 197, 94, 0.3); }
-        .discount-message { font-size: 15px; color: #e2e8f0; line-height: 1.6; margin-bottom: 20px; }
-        .discount-image { width: 100%; max-width: 100%; height: auto; max-height: 350px; object-fit: contain; border-radius: 12px; margin: 20px 0; border: 2px solid rgba(34, 197, 94, 0.5); display: block; background: #000; }
-        .discount-btn { border: none; padding: 18px 30px; border-radius: 14px; font-weight: 900; cursor: pointer; width: 100%; font-size: 16px; text-transform: uppercase; transition: all 0.3s; letter-spacing: 0.5px; margin-bottom: 12px; }
-        .discount-btn.secondary { background: transparent; color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); box-shadow: none; font-size: 14px; padding: 14px 30px; }
-        .discount-btn.secondary:hover { background: rgba(148, 163, 184, 0.1); border-color: rgba(148, 163, 184, 0.5); color: #cbd5e1; }
-        .discount-note { font-size: 11px; color: #64748b; margin-top: 15px; line-height: 1.4; font-style: italic; }
     </style>
 </head>
 <body>
@@ -198,19 +183,6 @@
         </div>
     </div>
 
-    <!-- Popup de Desconto -->
-    <div id="discount-popup" class="discount-popup-overlay">
-        <div class="discount-popup-content">
-            <div class="discount-icon">🎁</div>
-            <h2 class="discount-title">BÔNUS EXCLUSIVO LIBERADO!</h2>
-            <p class="discount-message">Como você concluiu nossa avaliação com sucesso, liberamos um **DESCONTO DE 40%** para você garantir seu acesso ao **Alpha Method** agora mesmo!</p>
-            <img src="https://i.ibb.co/67D9Fpv0/Whats-App-Image-2026-02-02-at-09-17-58-2-1.webp" alt="Alpha Method Oferta" class="discount-image">
-            <button class="btn-next" onclick="checkout()" style="background: #22c55e; margin-bottom: 10px;">APROVEITAR DESCONTO AGORA</button>
-            <button class="discount-btn secondary" onclick="continueWithoutDiscount()">Continuar sem o desconto</button>
-            <p class="discount-note">*Esta oferta especial é válida apenas para esta sessão e expira em breve.</p>
-        </div>
-    </div>
-
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -272,7 +244,7 @@
             if (qIdx < questions.length - 1) { renderQuiz(qIdx + 1); } else { step = 'analysis'; render(); startAnalysis(); }
         };
 
-        window.checkout = function() { trackEvent('checkout_clicked'); window.location.href = "https://pay.wiapy.com.br/checkout/XXXXXXXXXX"; };
+        window.checkout = function() { trackEvent('checkout_clicked'); window.location.href = "https://pay.wiapy.com/elbyXqblP2"; };
         window.goToOffer = function() { step = 'offer'; render(); trackEvent('analysis_video_completed', { currentStep: 'offer' }); };
 
         function render() {
@@ -333,19 +305,8 @@
                     events: {}, answers: {}, hesitation: {}, ageRange: null, hasDiscount: false, quizProgress: 0
                 });
             } catch (error) { console.error('Erro ao criar sessão:', error); }
-            checkAndShowDiscountPopup();
         }
 
-        function isInAppBrowser() { const ua = navigator.userAgent || navigator.vendor || window.opera; const inAppPatterns = [ /FBAN|FBAV/i, /Instagram/i, /Twitter/i, /Line\//i, /snapchat/i, /TikTok/i, /Bytedance/i, /musical_ly/i, /WhatsApp/i, /Telegram/i, /Pinterest/i, /LinkedIn/i, /Reddit/i ]; return inAppPatterns.some(pattern => pattern.test(ua)); }
-        function hasSeenDiscountPopup() { return localStorage.getItem('discount_popup_seen') === 'true'; }
-        function markDiscountPopupSeen() { localStorage.setItem('discount_popup_seen', 'true'); }
-        function checkAndShowDiscountPopup() {
-            const inAppBrowser = isInAppBrowser();
-            const alreadySeen = hasSeenDiscountPopup();
-            if (inAppBrowser && !alreadySeen) { document.getElementById('discount-popup').classList.add('active'); trackEvent('discount_popup_shown', { currentStep: 'discount_popup', userAgent: navigator.userAgent }); }
-            else if (!inAppBrowser) { trackEvent('opened_in_browser', { currentStep: 'browser_detected', hasDiscount: true }); updateDoc(doc(db, 'sessions', sid), { hasDiscount: true }); }
-        }
-        window.continueWithoutDiscount = async () => { document.getElementById('discount-popup').classList.remove('active'); markDiscountPopupSeen(); await trackEvent('discount_declined', { currentStep: 'discount_declined', hasDiscount: false }); await updateDoc(doc(db, 'sessions', sid), { hasDiscount: false, discountDeclined: true }); };
         init();
     </script>
 </body>
