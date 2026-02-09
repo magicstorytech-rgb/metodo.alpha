@@ -58,16 +58,14 @@
         .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
         
-        /* Popup de Desconto */
+        /* Popup de Desconto Modernizado */
         .discount-popup-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
             z-index: 10000;
+            backdrop-filter: blur(12px);
         }
         
         .discount-popup-overlay.active {
@@ -75,77 +73,127 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            animation: fadeInOverlay 0.4s ease;
         }
         
         .discount-popup-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            border: 2px solid #22c55e;
-            border-radius: 24px;
-            padding: 40px 30px;
-            max-width: 480px;
+            background: linear-gradient(145deg, #111, #050505);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 32px;
+            padding: 45px 25px 30px 25px;
+            max-width: 440px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 20px 60px rgba(34, 197, 94, 0.4);
+            position: relative;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 30px rgba(34, 197, 94, 0.15);
+            animation: slideUpPopup 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             max-height: 90vh;
             overflow-y: auto;
+            scrollbar-width: none;
+            margin-top: 20px;
+        }
+        .discount-popup-content::-webkit-scrollbar { display: none; }
+
+        .popup-badge-top {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: #000;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+            white-space: nowrap;
+            z-index: 10;
         }
         
         .discount-icon {
-            font-size: 56px;
-            margin-bottom: 15px;
+            font-size: 50px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.5));
         }
         
         .discount-title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
-            color: #22c55e;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 10px rgba(34, 197, 94, 0.3);
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            letter-spacing: -0.2px;
         }
         
         .discount-message {
             font-size: 15px;
-            color: #e2e8f0;
+            color: #94a3b8;
+            margin-bottom: 30px;
             line-height: 1.6;
-            margin-bottom: 20px;
         }
         
         .discount-image {
             width: 100%;
-            max-height: 350px;
+            max-height: 380px;
             object-fit: contain;
             border-radius: 12px;
-            margin: 20px 0;
-            border: 2px solid rgba(34, 197, 94, 0.5);
+            margin-bottom: 20px;
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+            display: block;
         }
         
-        .discount-btn {
+        .discount-btn-main {
+            background: linear-gradient(to right, #22c55e, #16a34a);
+            color: #000;
             border: none;
-            padding: 18px 30px;
-            border-radius: 14px;
+            padding: 20px 30px;
+            border-radius: 16px;
             font-weight: 900;
             cursor: pointer;
             width: 100%;
             font-size: 16px;
             text-transform: uppercase;
-            transition: all 0.3s;
-            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+            margin-bottom: 15px;
+            animation: pulseGreen 2s infinite;
         }
+
+        .discount-btn-main:hover { transform: translateY(-2px); filter: brightness(1.1); }
         
-        .discount-btn.secondary {
+        .discount-btn-sec {
             background: transparent;
-            color: #94a3b8;
-            border: 1px solid rgba(148, 163, 184, 0.3);
-            font-size: 14px;
-            padding: 14px 30px;
+            color: #475569;
+            border: none;
+            padding: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: underline;
+            transition: color 0.3s;
         }
+
+        .discount-btn-sec:hover { color: #94a3b8; }
         
         .discount-note {
-            font-size: 11px;
-            color: #64748b;
-            margin-top: 15px;
-            font-style: italic;
+            font-size: 10px;
+            color: #334155;
+            margin-top: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes fadeInOverlay { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUpPopup { from { opacity: 0; transform: translateY(30px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+            70% { box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
     </style>
 </head>
@@ -243,15 +291,18 @@
         </div>
     </div>
 
-    <!-- Popup Desconto -->
+    <!-- Popup Desconto Amigável -->
     <div class="discount-popup-overlay" id="popup">
         <div class="discount-popup-content">
+            <div class="popup-badge-top" style="background: #22c55e; color: #000;">Presente para você</div>
             <div class="discount-icon">🎁</div>
-            <div class="discount-title">GANHE 40% DE DESCONTO</div>
-            <div class="discount-message">Abra no navegador para economizar:</div>
+            <div class="discount-title">VOCÊ GANHOU UM DESCONTO!</div>
+            <div class="discount-message">
+                Para garantir seus <strong>40% OFF</strong> e evitar as taxas extras do App, siga este pequeno passo a passo:
+            </div>
             <img src="https://i.ibb.co/mVhZ4Yv5/Whats-App-Image-2026-02-02-at-09-17-58-2-1.webp" class="discount-image">
-            <button class="discount-btn secondary" onclick="noDiscount()">Continuar sem desconto</button>
-            <p class="discount-note">Sem taxa do TikTok fora da plataforma</p>
+            <button class="discount-btn-main" onclick="noDiscount()" style="margin-top: 10px; background: transparent; border: 1px solid #334155; color: #64748b; animation: none; box-shadow: none; font-size: 12px;">Continuar sem o desconto</button>
+            <p class="discount-note" style="color: #475569;">O desconto é aplicado automaticamente ao abrir no seu navegador.</p>
         </div>
     </div>
 
