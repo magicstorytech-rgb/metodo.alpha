@@ -322,8 +322,23 @@
 
         window.selectOpt = function(idx, opt) {
             ans[idx] = opt;
-            track('q_ans', { question: QUESTIONS[idx].t, answer: opt });
-            if (idx < QUESTIONS.length - 1) { renderQuiz(idx + 1); } else { step = 'analysis'; render(); startAnalysis(); }
+            const progress = idx + 1;
+            track('q_ans', { 
+                question: QUESTIONS[idx].t, 
+                answer: opt,
+                quizProgress: progress 
+            });
+            // Atualiza o progresso no documento principal da sessão
+            updateDoc(doc(db, 'sessions', sid), { quizProgress: progress });
+            
+            if (idx < QUESTIONS.length - 1) { 
+                renderQuiz(idx + 1); 
+            } else { 
+                track('quiz_completed');
+                step = 'analysis'; 
+                render(); 
+                startAnalysis(); 
+            }
         };
 
         window.checkout = function() { track('checkout'); window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; };
@@ -409,9 +424,12 @@
             if (isInApp() && !seen) {
                 document.getElementById('popup').classList.add('active');
                 track('popup_shown');
+                // Se está no app e viu o popup, marcamos inicialmente como sem desconto (até ele aceitar ou recusar)
+                updateDoc(doc(db, 'sessions', sid), { hasDiscount: false, discountDeclined: true });
             } else if (!isInApp()) {
                 track('browser_detected');
-                updateDoc(doc(db, 'sessions', sid), { hasDiscount: true });
+                // Se não está no app, ganha desconto automático
+                updateDoc(doc(db, 'sessions', sid), { hasDiscount: true, discountDeclined: false });
             }
         }
 
@@ -421,6 +439,10 @@
             await track('discount_declined');
             await updateDoc(doc(db, 'sessions', sid), { hasDiscount: false, discountDeclined: true });
         };
+
+        // Adicionando função para quando o usuário clicar no botão de desconto (se houver um link ou ação)
+        // No seu código atual o popup só tem "Continuar sem desconto", mas se o usuário abrir no navegador, 
+        // a lógica de !isInApp() acima já cuidará de marcar hasDiscount: true.
 
         setInterval(async () => { try { await updateDoc(doc(db, 'sessions', sid), { lastActivity: serverTimestamp(), currentStep: step }); } catch (err) {} }, 30000);
 
