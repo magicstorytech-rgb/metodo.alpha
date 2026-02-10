@@ -70,7 +70,7 @@
                 <script src="https://fast.wistia.com/player.js" async></script>
                 <script src="https://fast.wistia.com/embed/0j5gqssmb7.js" async type="module"></script>
                 <style>wistia-player[media-id='0j5gqssmb7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0j5gqssmb7/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }</style>
-                <wistia-player id="vsl_vid" media-id="0j5gqssmb7" aspect="0.5616224648985959" auto-play="true"></wistia-player>
+                <wistia-player id="vsl_vid" media-id="0j5gqssmb7" aspect="0.5616224648985959"></wistia-player>
             </div>
             <button class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
@@ -109,8 +109,10 @@
             </div>
 
             <div class="video-container">
-                <script src="https://fast.wistia.com/embed/oqxmnjb1sa.js" async type="module"></script>
-                <wistia-player id="vid" media-id="oqxmnjb1sa" auto-play="true"></wistia-player>
+                <script src="https://fast.wistia.com/player.js" async></script>
+                <script src="https://fast.wistia.com/embed/0bj892x3m1.js" async type="module"></script>
+                <style>wistia-player[media-id='0bj892x3m1']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0bj892x3m1/swatch'); display: block; filter: blur(5px); padding-top:100.0%; }</style> 
+                <wistia-player id="vid" media-id="0bj892x3m1" aspect="1.0"></wistia-player>
             </div>
 
             <div class="analysis-item">
@@ -230,7 +232,7 @@
                 slides[i].classList.remove('active'); 
                 i = (i + 1) % slides.length; 
                 slides[i].classList.add('active'); 
-            }, 3000);
+            }, 1000);
         }
 
         window.selectOpt = function(idx, opt) {
@@ -275,9 +277,6 @@
             
             if (typeof step === 'number') {
                 document.getElementById(`s-${step}`).classList.add('active');
-                if (step === 0) {
-                    _wq.push({ id: "vsl_vid", onReady: function(v) { v.play(); }});
-                }
             } else { 
                 document.getElementById(`s-${step}`).classList.add('active'); 
                 if (step === 'quiz') renderQuiz(0); 
@@ -301,14 +300,14 @@
         function startAnalysis() {
             let p1=0, p2=0, p3=0;
             window._wq = window._wq || [];
-            _wq.push({ id: "oqxmnjb1sa", onReady: function(v) { 
+            _wq.push({ id: "0bj892x3m1", onReady: function(v) { 
                 v.play(); 
                 v.bind("end", goOffer); 
             }});
             
             const t = setInterval(() => {
                 if (p1 < 100) {
-                    p1 += 2; 
+                    p1 += 10; 
                     document.getElementById('b1').style.width = p1 + '%';
                     if (p1 >= 100) { 
                         document.getElementById('s1').innerText = 'VALIDADO'; 
@@ -317,7 +316,7 @@
                         document.getElementById('s2').innerText = 'PROCESSANDO'; 
                     }
                 } else if (p2 < 100) {
-                    p2 += 1.5; 
+                    p2 += 10; 
                     document.getElementById('b2').style.width = p2 + '%';
                     if (p2 >= 100) { 
                         document.getElementById('s2').innerText = 'VALIDADO'; 
@@ -326,7 +325,7 @@
                         document.getElementById('s3').innerText = 'PROCESSANDO'; 
                     }
                 } else if (p3 < 100) {
-                    p3 += 2.5; 
+                    p3 += 10; 
                     document.getElementById('b3').style.width = p3 + '%';
                     if (p3 >= 100) { 
                         document.getElementById('s3').innerText = 'VALIDADO'; 
