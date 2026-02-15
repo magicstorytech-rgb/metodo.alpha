@@ -80,6 +80,12 @@
         
         .social-proof { background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; margin: 20px 0; font-size: 13px; line-height: 1.6; }
         
+        .testimonials-carousel { position: relative; height: 60px; overflow: hidden; margin: 20px 0; }
+        .testimonial-slide { position: absolute; width: 100%; text-align: center; opacity: 0; transition: opacity 0.8s ease; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; }
+        .testimonial-slide.active { opacity: 1; }
+        .testimonial-quote { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .testimonial-author { font-size: 12px; color: #999; }
+        
         .security-footer { font-size: 11px; margin-top: 15px; color: #999; font-weight: 700; text-align: center; }
     </style>
 </head>
@@ -104,7 +110,7 @@
                         <div class="stat-label">Avaliação</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-number">R$ 13</div>
+                        <div class="stat-number">R$ 12,90</div>
                         <div class="stat-label">Só Hoje</div>
                     </div>
                 </div>
@@ -202,53 +208,55 @@
         <!-- TELA 4: OFERTA -->
         <div id="screen-4" class="screen">
             <div class="card">
-                <div class="badge">🔥 ACESSO LIBERADO</div>
+                <div class="badge" style="display: block; text-align: center;">🔥 ACESSO LIBERADO</div>
                 
-                <h1 class="headline">Transforme Seu Resultado em Realidade!</h1>
-                
-                <p class="subheadline">Acesso completo ao Alpha Method. O mesmo protocolo usado por +50 mil homens.</p>
+                <h1 class="headline" style="text-align: center; font-size: 28px;">Transforme Seu Resultado em Realidade!</h1>
                 
                 <div class="price-box">
-                    <div class="old-price">De R$ 97,00</div>
-                    <div class="new-price">R$ 12,90</div>
-                    <div class="economy">💰 Você economiza R$ 84,10 (87% OFF)</div>
-                    <div class="comparison">
-                        👉 Menos que 1 Uber<br>
-                        👉 Menos que 1 lanche do McDonald's<br>
-                        👉 Menos que 1 ingresso de cinema
+                    <div class="old-price" style="font-size: 16px;">De R$ 97,00</div>
+                    <div class="new-price" style="font-size: 64px; line-height: 1;">R$ 12,90</div>
+                    <div class="economy" style="font-size: 15px;">💰 Você economiza R$ 84,10 (87% OFF)</div>
+                </div>
+                
+                <div style="margin: 30px 0;">
+                    <div class="benefit"><span>✓</span> Aumento permanente 3-7cm</div>
+                    <div class="benefit"><span>✓</span> Resultados em 30 dias</div>
+                    <div class="benefit"><span>✓</span> Controle total da ejaculação</div>
+                    <div class="benefit"><span>✓</span> Sem cirurgias ou aparelhos</div>
+                    <div class="benefit"><span>✓</span> Aplicativo Exclusivo</div>
+                </div>
+                
+                <div class="guarantee" style="font-size: 14px; padding: 12px;">
+                    🛡️ GARANTIA INCONDICIONAL DE 30 DIAS
+                </div>
+                
+                <button class="btn" onclick="checkout()" style="font-size: 19px; padding: 22px;">💳 GARANTIR ACESSO POR R$ 12,90</button>
+                
+                <div class="testimonials-carousel" id="testimonials">
+                    <div class="testimonial-slide active">
+                        <div class="testimonial-quote">💬 "Aumentei 3cm em 6 semanas. Melhor investimento!"</div>
+                        <div class="testimonial-author">@marcos_sp, 27 anos</div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-quote">💬 "Minha namorada percebeu a diferença logo nas primeiras semanas 🔥"</div>
+                        <div class="testimonial-author">@carlos_rj, 31 anos</div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-quote">💬 "Tinha 13cm, hoje tenho 16cm. Mudou minha autoestima!"</div>
+                        <div class="testimonial-author">@pedro_mg, 25 anos</div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-quote">💬 "Agora duro quanto EU quero. Controle total mesmo!"</div>
+                        <div class="testimonial-author">@lucas_ba, 29 anos</div>
+                    </div>
+                    <div class="testimonial-slide">
+                        <div class="testimonial-quote">💬 "Funcionou! Não acreditei até ver os resultados. Vale muito!"</div>
+                        <div class="testimonial-author">@rafael_sp, 26 anos</div>
                     </div>
                 </div>
                 
-                <div class="urgency-box">
-                    ⚠️ ATENÇÃO: Apenas 47 vagas com esse preço hoje<br>
-                    🔥 15 pessoas compraram nas últimas 3 horas
-                </div>
-                
-                <div style="margin: 25px 0;">
-                    <div class="benefit"><span>✓</span> Protocolo completo Alpha Method</div>
-                    <div class="benefit"><span>✓</span> Técnicas de aumento permanente</div>
-                    <div class="benefit"><span>✓</span> Controle total da ejaculação</div>
-                    <div class="benefit"><span>✓</span> Resultados em 45 dias</div>
-                    <div class="benefit"><span>✓</span> Sem aparelhos ou cirurgias</div>
-                    <div class="benefit"><span>✓</span> Acesso vitalício</div>
-                </div>
-                
-                <div class="guarantee">
-                    🛡️ GARANTIA INCONDICIONAL DE 30 DIAS<br>
-                    <small style="color: #ccc;">Não funcionou? Devolvemos 100% do seu dinheiro</small>
-                </div>
-                
-                <button class="btn" onclick="checkout()">💳 GARANTIR ACESSO POR R$ 12,90</button>
-                
-                <div class="social-proof">
-                    💬 <strong>@marcos_rj:</strong> "Comecei com 12cm, hoje tô com 16cm. FUNCIONA!"<br>
-                    ✅ <strong>@carlos_sp:</strong> "Minha mina notou diferença em 3 semanas 🔥"<br>
-                    🔥 <strong>@pedro_mg:</strong> "Melhor investimento que fiz. Valeu cada centavo"<br>
-                    💪 <strong>@lucas_ba:</strong> "Agora eu controlo. Duro o que EU quiser"
-                </div>
-                
-                <div class="security-footer">
-                    🔒 Pagamento 100% seguro e discreto | 📦 Acesso imediato após confirmação
+                <div class="security-footer" style="margin-top: 12px;">
+                    🔒 Pagamento 100% seguro e discreto
                 </div>
             </div>
         </div>
@@ -463,7 +471,21 @@
         window.goToOffer = function() {
             track('offer_viewed');
             showScreen(4);
+            
+            // Inicia carrossel de depoimentos
+            startTestimonialsCarousel();
         };
+
+        function startTestimonialsCarousel() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            let currentSlide = 0;
+            
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 4000); // Troca a cada 4 segundos
+        }
 
         window.checkout = function() {
             track('checkout');
