@@ -3,155 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Consulta Profissional - Alpha Method</title>
+    <title>Alpha Method - Teste Gratuito</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ef4444; --bg: #050505; --card: #111111; --text: #ffffff; --muted: #9ca3af; --border: #262626; }
+        :root { --primary: #ef4444; --bg: #050505; --card: #111111; --text: #ffffff; --green: #22c55e; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
-        .quiz-card { width: 100%; max-width: 550px; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); text-align: center; }
-        .fixed-header { font-size: 10px; font-weight: 900; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
-        .headline { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 15px; line-height: 1.2; text-transform: uppercase; }
-        .sub-headline { font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 20px; }
-        .video-container { position: relative; background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 25px; border: 1px solid var(--border); width: 100%; }
-        .btn-next { background: var(--primary); color: white; border: none; padding: 22px; border-radius: 14px; font-weight: 900; cursor: pointer; width: 100%; font-size: 20px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
-        .btn-next:hover { transform: scale(1.02); }
-        .btn-next:disabled { background: #555; color: #999; cursor: not-allowed; box-shadow: none; }
+        
+        .container { width: 100%; max-width: 500px; }
+        
         .screen { display: none; }
-        .screen.active { display: block; }
-        .progress-bar-container { margin-bottom: 30px; }
-        .progress-text { font-size: 12px; font-weight: 900; color: var(--primary); margin-bottom: 8px; text-align: right; text-transform: uppercase; }
-        .progress-bar { height: 6px; background: var(--border); border-radius: 10px; overflow: hidden; }
+        .screen.active { display: block; animation: fadeIn 0.3s; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .card { background: var(--card); border: 1px solid #262626; border-radius: 20px; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        
+        .badge { display: inline-block; background: rgba(239, 68, 68, 0.15); border: 1px solid var(--primary); color: var(--primary); padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+        
+        .headline { font-size: 26px; font-weight: 900; color: #fff; margin-bottom: 15px; line-height: 1.2; }
+        
+        .subheadline { font-size: 15px; color: #999; margin-bottom: 25px; line-height: 1.4; }
+        
+        .stats-row { display: flex; gap: 10px; margin-bottom: 25px; }
+        .stat-box { flex: 1; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 12px; border-radius: 10px; text-align: center; }
+        .stat-number { font-size: 18px; font-weight: 900; color: var(--green); }
+        .stat-label { font-size: 10px; color: #999; text-transform: uppercase; margin-top: 4px; }
+        
+        .urgency-box { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--primary); padding: 12px; border-radius: 10px; text-align: center; margin-bottom: 20px; font-size: 13px; font-weight: 700; color: var(--primary); }
+        
+        .btn { background: var(--primary); color: white; border: none; padding: 20px; border-radius: 14px; font-weight: 900; cursor: pointer; width: 100%; font-size: 18px; text-transform: uppercase; transition: all 0.3s; box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3); }
+        .btn:hover { transform: scale(1.02); }
+        
+        .progress-bar-container { margin-bottom: 25px; }
+        .progress-text { font-size: 12px; font-weight: 900; color: var(--primary); margin-bottom: 8px; text-align: right; }
+        .progress-bar { height: 6px; background: #262626; border-radius: 10px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
-        .options-grid { display: grid; gap: 12px; margin-bottom: 25px; }
-        .option-btn { background: var(--card); border: 2px solid var(--border); color: var(--text); padding: 16px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .option-btn:hover { border-color: var(--primary); background: rgba(239, 68, 68, 0.1); }
-        .carousel { width: 100%; height: 280px; background: #000; border-radius: 15px; margin: 15px 0; overflow: hidden; position: relative; border: 1px solid var(--border); }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; display: flex; align-items: center; justify-content: center; }
-        .slide.active { opacity: 1; }
-        .slide img { width: 100%; height: 100%; object-fit: contain; }
-        .slide-caption { position: absolute; bottom: 10px; left: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 8px; border-radius: 8px; font-size: 11px; font-weight: 900; color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); text-align: center; z-index: 10; text-transform: uppercase; }
-        .analysis-item { margin-bottom: 20px; text-align: left; }
-        .analysis-label { font-size: 12px; font-weight: 700; margin-bottom: 5px; display: flex; justify-content: space-between; }
-        .progress-container { width: 100%; height: 12px; background: #222; border-radius: 10px; overflow: hidden; border: 1px solid #333; }
-        .progress-bar-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.5s ease, background 0.3s ease; }
-        .progress-bar-fill.complete { background: #22c55e; }
-        .status-tag { font-size: 10px; padding: 4px 10px; border-radius: 6px; background: #333; font-weight: 900; text-transform: uppercase; }
-        .status-tag.complete { background: #22c55e; color: #000; }
-        .testimonial-box { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align: left; }
-        .testimonial-title { font-size: 12px; font-weight: 900; color: #22c55e; text-transform: uppercase; margin-bottom: 8px; display: block; }
-        .testimonial-text { font-size: 14px; color: #fff; line-height: 1.4; font-style: italic; }
-        .benefit-list { text-align: left; margin: 25px 0; }
-        .benefit-item { display: flex; align-items: center; margin-bottom: 15px; font-size: 15px; font-weight: 800; color: #fff; text-transform: uppercase; line-height: 1.2; }
-        .benefit-item span { color: #22c55e; margin-right: 12px; font-size: 18px; }
         
-        .offer-box { background: rgba(255,255,255,0.03); border: 1px dashed #333; border-radius: 16px; padding: 20px; margin: 25px 0; display: flex; align-items: center; text-align: left; }
-        .offer-logo { width: 60px; height: 60px; border-radius: 8px; margin-right: 15px; object-fit: cover; }
-        .offer-details { flex: 1; }
-        .offer-name { font-weight: 900; color: #fff; font-size: 16px; text-transform: uppercase; margin-bottom: 4px; }
-        .offer-guarantee { color: #22c55e; font-weight: 900; font-size: 14px; text-transform: uppercase; }
-        .offer-bonus { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .question { font-size: 20px; font-weight: 900; margin-bottom: 20px; line-height: 1.3; }
         
-        .security-footer { font-size: 11px; margin-top: 15px; color: var(--muted); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 5px; }
-
-        .online-counter { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 25px; font-size: 13px; font-weight: 900; color: #22c55e; border: 2px solid #22c55e; padding: 10px 25px; border-radius: 50px; text-transform: uppercase; }
-        .online-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+        .privacy-note { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 12px; text-align: center; color: var(--green); font-weight: 700; }
+        
+        .options { display: grid; gap: 12px; }
+        .option-btn { background: rgba(255, 255, 255, 0.05); border: 2px solid #262626; color: var(--text); padding: 18px; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s; font-size: 16px; text-align: left; }
+        .option-btn:hover { border-color: var(--primary); background: rgba(239, 68, 68, 0.1); transform: translateX(5px); }
+        
+        .analysis-bar { margin-bottom: 15px; }
+        .analysis-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 13px; font-weight: 700; }
+        .bar-container { height: 10px; background: #222; border-radius: 5px; overflow: hidden; }
+        .bar-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.5s ease; }
+        .bar-fill.complete { background: var(--green); }
+        
+        .testimonial-box { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: 12px; padding: 15px; margin: 20px 0; }
+        .testimonial-title { font-size: 12px; font-weight: 900; color: var(--green); text-transform: uppercase; margin-bottom: 10px; }
+        
+        .video-container { position: relative; background: #000; border-radius: 16px; overflow: hidden; margin-bottom: 20px; border: 1px solid #262626; }
+        
+        .result-box { background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.05) 100%); border: 2px solid var(--green); padding: 25px; border-radius: 16px; margin: 25px 0; text-align: center; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); } 50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.6); } }
+        
+        .result-number { font-size: 56px; font-weight: 900; color: var(--green); margin: 15px 0; text-shadow: 0 0 30px rgba(34, 197, 94, 0.6); }
+        
+        .result-label { font-size: 14px; color: #ccc; text-transform: uppercase; font-weight: 700; }
+        
+        .benefit { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; font-weight: 800; }
+        .benefit span { color: var(--green); margin-right: 12px; font-size: 20px; }
+        
+        .price-box { background: rgba(239, 68, 68, 0.1); border: 2px solid var(--primary); padding: 25px; border-radius: 16px; margin: 25px 0; text-align: center; }
+        .old-price { font-size: 18px; color: #999; text-decoration: line-through; }
+        .new-price { font-size: 48px; font-weight: 900; color: var(--green); margin: 10px 0; }
+        .economy { font-size: 14px; color: var(--green); font-weight: 700; margin-top: 5px; }
+        .comparison { font-size: 13px; color: #999; margin-top: 10px; }
+        
+        .guarantee { background: rgba(34, 197, 94, 0.15); border: 1px solid var(--green); padding: 15px; border-radius: 12px; text-align: center; margin: 20px 0; font-weight: 700; color: var(--green); }
+        
+        .social-proof { background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; margin: 20px 0; font-size: 13px; line-height: 1.6; }
+        
+        .security-footer { font-size: 11px; margin-top: 15px; color: #999; font-weight: 700; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="quiz-card">
-        <!-- VSL -->
-        <div id="s-0" class="screen active">
-            <div class="fixed-header">ALPHA METHOD - REVELADO</div>
-            <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS.</h1>
-            <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
-            <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script>
-                <script src="https://fast.wistia.com/embed/0j5gqssmb7.js" async type="module"></script>
-                <style>wistia-player[media-id='0j5gqssmb7']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0j5gqssmb7/swatch'); display: block; filter: blur(5px); padding-top: 56.25%; }</style>
-                <wistia-player id="vsl_vid" media-id="0j5gqssmb7" aspect="0.5616224648985959"></wistia-player>
+    <div class="container">
+        <!-- TELA 1: GANCHO DIRETO (SEM VSL) -->
+        <div id="screen-1" class="screen active">
+            <div class="card">
+                <div class="badge">🔥 COMO NO VÍDEO QUE VOCÊ ACABOU DE VER</div>
+                
+                <h1 class="headline">Descubra Quantos CM Você Pode Aumentar</h1>
+                
+                <p class="subheadline">Teste rápido e personalizado. 100% confidencial e anônimo.</p>
+                
+                <div class="stats-row">
+                    <div class="stat-box">
+                        <div class="stat-number">50K+</div>
+                        <div class="stat-label">Testaram</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">4.9★</div>
+                        <div class="stat-label">Avaliação</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">R$ 13</div>
+                        <div class="stat-label">Só Hoje</div>
+                    </div>
+                </div>
+                
+                <div class="privacy-note">
+                    🔒 TOTALMENTE CONFIDENCIAL - Suas respostas são 100% anônimas
+                </div>
+                
+                <div class="urgency-box">
+                    🔥 1.247 homens fizeram este teste nas últimas 24 horas
+                </div>
+                
+                <button class="btn" onclick="startQuiz()">⚡ DESCOBRIR MEU POTENCIAL AGORA</button>
             </div>
-            <button class="btn-next" onclick="next()">REVELAR O SEGREDO</button>
         </div>
 
-        <!-- Modal -->
-        <div id="s-1" class="screen">
-            <div class="fixed-header">CONSULTA PROFISSIONAL GRATUITA</div>
-            <h1 class="headline" style="font-size: 28px; margin-bottom: 20px;">CLIQUE AGORA PARA FAZER SUA AVALIAÇÃO GRATUITA</h1>
-            <div class="online-counter"><div class="online-dot"></div><span>161 homens online agora</span></div>
-            <div class="carousel" id="carousel">
-                <div class="slide active"><img src="https://i.ibb.co/jP9c3fQx/Whats-App-Image-2024-12-18-at-15-11-46-rcl53qv1p0gr5s3fzr30gvvchnyybvpbhth13gqhj4.jpg"><div class="slide-caption">ESTUDO CLÍNICO: EXPANSAO TECIDUAL ATIVA</div></div>
-                <div class="slide"><img src="https://i.ibb.co/Q38jhcmQ/55db78-0079baf30d6c485581fa2291d62c7d25-mv2.avif"><div class="slide-caption">ESTUDO CLÍNICO: EXPANSAO TECIDUAL ATIVA</div></div>
-                <div class="slide"><img src="https://i.ibb.co/DfM8RZVr/mea-Saa-Tba-Aaaaamh-D-i-LJzfk9u2-QO-ZC1.jpg"><div class="slide-caption">ESTUDO CLÍNICO: EXPANSAO TECIDUAL ATIVA</div></div>
+        <!-- TELA 2: QUIZ (8 PERGUNTAS) -->
+        <div id="screen-2" class="screen">
+            <div class="card">
+                <div class="badge">🔒 100% CONFIDENCIAL</div>
+                
+                <div class="progress-bar-container">
+                    <div class="progress-text" id="progress-text">13% COMPLETO</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div id="quiz-content"></div>
             </div>
-            <p style="color: var(--muted); font-weight: 700; margin: 15px 0;" id="loading">Preparando sua avaliação...</p>
-            <button class="btn-next" onclick="next()" id="startBtn" disabled>INICIAR AVALIAÇÃO AGORA</button>
         </div>
 
-        <!-- Quiz -->
-        <div id="s-quiz" class="screen">
-            <div class="progress-bar-container">
-                <div class="progress-text" id="pct">0% CONCLUÍDO</div>
-                <div class="progress-bar"><div class="progress-fill" id="prog"></div></div>
-            </div>
-            <div id="qbox"></div>
-        </div>
-
-        <!-- Análise -->
-        <div id="s-analysis" class="screen">
-            <div class="fixed-header" style="color: var(--primary);">SISTEMA DE DIAGNÓSTICO AVANÇADO</div>
-            <h2 class="headline" style="font-size: 26px; margin-bottom: 25px;">ANALISANDO DADOS BIOMÉTRICOS...</h2>
-            
-            <div class="testimonial-box">
-                <span class="testimonial-title">Depoimento real de um dos 20 mil pacientes:</span>
-                <p class="testimonial-text">"Fiquei com bastante medo de comprar e nao funcionar, mas funcionou, ja consegui aumento mais de 3 centimetros…" <br><strong>Luan – BA</strong></p>
-            </div>
-
-            <div class="video-container">
-                <script src="https://fast.wistia.com/player.js" async></script>
-                <script src="https://fast.wistia.com/embed/0bj892x3m1.js" async type="module"></script>
-                <style>wistia-player[media-id='0bj892x3m1']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/0bj892x3m1/swatch'); display: block; filter: blur(5px); padding-top:100.0%; }</style> 
-                <wistia-player id="vid" media-id="0bj892x3m1" aspect="1.0"></wistia-player>
-            </div>
-
-            <div class="analysis-item">
-                <div class="analysis-label"><span>FLUXO SANGUÍNEO CAVERNOSO</span><span class="status-tag" id="s1">PROCESSANDO</span></div>
-                <div class="progress-container"><div class="progress-bar-fill" id="b1"></div></div>
-            </div>
-            <div class="analysis-item">
-                <div class="analysis-label"><span>DENSIDADE TECIDUAL</span><span class="status-tag" id="s2">AGUARDANDO</span></div>
-                <div class="progress-container"><div class="progress-bar-fill" id="b2"></div></div>
-            </div>
-            <div class="analysis-item">
-                <div class="analysis-label"><span>COMPATIBILIDADE PROTOCOLO</span><span class="status-tag" id="s3">AGUARDANDO</span></div>
-                <div class="progress-container"><div class="progress-bar-fill" id="b3"></div></div>
-            </div>
-            <button class="btn-next" onclick="goOffer()" id="btnOffer" style="display:none;margin-top:20px">VER RESULTADO FINAL</button>
-        </div>
-
-        <!-- Oferta -->
-        <div id="s-offer" class="screen">
-            <div class="fixed-header">ACESSO LIBERADO</div>
-            <h1 class="headline" style="font-size:26px">SEU PLANO ESTÁ PRONTO!</h1>
-            <div class="benefit-list">
-                <div class="benefit-item"><span>✓</span> AUMENTE TAMANHO E GROSSURA</div>
-                <div class="benefit-item"><span>✓</span> EREÇÕES DURADOURAS</div>
-                <div class="benefit-item"><span>✓</span> RESULTADOS EM 45 DIAS</div>
-                <div class="benefit-item"><span>✓</span> SEM APARELHOS</div>
-                <div class="benefit-item"><span>✓</span> FAÇA ELA GOZAR 3X</div>
-                <div class="benefit-item"><span>✓</span> DURE ATÉ 3 HORAS</div>
-            </div>
-            <div class="offer-box">
-                <img src="https://i.ibb.co/MDts3gtz/Chat-GPT-Image-3-de-fev-de-2026-16-55-56.png" class="offer-logo">
-                <div class="offer-details">
-                    <div class="offer-name">ALPHA METHOD</div>
-                    <div class="offer-guarantee">30 DIAS GARANTIA</div>
-                    <div class="offer-bonus">+ BÔNUS INCLUSOS</div>
+        <!-- TELA 3: ANÁLISE COM DEPOIMENTO (1:47) -->
+        <div id="screen-3" class="screen">
+            <div class="card">
+                <div class="badge">🔬 Processando seus dados</div>
+                
+                <h2 class="headline">Analisando Seu Perfil...</h2>
+                
+                <div class="analysis-bar">
+                    <div class="analysis-label">
+                        <span>Fluxo Sanguíneo Cavernoso</span>
+                        <span id="status-1">⏳</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar-1"></div>
+                    </div>
+                </div>
+                
+                <div class="analysis-bar">
+                    <div class="analysis-label">
+                        <span>Densidade Tecidual</span>
+                        <span id="status-2">⏳</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar-2"></div>
+                    </div>
+                </div>
+                
+                <div class="analysis-bar">
+                    <div class="analysis-label">
+                        <span>Compatibilidade Protocolo</span>
+                        <span id="status-3">⏳</span>
+                    </div>
+                    <div class="bar-container">
+                        <div class="bar-fill" id="bar-3"></div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-box">
+                    <div class="testimonial-title">📹 Enquanto processamos, veja o relato REAL de João, 28 anos:</div>
+                    <div class="video-container">
+                        <script src="https://fast.wistia.com/player.js" async></script>
+                        <script src="https://fast.wistia.com/embed/0bj892x3m1.js" async type="module"></script>
+                        <wistia-player id="testimonial_vid" media-id="0bj892x3m1" aspect="1.0" auto-play="true"></wistia-player>
+                    </div>
+                </div>
+                
+                <div id="result-container" style="display:none;">
+                    <div class="result-box">
+                        <div class="result-label">🎉 SEU POTENCIAL DE CRESCIMENTO:</div>
+                        <div class="result-number" id="growth-result">4-6cm</div>
+                        <div class="result-label">Em até 45 dias com o método</div>
+                    </div>
+                    
+                    <p style="text-align: center; color: #ccc; font-size: 14px; margin-bottom: 20px;">
+                        Baseado no seu perfil, você tem um <strong style="color: var(--green);">potencial ALTO</strong>. O método Alpha foi feito exatamente para o seu caso!
+                    </p>
+                    
+                    <button class="btn" onclick="goToOffer()">🚀 QUERO ALCANÇAR ESSE RESULTADO</button>
                 </div>
             </div>
-            <button class="btn-next" onclick="checkout()">GARANTIR ACESSO AGORA</button>
-            <div class="security-footer">🔒 Compra Segura</div>
+        </div>
+
+        <!-- TELA 4: OFERTA -->
+        <div id="screen-4" class="screen">
+            <div class="card">
+                <div class="badge">🔥 ACESSO LIBERADO</div>
+                
+                <h1 class="headline">Transforme Seu Resultado em Realidade!</h1>
+                
+                <p class="subheadline">Acesso completo ao Alpha Method. O mesmo protocolo usado por +50 mil homens.</p>
+                
+                <div class="price-box">
+                    <div class="old-price">De R$ 97,00</div>
+                    <div class="new-price">R$ 12,90</div>
+                    <div class="economy">💰 Você economiza R$ 84,10 (87% OFF)</div>
+                    <div class="comparison">
+                        👉 Menos que 1 Uber<br>
+                        👉 Menos que 1 lanche do McDonald's<br>
+                        👉 Menos que 1 ingresso de cinema
+                    </div>
+                </div>
+                
+                <div class="urgency-box">
+                    ⚠️ ATENÇÃO: Apenas 47 vagas com esse preço hoje<br>
+                    🔥 15 pessoas compraram nas últimas 3 horas
+                </div>
+                
+                <div style="margin: 25px 0;">
+                    <div class="benefit"><span>✓</span> Protocolo completo Alpha Method</div>
+                    <div class="benefit"><span>✓</span> Técnicas de aumento permanente</div>
+                    <div class="benefit"><span>✓</span> Controle total da ejaculação</div>
+                    <div class="benefit"><span>✓</span> Resultados em 45 dias</div>
+                    <div class="benefit"><span>✓</span> Sem aparelhos ou cirurgias</div>
+                    <div class="benefit"><span>✓</span> Acesso vitalício</div>
+                </div>
+                
+                <div class="guarantee">
+                    🛡️ GARANTIA INCONDICIONAL DE 30 DIAS<br>
+                    <small style="color: #ccc;">Não funcionou? Devolvemos 100% do seu dinheiro</small>
+                </div>
+                
+                <button class="btn" onclick="checkout()">💳 GARANTIR ACESSO POR R$ 12,90</button>
+                
+                <div class="social-proof">
+                    💬 <strong>@marcos_rj:</strong> "Comecei com 12cm, hoje tô com 16cm. FUNCIONA!"<br>
+                    ✅ <strong>@carlos_sp:</strong> "Minha mina notou diferença em 3 semanas 🔥"<br>
+                    🔥 <strong>@pedro_mg:</strong> "Melhor investimento que fiz. Valeu cada centavo"<br>
+                    💪 <strong>@lucas_ba:</strong> "Agora eu controlo. Duro o que EU quiser"
+                </div>
+                
+                <div class="security-footer">
+                    🔒 Pagamento 100% seguro e discreto | 📦 Acesso imediato após confirmação
+                </div>
+            </div>
         </div>
     </div>
 
@@ -175,26 +274,61 @@
             localStorage.setItem('alpha_sid', sid);
         }
 
+        // QUIZ DE 8 PERGUNTAS (ESSENCIAIS)
         const QUESTIONS = [
-            { id: 'idade', t: 'Qual sua faixa etária? (Fator de risco vascular)', o: ['18-25', '26-35', '36-45', '46-55', '55+'] },
-            { id: 'rigidez', t: 'Com que frequência você atinge rigidez máxima do pênis?', o: ['Quase nunca', 'Raramente', 'Às vezes', 'Frequentemente', 'Sempre'] },
-            { id: 'manutencao', t: 'Consegue manter a ereção até ejacular?', o: ['Tenho muita dificuldade', 'Às vezes falha', 'Sim, sem problemas'] },
-            { id: 'matinal', t: 'Você acorda com ereção matinal?', o: ['Nunca', 'Raramente', 'Quase todos os dias'] },
-            { id: 'circulacao', t: 'Sente as extremidades (mãos/pés) frias com frequência?', o: ['Sim, constantemente', 'Às vezes', 'Não'] },
-            { id: 'historico', t: 'Você tem histórico de Diabetes ou Pressão Alta?', o: ['Sim, ambos', 'Sim, um deles', 'Não'] },
-            { id: 'tamanho', t: 'Você percebeu alguma redução no tamanho do pênis ao longo dos anos?', o: ['Sim, visível', 'Talvez um pouco', 'Não'] },
-            { id: 'estresse', t: 'Qual seu nível de estresse diário?', o: ['Muito alto', 'Alto', 'Moderado', 'Baixo'] },
-            { id: 'sono', t: 'Quantas horas de sono de qualidade você tem?', o: ['Menos de 5h', '5-6h', '7-8h', 'Mais de 8h'] },
-            { id: 'libido', t: 'Como você avalia seu desejo sexual (libido)?', o: ['Muito baixo', 'Baixo', 'Normal', 'Alto'] },
-            { id: 'vicios', t: 'Você fuma ou consome álcool em excesso?', o: ['Sim, ambos', 'Sim, um deles', 'Não'] },
-            { id: 'medicamentos', t: 'Faz uso contínuo de algum medicamento?', o: ['Sim', 'Não'] },
-            { id: 'exercicio', t: 'Qual sua frequência de exercícios físicos?', o: ['Nunca', '1-2x/semana', '3-4x/semana', 'Diariamente'] },
-            { id: 'recuperacao', t: 'Quanto tempo leva para ter uma segunda ereção?', o: ['Mais de 1 hora', '30 minutos', '10-20 minutos', 'Quase imediato'] },
-            { id: 'prioridade', t: 'Resolver este problema é sua prioridade máxima?', o: ['Sim, urgente', 'Sim, mas posso esperar', 'Apenas curiosidade'] }
+            { 
+                id: 'tamanho', 
+                q: '📏 Qual o tamanho do seu pênis ERETO?', 
+                o: ['Menos de 10cm', 'Entre 10-13cm', 'Entre 13-16cm', 'Mais de 16cm'],
+                points: [10, 8, 5, 3]
+            },
+            { 
+                id: 'duracao', 
+                q: '⏱️ Quanto tempo você DURA na cama?', 
+                o: ['Menos de 3 minutos', 'Entre 3-7 minutos', 'Entre 7-15 minutos', 'Mais de 15 minutos'],
+                points: [10, 7, 4, 2]
+            },
+            { 
+                id: 'satisfacao', 
+                q: '😔 Como você se sente com seu desempenho?', 
+                o: ['Muito insatisfeito (ela reclama)', 'Insatisfeito (sei que posso melhorar)', 'Razoável (funciona mas quero mais)', 'Satisfeito (mas sempre dá pra evoluir)'],
+                points: [10, 8, 6, 4]
+            },
+            { 
+                id: 'idade', 
+                q: '📅 Qual sua idade?', 
+                o: ['18-25 anos', '26-35 anos', '36-45 anos', '46+ anos'],
+                points: [10, 8, 6, 5]
+            },
+            { 
+                id: 'alimentacao', 
+                q: '🍎 Como está sua alimentação?', 
+                o: ['Muito saudável', 'Razoável', 'Ruim', 'Péssima'],
+                points: [10, 7, 4, 2]
+            },
+            { 
+                id: 'sono', 
+                q: '😴 Quantas horas você dorme por noite?', 
+                o: ['7-9 horas (qualidade boa)', '6-7 horas (acordo cansado)', '5-6 horas (durmo pouco)', 'Menos de 5 horas'],
+                points: [10, 7, 4, 2]
+            },
+            { 
+                id: 'tentou', 
+                q: '💊 Já tentou algo antes?', 
+                o: ['Sim, não funcionou', 'Sim, funcionou pouco', 'Nunca tentei nada', 'Tentei várias coisas'],
+                points: [7, 8, 10, 5]
+            },
+            { 
+                id: 'prioridade', 
+                q: '🎯 Resolver isso é sua PRIORIDADE máxima?', 
+                o: ['Sim, urgente!', 'Sim, mas posso esperar', 'Apenas curiosidade', 'Não é prioridade'],
+                points: [10, 7, 4, 2]
+            }
         ];
 
-        let step = 0;
-        let ans = {};
+        let currentQ = 0;
+        let answers = {};
+        let totalPoints = 0;
 
         async function track(e, d = {}) { 
             try { 
@@ -205,163 +339,164 @@
                 }); 
             } catch (err) {} 
         }
-        
-        window.next = function() {
-            if (step === 0) { 
-                track('vsl_done'); 
-                step = 1; 
-                render(); 
-                startCarousel(); 
-                setTimeout(() => { 
-                    document.getElementById('loading').innerText = 'Avaliação carregada!'; 
-                    document.getElementById('loading').style.color = '#22c55e';
-                    document.getElementById('startBtn').disabled = false; 
-                }, 3000); 
-            }
-            else if (step === 1) { 
-                track('quiz_start'); 
-                step = 'quiz'; 
-                render(); 
-            }
+
+        window.startQuiz = function() {
+            track('quiz_started');
+            showScreen(2);
+            renderQuestion();
         };
 
-        function startCarousel() {
-            let i = 0;
-            const slides = document.querySelectorAll('.slide');
-            setInterval(() => { 
-                slides[i].classList.remove('active'); 
-                i = (i + 1) % slides.length; 
-                slides[i].classList.add('active'); 
-            }, 1000);
-        }
-
-        window.selectOpt = function(idx, opt) {
-            ans[idx] = opt;
-            const progress = idx + 1;
-            track('q_ans', { 
-                question: QUESTIONS[idx].t, 
-                answer: opt,
-                quizProgress: progress 
-            });
-            updateDoc(doc(db, 'sessions', sid), { quizProgress: progress });
+        function renderQuestion() {
+            const q = QUESTIONS[currentQ];
+            const progress = ((currentQ + 1) / QUESTIONS.length) * 100;
             
-            if (idx < QUESTIONS.length - 1) { 
-                renderQuiz(idx + 1); 
-            } else { 
-                track('quiz_completed');
-                step = 'analysis'; 
-                render(); 
-                startAnalysis(); 
-            }
-        };
-
-        window.checkout = function() { 
-            track('checkout'); 
-            window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`; 
-        };
-        
-        window.goOffer = function() { 
-            step = 'offer'; 
-            render(); 
-            track('offer'); 
-        };
-
-        function render() {
-            // Pausa todos os vídeos ao mudar de tela
-            window._wq = window._wq || [];
-            _wq.push({ id: "_all", onReady: function(video) {
-                video.pause();
-            }});
-
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('progress-text').innerText = `${Math.round(progress)}% COMPLETO`;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
             
-            if (typeof step === 'number') {
-                document.getElementById(`s-${step}`).classList.add('active');
-            } else { 
-                document.getElementById(`s-${step}`).classList.add('active'); 
-                if (step === 'quiz') renderQuiz(0); 
-            }
-            window.scrollTo(0, 0);
-        }
-
-        function renderQuiz(idx) {
-            const pct = Math.round((idx / QUESTIONS.length) * 100);
-            document.getElementById('pct').innerText = `${pct}% CONCLUÍDO`;
-            document.getElementById('prog').style.width = `${pct}%`;
-            const q = QUESTIONS[idx];
-            document.getElementById('qbox').innerHTML = `
-                <h2 class="headline">${q.t}</h2>
-                <div class="options-grid">
-                    ${q.o.map(o => `<button class="option-btn" onclick="selectOpt(${idx}, '${o}')">${o}</button>`).join('')}
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question">${q.q}</div>
+                <div class="options">
+                    ${q.o.map((opt, idx) => `<button class="option-btn" onclick="selectAnswer(${idx}, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`).join('')}
                 </div>
             `;
         }
 
-        function startAnalysis() {
-            let p1=0, p2=0, p3=0;
-            window._wq = window._wq || [];
-            _wq.push({ id: "0bj892x3m1", onReady: function(v) { 
-                v.play(); 
-                v.bind("end", goOffer); 
-            }});
+        window.selectAnswer = function(optionIndex, answer) {
+            const q = QUESTIONS[currentQ];
+            answers[q.id] = answer;
+            totalPoints += q.points[optionIndex];
             
-            const t = setInterval(() => {
-                if (p1 < 100) {
-                    p1 += 10; 
-                    document.getElementById('b1').style.width = p1 + '%';
-                    if (p1 >= 100) { 
-                        document.getElementById('s1').innerText = 'VALIDADO'; 
-                        document.getElementById('s1').classList.add('complete'); 
-                        document.getElementById('b1').classList.add('complete'); 
-                        document.getElementById('s2').innerText = 'PROCESSANDO'; 
-                    }
-                } else if (p2 < 100) {
-                    p2 += 10; 
-                    document.getElementById('b2').style.width = p2 + '%';
-                    if (p2 >= 100) { 
-                        document.getElementById('s2').innerText = 'VALIDADO'; 
-                        document.getElementById('s2').classList.add('complete'); 
-                        document.getElementById('b2').classList.add('complete'); 
-                        document.getElementById('s3').innerText = 'PROCESSANDO'; 
-                    }
-                } else if (p3 < 100) {
-                    p3 += 10; 
-                    document.getElementById('b3').style.width = p3 + '%';
-                    if (p3 >= 100) { 
-                        document.getElementById('s3').innerText = 'VALIDADO'; 
-                        document.getElementById('s3').classList.add('complete'); 
-                        document.getElementById('b3').classList.add('complete'); 
-                        document.getElementById('btnOffer').style.display = 'block'; 
-                    }
-                }
-                if (p1 >= 100 && p2 >= 100 && p3 >= 100) clearInterval(t);
-            }, 100);
+            const progress = currentQ + 1;
+            
+            track('quiz_answer', { 
+                question: q.q,
+                answer: answer,
+                quizProgress: progress
+            });
+            
+            updateDoc(doc(db, 'sessions', sid), { quizProgress: progress });
+            
+            currentQ++;
+            
+            if (currentQ < QUESTIONS.length) {
+                renderQuestion();
+            } else {
+                track('quiz_completed', { totalScore: totalPoints });
+                showScreen(3);
+                startAnalysis();
+            }
+        };
+
+        function calculateResults() {
+            // Pontuação máxima: 80 pontos
+            let growth;
+            
+            if (totalPoints >= 65) growth = '5-7cm';
+            else if (totalPoints >= 50) growth = '4-6cm';
+            else if (totalPoints >= 35) growth = '3-5cm';
+            else if (totalPoints >= 20) growth = '2-4cm';
+            else growth = '2-3cm';
+            
+            return { growth };
         }
 
-        setInterval(async () => { 
-            try { 
-                await updateDoc(doc(db, 'sessions', sid), { 
-                    lastActivity: serverTimestamp(), 
-                    currentStep: step 
-                }); 
-            } catch (err) {} 
-        }, 30000);
+        function startAnalysis() {
+            let p1 = 0, p2 = 0, p3 = 0;
+            
+            // Inicia vídeo automático
+            window._wq = window._wq || [];
+            _wq.push({ 
+                id: "0bj892x3m1", 
+                onReady: function(video) { 
+                    video.play();
+                    
+                    // Quando vídeo acabar (1:47 = 107 segundos)
+                    video.bind("end", function() {
+                        // Garante que barras terminaram
+                        document.getElementById('bar-1').style.width = '100%';
+                        document.getElementById('bar-2').style.width = '100%';
+                        document.getElementById('bar-3').style.width = '100%';
+                        document.getElementById('status-1').innerText = '✅';
+                        document.getElementById('status-2').innerText = '✅';
+                        document.getElementById('status-3').innerText = '✅';
+                        document.getElementById('bar-1').classList.add('complete');
+                        document.getElementById('bar-2').classList.add('complete');
+                        document.getElementById('bar-3').classList.add('complete');
+                        
+                        // Mostra resultado
+                        setTimeout(() => {
+                            const results = calculateResults();
+                            document.getElementById('growth-result').innerText = results.growth;
+                            document.getElementById('result-container').style.display = 'block';
+                            track('result_shown', { growthPotential: results.growth, score: totalPoints });
+                        }, 500);
+                    });
+                }
+            });
+            
+            // Barras progridem em 107 segundos (1:47)
+            const totalSteps = 107; // segundos do vídeo
+            const interval = setInterval(() => {
+                if (p1 < 100) {
+                    p1 += (100 / totalSteps);
+                    document.getElementById('bar-1').style.width = Math.min(p1, 100) + '%';
+                    if (p1 >= 100) {
+                        document.getElementById('bar-1').classList.add('complete');
+                        document.getElementById('status-1').innerText = '✅';
+                        document.getElementById('status-2').innerText = 'PROCESSANDO';
+                    }
+                } else if (p2 < 100) {
+                    p2 += (100 / totalSteps);
+                    document.getElementById('bar-2').style.width = Math.min(p2, 100) + '%';
+                    if (p2 >= 100) {
+                        document.getElementById('bar-2').classList.add('complete');
+                        document.getElementById('status-2').innerText = '✅';
+                        document.getElementById('status-3').innerText = 'PROCESSANDO';
+                    }
+                } else if (p3 < 100) {
+                    p3 += (100 / totalSteps);
+                    document.getElementById('bar-3').style.width = Math.min(p3, 100) + '%';
+                    if (p3 >= 100) {
+                        document.getElementById('bar-3').classList.add('complete');
+                        document.getElementById('status-3').innerText = '✅';
+                    }
+                }
+                
+                if (p1 >= 100 && p2 >= 100 && p3 >= 100) {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+
+        window.goToOffer = function() {
+            track('offer_viewed');
+            showScreen(4);
+        };
+
+        window.checkout = function() {
+            track('checkout');
+            window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`;
+        };
+
+        function showScreen(num) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(`screen-${num}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
 
         async function init() {
-            render();
             try {
                 await setDoc(doc(db, 'sessions', sid), {
-                    sessionId: sid, 
-                    enteredAt: serverTimestamp(), 
-                    lastActivity: serverTimestamp(), 
-                    currentStep: 'vsl', 
+                    sessionId: sid,
+                    enteredAt: serverTimestamp(),
+                    lastActivity: serverTimestamp(),
+                    currentStep: 'hook',
                     status: 'active',
-                    geo: { city: 'N/A', region: 'N/A', country: 'N/A' },
-                    device: { type: 'N/A', os: 'N/A', browser: 'N/A' },
-                    conversion: { clickedCheckout: false, enteredCheckout: false },
-                    events: {}, 
-                    answers: {}, 
-                    quizProgress: 0
+                    source: 'tiktok_optimized',
+                    quizProgress: 0,
+                    events: {},
+                    answers: {},
+                    conversion: { clickedCheckout: false }
                 });
             } catch (err) {}
         }
