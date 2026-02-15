@@ -88,11 +88,11 @@
         <!-- TELA 1: GANCHO DIRETO (SEM VSL) -->
         <div id="screen-1" class="screen active">
             <div class="card">
-                <div class="badge">🔥 COMO NO VÍDEO QUE VOCÊ ACABOU DE VER</div>
+                <div class="badge" style="display: block; text-align: center;">⚡ MÉTODO VALIDADO POR +50 MIL HOMENS</div>
                 
-                <h1 class="headline">Descubra Quantos CM Você Pode Aumentar</h1>
+                <h1 class="headline" style="text-align: center;">Descubra Quantos CM Você Pode Aumentar em 45 Dias</h1>
                 
-                <p class="subheadline">Teste rápido e personalizado. 100% confidencial e anônimo.</p>
+                <p class="subheadline" style="text-align: center;">Teste rápido baseado em ciência. 100% confidencial.</p>
                 
                 <div class="stats-row">
                     <div class="stat-box">
@@ -175,7 +175,7 @@
                 </div>
                 
                 <div class="testimonial-box">
-                    <div class="testimonial-title">📹 Enquanto processamos, veja o relato REAL de João, 28 anos:</div>
+                    <div class="testimonial-title">📹 "Já consegui aumentar mais de 3cm com esse método" - Luan, 23 anos</div>
                     <div class="video-container">
                         <script src="https://fast.wistia.com/player.js" async></script>
                         <script src="https://fast.wistia.com/embed/0bj892x3m1.js" async type="module"></script>
@@ -409,61 +409,53 @@
                 id: "0bj892x3m1", 
                 onReady: function(video) { 
                     video.play();
-                    
-                    // Quando vídeo acabar (1:47 = 107 segundos)
-                    video.bind("end", function() {
-                        // Garante que barras terminaram
-                        document.getElementById('bar-1').style.width = '100%';
-                        document.getElementById('bar-2').style.width = '100%';
-                        document.getElementById('bar-3').style.width = '100%';
-                        document.getElementById('status-1').innerText = '✅';
-                        document.getElementById('status-2').innerText = '✅';
-                        document.getElementById('status-3').innerText = '✅';
+                    video.volume(0.7); // Volume 70%
+                }
+            });
+            
+            // ANÁLISE RÁPIDA: 15 segundos total (não espera vídeo terminar)
+            const totalSteps = 15; // 15 segundos apenas!
+            let step = 0;
+            
+            const interval = setInterval(() => {
+                step++;
+                
+                if (step <= 5) {
+                    // Primeiros 5 segundos: barra 1
+                    p1 = (step / 5) * 100;
+                    document.getElementById('bar-1').style.width = p1 + '%';
+                    if (step === 5) {
                         document.getElementById('bar-1').classList.add('complete');
+                        document.getElementById('status-1').innerText = '✅';
+                        document.getElementById('status-2').innerText = 'PROCESSANDO';
+                    }
+                } else if (step <= 10) {
+                    // 5-10 segundos: barra 2
+                    p2 = ((step - 5) / 5) * 100;
+                    document.getElementById('bar-2').style.width = p2 + '%';
+                    if (step === 10) {
                         document.getElementById('bar-2').classList.add('complete');
+                        document.getElementById('status-2').innerText = '✅';
+                        document.getElementById('status-3').innerText = 'PROCESSANDO';
+                    }
+                } else if (step <= 15) {
+                    // 10-15 segundos: barra 3
+                    p3 = ((step - 10) / 5) * 100;
+                    document.getElementById('bar-3').style.width = p3 + '%';
+                    if (step === 15) {
                         document.getElementById('bar-3').classList.add('complete');
+                        document.getElementById('status-3').innerText = '✅';
                         
-                        // Mostra resultado
+                        clearInterval(interval);
+                        
+                        // Mostra resultado após 15 segundos
                         setTimeout(() => {
                             const results = calculateResults();
                             document.getElementById('growth-result').innerText = results.growth;
                             document.getElementById('result-container').style.display = 'block';
                             track('result_shown', { growthPotential: results.growth, score: totalPoints });
                         }, 500);
-                    });
-                }
-            });
-            
-            // Barras progridem em 107 segundos (1:47)
-            const totalSteps = 107; // segundos do vídeo
-            const interval = setInterval(() => {
-                if (p1 < 100) {
-                    p1 += (100 / totalSteps);
-                    document.getElementById('bar-1').style.width = Math.min(p1, 100) + '%';
-                    if (p1 >= 100) {
-                        document.getElementById('bar-1').classList.add('complete');
-                        document.getElementById('status-1').innerText = '✅';
-                        document.getElementById('status-2').innerText = 'PROCESSANDO';
                     }
-                } else if (p2 < 100) {
-                    p2 += (100 / totalSteps);
-                    document.getElementById('bar-2').style.width = Math.min(p2, 100) + '%';
-                    if (p2 >= 100) {
-                        document.getElementById('bar-2').classList.add('complete');
-                        document.getElementById('status-2').innerText = '✅';
-                        document.getElementById('status-3').innerText = 'PROCESSANDO';
-                    }
-                } else if (p3 < 100) {
-                    p3 += (100 / totalSteps);
-                    document.getElementById('bar-3').style.width = Math.min(p3, 100) + '%';
-                    if (p3 >= 100) {
-                        document.getElementById('bar-3').classList.add('complete');
-                        document.getElementById('status-3').innerText = '✅';
-                    }
-                }
-                
-                if (p1 >= 100 && p2 >= 100 && p3 >= 100) {
-                    clearInterval(interval);
                 }
             }, 1000);
         }
