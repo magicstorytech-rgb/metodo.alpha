@@ -421,48 +421,48 @@
                 }
             });
             
-            // ANÁLISE RÁPIDA: 15 segundos total (não espera vídeo terminar)
-            const totalSteps = 15; // 15 segundos apenas!
+            // ANÁLISE SUPER RÁPIDA: 8 segundos total
+            const totalSteps = 8; // 8 segundos apenas!
             let step = 0;
             
             const interval = setInterval(() => {
                 step++;
                 
-                if (step <= 5) {
-                    // Primeiros 5 segundos: barra 1
-                    p1 = (step / 5) * 100;
+                if (step <= 3) {
+                    // Primeiros 3 segundos: barra 1
+                    p1 = (step / 3) * 100;
                     document.getElementById('bar-1').style.width = p1 + '%';
-                    if (step === 5) {
+                    if (step === 3) {
                         document.getElementById('bar-1').classList.add('complete');
                         document.getElementById('status-1').innerText = '✅';
                         document.getElementById('status-2').innerText = 'PROCESSANDO';
                     }
-                } else if (step <= 10) {
-                    // 5-10 segundos: barra 2
-                    p2 = ((step - 5) / 5) * 100;
+                } else if (step <= 6) {
+                    // 3-6 segundos: barra 2
+                    p2 = ((step - 3) / 3) * 100;
                     document.getElementById('bar-2').style.width = p2 + '%';
-                    if (step === 10) {
+                    if (step === 6) {
                         document.getElementById('bar-2').classList.add('complete');
                         document.getElementById('status-2').innerText = '✅';
                         document.getElementById('status-3').innerText = 'PROCESSANDO';
                     }
-                } else if (step <= 15) {
-                    // 10-15 segundos: barra 3
-                    p3 = ((step - 10) / 5) * 100;
+                } else if (step <= 8) {
+                    // 6-8 segundos: barra 3
+                    p3 = ((step - 6) / 2) * 100;
                     document.getElementById('bar-3').style.width = p3 + '%';
-                    if (step === 15) {
+                    if (step === 8) {
                         document.getElementById('bar-3').classList.add('complete');
                         document.getElementById('status-3').innerText = '✅';
                         
                         clearInterval(interval);
                         
-                        // Mostra resultado após 15 segundos
+                        // Mostra resultado após 8 segundos
                         setTimeout(() => {
                             const results = calculateResults();
                             document.getElementById('growth-result').innerText = results.growth;
                             document.getElementById('result-container').style.display = 'block';
                             track('result_shown', { growthPotential: results.growth, score: totalPoints });
-                        }, 500);
+                        }, 300);
                     }
                 }
             }, 1000);
