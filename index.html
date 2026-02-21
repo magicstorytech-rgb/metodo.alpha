@@ -67,18 +67,18 @@
         
         .result-label { font-size: 14px; color: #ccc; text-transform: uppercase; font-weight: 700; }
         
-        .benefit { display: flex; align-items: center; margin-bottom: 15px; font-size: 16px; font-weight: 800; }
-        .benefit span { color: var(--green); margin-right: 12px; font-size: 20px; }
+        .benefit { display: flex; align-items: flex-start; margin-bottom: 15px; font-size: 15px; font-weight: 700; line-height: 1.4; }
+        .benefit span { color: var(--green); margin-right: 12px; font-size: 20px; flex-shrink: 0; }
         
-        .price-box { background: rgba(239, 68, 68, 0.1); border: 2px solid var(--primary); padding: 25px; border-radius: 16px; margin: 25px 0; text-align: center; }
-        .old-price { font-size: 18px; color: #999; text-decoration: line-through; }
-        .new-price { font-size: 48px; font-weight: 900; color: var(--green); margin: 10px 0; }
-        .economy { font-size: 14px; color: var(--green); font-weight: 700; margin-top: 5px; }
-        .comparison { font-size: 13px; color: #999; margin-top: 10px; }
+        .bonus-section { background: rgba(251, 191, 36, 0.1); border: 2px solid #fbbf24; padding: 20px; border-radius: 16px; margin: 25px 0; }
+        .bonus-title { font-size: 16px; font-weight: 900; color: #fbbf24; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
+        .bonus-item { background: rgba(0, 0, 0, 0.3); padding: 12px 15px; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; }
+        .bonus-icon { font-size: 24px; margin-right: 12px; }
+        .bonus-content { flex: 1; }
+        .bonus-name { font-size: 13px; font-weight: 900; color: #fff; margin-bottom: 3px; }
+        .bonus-desc { font-size: 11px; color: #999; line-height: 1.3; }
         
         .guarantee { background: rgba(34, 197, 94, 0.15); border: 1px solid var(--green); padding: 15px; border-radius: 12px; text-align: center; margin: 20px 0; font-weight: 700; color: var(--green); }
-        
-        .social-proof { background: rgba(255, 255, 255, 0.03); padding: 15px; border-radius: 12px; margin: 20px 0; font-size: 13px; line-height: 1.6; }
         
         .testimonials-carousel { position: relative; height: 60px; overflow: hidden; margin: 20px 0; }
         .testimonial-slide { position: absolute; width: 100%; text-align: center; opacity: 0; transition: opacity 0.8s ease; padding: 12px; background: rgba(255, 255, 255, 0.03); border-radius: 12px; }
@@ -87,11 +87,16 @@
         .testimonial-author { font-size: 12px; color: #999; }
         
         .security-footer { font-size: 11px; margin-top: 15px; color: #999; font-weight: 700; text-align: center; }
+        
+        .value-props { background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 12px; margin: 20px 0; }
+        .value-item { display: flex; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: 600; color: #ccc; }
+        .value-item:last-child { margin-bottom: 0; }
+        .value-icon { font-size: 18px; margin-right: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- TELA 1: GANCHO DIRETO (SEM VSL) -->
+        <!-- TELA 1: GANCHO -->
         <div id="screen-1" class="screen active">
             <div class="card">
                 <div class="badge" style="display: block; text-align: center;">⚡ MÉTODO VALIDADO POR +50 MIL HOMENS</div>
@@ -103,15 +108,15 @@
                 <div class="stats-row">
                     <div class="stat-box">
                         <div class="stat-number">50K+</div>
-                        <div class="stat-label">Testaram</div>
+                        <div class="stat-label">Homens</div>
                     </div>
                     <div class="stat-box">
                         <div class="stat-number">4.9★</div>
                         <div class="stat-label">Avaliação</div>
                     </div>
                     <div class="stat-box">
-                        <div class="stat-number">R$ 12,90</div>
-                        <div class="stat-label">Só Hoje</div>
+                        <div class="stat-number">94%</div>
+                        <div class="stat-label">Aprovam</div>
                     </div>
                 </div>
                 
@@ -143,7 +148,7 @@
             </div>
         </div>
 
-        <!-- TELA 3: ANÁLISE COM DEPOIMENTO (1:47) -->
+        <!-- TELA 3: ANÁLISE COM DEPOIMENTO -->
         <div id="screen-3" class="screen">
             <div class="card">
                 <div class="badge">🔬 Processando seus dados</div>
@@ -205,32 +210,95 @@
             </div>
         </div>
 
-        <!-- TELA 4: OFERTA -->
+        <!-- TELA 4: OFERTA (SEM PREÇO) -->
         <div id="screen-4" class="screen">
             <div class="card">
                 <div class="badge" style="display: block; text-align: center;">🔥 ACESSO LIBERADO</div>
                 
                 <h1 class="headline" style="text-align: center; font-size: 28px;">Transforme Seu Resultado em Realidade!</h1>
                 
-                <div class="price-box">
-                    <div class="old-price" style="font-size: 16px;">De R$ 97,00</div>
-                    <div class="new-price" style="font-size: 64px; line-height: 1;">R$ 12,90</div>
-                    <div class="economy" style="font-size: 15px;">💰 Você economiza R$ 84,10 (87% OFF)</div>
-                </div>
+                <p style="text-align: center; font-size: 14px; color: #ccc; margin: 15px 0;">
+                    Acesso vitalício ao método completo + bônus exclusivos
+                </p>
                 
                 <div style="margin: 30px 0;">
-                    <div class="benefit"><span>✓</span> Aumento permanente 3-7cm</div>
-                    <div class="benefit"><span>✓</span> Resultados em 30 dias</div>
-                    <div class="benefit"><span>✓</span> Controle total da ejaculação</div>
-                    <div class="benefit"><span>✓</span> Sem cirurgias ou aparelhos</div>
-                    <div class="benefit"><span>✓</span> Aplicativo Exclusivo</div>
+                    <div class="benefit"><span>✓</span> Protocolo Completo Alpha Method (aumento 3-7cm permanente)</div>
+                    <div class="benefit"><span>✓</span> Resultados visíveis em 30 dias (comprovado cientificamente)</div>
+                    <div class="benefit"><span>✓</span> Controle total da ejaculação (dure quanto você quiser)</div>
+                    <div class="benefit"><span>✓</span> Ereções mais fortes e rígidas (sem remédios)</div>
+                    <div class="benefit"><span>✓</span> Aumento da libido e desejo sexual</div>
+                    <div class="benefit"><span>✓</span> 100% natural (sem cirurgias, bombas ou aparelhos)</div>
+                    <div class="benefit"><span>✓</span> Acesso vitalício ao método atualizado</div>
+                    <div class="benefit"><span>✓</span> Suporte via WhatsApp (tire suas dúvidas)</div>
+                </div>
+                
+                <!-- BÔNUS QUE CONVERTEM -->
+                <div class="bonus-section">
+                    <div class="bonus-title">🎁 BÔNUS EXCLUSIVOS INCLUSOS</div>
+                    
+                    <div class="bonus-item">
+                        <div class="bonus-icon">📱</div>
+                        <div class="bonus-content">
+                            <div class="bonus-name">BÔNUS #1: App Alpha Tracker</div>
+                            <div class="bonus-desc">Acompanhe sua evolução dia a dia com gráficos e lembretes automáticos</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bonus-item">
+                        <div class="bonus-icon">🍎</div>
+                        <div class="bonus-content">
+                            <div class="bonus-name">BÔNUS #2: Guia Alimentação Virilidade</div>
+                            <div class="bonus-desc">12 alimentos que potencializam testosterona + cardápio semanal pronto</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bonus-item">
+                        <div class="bonus-icon">💪</div>
+                        <div class="bonus-content">
+                            <div class="bonus-name">BÔNUS #3: Treino Kegel Avançado</div>
+                            <div class="bonus-desc">Exercícios para controle total + técnicas de respiração para durar mais</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bonus-item">
+                        <div class="bonus-icon">🎯</div>
+                        <div class="bonus-content">
+                            <div class="bonus-name">BÔNUS #4: Protocolo Pompoarismo Masculino</div>
+                            <div class="bonus-desc">Técnicas secretas para controlar 100% a ejaculação (nunca broxar)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bonus-item">
+                        <div class="bonus-icon">🔥</div>
+                        <div class="bonus-content">
+                            <div class="bonus-name">BÔNUS #5: 50 Posições de Alta Performance</div>
+                            <div class="bonus-desc">Guia ilustrado com posições que maximizam prazer e duração</div>
+                        </div>
+                    </div>
+                    
+                    <div class="bonus-item">
+                        <div class="bonus-icon">🧠</div>
+                        <div class="bonus-content">
+                            <div class="bonus-name">BÔNUS #6: Controle Mental da Ejaculação</div>
+                            <div class="bonus-desc">Técnicas psicológicas para durar 3x mais (usado por atores pornô)</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- VALOR AGREGADO -->
+                <div class="value-props">
+                    <div class="value-item"><span class="value-icon">⚡</span> Acesso imediato após o pagamento</div>
+                    <div class="value-item"><span class="value-icon">🔄</span> Atualizações gratuitas para sempre</div>
+                    <div class="value-item"><span class="value-icon">📱</span> Funciona em qualquer dispositivo</div>
+                    <div class="value-item"><span class="value-icon">🔒</span> 100% sigiloso e discreto</div>
                 </div>
                 
                 <div class="guarantee" style="font-size: 14px; padding: 12px;">
-                    🛡️ GARANTIA INCONDICIONAL DE 30 DIAS
+                    🛡️ GARANTIA INCONDICIONAL DE 30 DIAS<br>
+                    <span style="font-size: 12px; color: #ccc; display: block; margin-top: 5px;">Não gostou? Devolvemos 100% do seu dinheiro sem perguntas</span>
                 </div>
                 
-                <button class="btn" onclick="checkout()" style="font-size: 19px; padding: 22px;">💳 GARANTIR ACESSO POR R$ 12,90</button>
+                <button class="btn" onclick="checkout()" style="font-size: 19px; padding: 22px;">🔒 GARANTIR MEU ACESSO AGORA</button>
                 
                 <div class="testimonials-carousel" id="testimonials">
                     <div class="testimonial-slide active">
@@ -282,7 +350,6 @@
             localStorage.setItem('alpha_sid', sid);
         }
 
-        // QUIZ DE 8 PERGUNTAS (ESSENCIAIS)
         const QUESTIONS = [
             { 
                 id: 'tamanho', 
@@ -396,7 +463,6 @@
         };
 
         function calculateResults() {
-            // Pontuação máxima: 80 pontos
             let growth;
             
             if (totalPoints >= 65) growth = '5-7cm';
@@ -411,25 +477,22 @@
         function startAnalysis() {
             let p1 = 0, p2 = 0, p3 = 0;
             
-            // Inicia vídeo automático
             window._wq = window._wq || [];
             _wq.push({ 
                 id: "0bj892x3m1", 
                 onReady: function(video) { 
                     video.play();
-                    video.volume(0.7); // Volume 70%
+                    video.volume(0.7);
                 }
             });
             
-            // ANÁLISE SUPER RÁPIDA: 8 segundos total
-            const totalSteps = 8; // 8 segundos apenas!
+            const totalSteps = 8;
             let step = 0;
             
             const interval = setInterval(() => {
                 step++;
                 
                 if (step <= 3) {
-                    // Primeiros 3 segundos: barra 1
                     p1 = (step / 3) * 100;
                     document.getElementById('bar-1').style.width = p1 + '%';
                     if (step === 3) {
@@ -438,7 +501,6 @@
                         document.getElementById('status-2').innerText = 'PROCESSANDO';
                     }
                 } else if (step <= 6) {
-                    // 3-6 segundos: barra 2
                     p2 = ((step - 3) / 3) * 100;
                     document.getElementById('bar-2').style.width = p2 + '%';
                     if (step === 6) {
@@ -447,7 +509,6 @@
                         document.getElementById('status-3').innerText = 'PROCESSANDO';
                     }
                 } else if (step <= 8) {
-                    // 6-8 segundos: barra 3
                     p3 = ((step - 6) / 2) * 100;
                     document.getElementById('bar-3').style.width = p3 + '%';
                     if (step === 8) {
@@ -456,7 +517,6 @@
                         
                         clearInterval(interval);
                         
-                        // Mostra resultado após 8 segundos
                         setTimeout(() => {
                             const results = calculateResults();
                             document.getElementById('growth-result').innerText = results.growth;
@@ -471,8 +531,6 @@
         window.goToOffer = function() {
             track('offer_viewed');
             showScreen(4);
-            
-            // Inicia carrossel de depoimentos
             startTestimonialsCarousel();
         };
 
@@ -484,7 +542,7 @@
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
-            }, 4000); // Troca a cada 4 segundos
+            }, 4000);
         }
 
         window.checkout = function() {
