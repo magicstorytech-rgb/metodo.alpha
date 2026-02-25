@@ -262,10 +262,10 @@
                     sessionId: sid,
                     enteredAt: serverTimestamp(),
                     lastActivity: serverTimestamp(),
-                    currentStep: 'hook',
+                    currentStep: 'vsl',
                     source: 'alpha_method_pt',
                     quizProgress: 0,
-                    events: {},
+                    'events.page_view': serverTimestamp(),
                     answers: {}
                 });
                 docCreated = true;
@@ -279,21 +279,23 @@
             if (currentScreen === 0) {
                 currentScreen = 1;
                 await ensureDoc();
-                updateFirebase({ vsl_clicked: true });
+                updateFirebase({ vsl_clicked: true, currentStep: 'avaliacao' });
                 startCarousel('authority-carousel');
                 startModalDelay();
             } else if (currentScreen === 1) {
                 currentScreen = 2;
-                updateFirebase({ quiz_started: true });
+                updateFirebase({ quiz_started: true, currentStep: 'quiz' });
             }
             renderScreen();
         };
 
         window.selectAnswer = (questionId, answerIndex, answerText) => {
             answers[questionId] = answerText;
+            const nextProgress = currentQuestion + 1;
             updateFirebase({ 
                 [`answers.${questionId}`]: answerText,
-                quizProgress: currentQuestion + 1
+                quizProgress: nextProgress,
+                currentStep: 'quiz'
             });
 
             if (currentQuestion < 14) {
@@ -306,7 +308,7 @@
         };
 
         window.finishCheckout = () => {
-            updateFirebase({ checkout: true });
+            updateFirebase({ checkout: true, currentStep: 'checkout' });
             setTimeout(() => {
                 window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`;
             }, 500); // garante que o Firebase salva antes do redirect
@@ -351,7 +353,7 @@
 
         function startProcessing() {
             renderScreen();
-            updateFirebase({ quiz_completed: true, result_shown: true });
+            updateFirebase({ quiz_completed: true, result_shown: true, currentStep: 'analise' });
             startCarousel('depo-carousel');
 
             const bars = [
@@ -377,7 +379,7 @@
             setTimeout(() => {
                 currentScreen = 4;
                 renderScreen();
-                updateFirebase({ offer_viewed: true });
+                updateFirebase({ offer_viewed: true, currentStep: 'oferta' });
             }, 11000);
         }
 
@@ -385,7 +387,7 @@
         function updateFirebase(data) {
             const sessionRef = doc(db, 'sessions', sid);
             const mapped = {};
-            const eventKeys = ['vsl_clicked','quiz_started','quiz_completed','result_shown','offer_viewed','checkout'];
+            const eventKeys = ['page_view','vsl_clicked','quiz_started','quiz_completed','result_shown','offer_viewed','checkout'];
             Object.entries(data).forEach(([k, v]) => {
                 if (eventKeys.includes(k) && v === true) {
                     mapped[`events.${k}`] = serverTimestamp();
