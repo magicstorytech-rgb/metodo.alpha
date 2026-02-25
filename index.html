@@ -94,7 +94,7 @@
         <!-- TELA 0: VSL -->
         <div id="s-0" class="screen active">
             <div class="fixed-header">🔴 MÉTODO REVELADO NO TIKTOK</div>
-            <h1 class="headline">Descubra o Protocolo Usado por +2.847 Homens Para Crescimento Real</h1>
+            <h1 class="headline">O SEGREDO DOS ATORES PÔRNO PARA ATIVAR O CRESCIMENTO DO PÊNIS EM 45 DIAS</h1>
             <p class="sub-headline">Assista ao vídeo abaixo para liberar sua 👇avaliação gratuita👇</p>
             <div class="video-container">
                 <script src="https://fast.wistia.com/player.js" async></script>
@@ -131,7 +131,7 @@
             <button class="btn-next" onclick="nextScreen()" id="start-quiz-btn" disabled>INICIAR AVALIAÇÃO AGORA</button>
         </div>
 
-        <!-- TELA 2: QUIZ 15 PERGUNTAS ATUALIZADAS -->
+        <!-- TELA 2: QUIZ 15 PERGUNTAS -->
         <div id="s-2" class="screen">
             <div class="fixed-header">AVALIAÇÃO ALPHA METHOD - PERGUNTA <span id="q-num">1</span>/15</div>
             <div class="progress-bar"><div class="progress-fill" id="p-fill"></div></div>
@@ -199,11 +199,11 @@
                 <div class="benefit-item"><span>✓</span> DURE ATÉ 3 HORAS NA CAMA</div>
             </div>
 
-            <!-- LOGO BOX ESTILO PRINT -->
+            <!-- LOGO BOX -->
             <div class="logo-box">
-                <img src="https://i.ibb.co/HDswqdTy/Chat-GPT-Image-3-de-fev-de-2026-16-55-56.png" alt="Método Tripe" class="logo-image">
+                <img src="https://i.ibb.co/HDswqdTy/Chat-GPT-Image-3-de-fev-de-2026-16-55-56.png" alt="Alpha Method" class="logo-image">
                 <div class="logo-text">
-                    <div class="logo-name">MÉTODO TRIPE</div>
+                    <div class="logo-name">ALPHA METHOD</div>
                     <div class="logo-guarantee">30 DIAS DE GARANTIA</div>
                     <div class="logo-bonus">+ BÔNUS EXCLUSIVOS INCLUSOS</div>
                 </div>
@@ -227,7 +227,6 @@
             appId: "1:389989039442:web:e897945ffbfe52da210e8b"
         };
 
-        // PERGUNTAS ATUALIZADAS
         const QUESTIONS = [
             { id: 'idade', t: 'Qual sua faixa etária? (Fator de risco vascular)', o: ['18-25', '26-35', '36-45', '46-55', '55+'] },
             { id: 'rigidez', t: 'Com que frequência você atinge rigidez máxima do pênis?', o: ['Quase nunca', 'Raramente', 'Às vezes', 'Frequentemente', 'Sempre'] },
@@ -254,9 +253,32 @@
         let currentQuestion = 0;
         let answers = {};
 
-        window.nextScreen = () => {
+        // Garante que o doc existe antes dos primeiros eventos
+        let docCreated = false;
+        async function ensureDoc() {
+            if (docCreated) return;
+            try {
+                await setDoc(doc(db, 'sessions', sid), {
+                    sessionId: sid,
+                    enteredAt: serverTimestamp(),
+                    lastActivity: serverTimestamp(),
+                    currentStep: 'hook',
+                    source: 'alpha_method_pt',
+                    quizProgress: 0,
+                    events: {},
+                    answers: {}
+                });
+                docCreated = true;
+            } catch(e) {
+                // doc já existe, ok
+                docCreated = true;
+            }
+        }
+
+        window.nextScreen = async () => {
             if (currentScreen === 0) {
                 currentScreen = 1;
+                await ensureDoc();
                 updateFirebase({ vsl_clicked: true });
                 startCarousel('authority-carousel');
                 startModalDelay();
@@ -269,7 +291,6 @@
 
         window.selectAnswer = (questionId, answerIndex, answerText) => {
             answers[questionId] = answerText;
-            
             updateFirebase({ 
                 [`answers.${questionId}`]: answerText,
                 quizProgress: currentQuestion + 1
@@ -286,7 +307,9 @@
 
         window.finishCheckout = () => {
             updateFirebase({ checkout: true });
-            window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`;
+            setTimeout(() => {
+                window.location.href = `https://pay.wiapy.com/elbyXqblP2?utm_source=${sid}&external_id=${sid}`;
+            }, 500); // garante que o Firebase salva antes do redirect
         };
 
         function renderScreen() {
@@ -312,7 +335,6 @@
         function startCarousel(carouselId) {
             let slideIndex = 0;
             const slides = document.querySelectorAll(`#${carouselId} .slide`);
-            
             setInterval(() => {
                 slides.forEach(s => s.classList.remove('active'));
                 slideIndex = (slideIndex + 1) % slides.length;
@@ -330,7 +352,6 @@
         function startProcessing() {
             renderScreen();
             updateFirebase({ quiz_completed: true, result_shown: true });
-            
             startCarousel('depo-carousel');
 
             const bars = [
@@ -347,7 +368,6 @@
                     document.getElementById(`pb-${bar}`).classList.add('complete');
                     document.getElementById(`st-${bar}`).textContent = '✓ VALIDADO';
                     document.getElementById(`st-${bar}`).classList.add('complete');
-                    
                     if (bar < 5) {
                         document.getElementById(`st-${bar + 1}`).textContent = 'PROCESSANDO';
                     }
@@ -361,16 +381,20 @@
             }, 11000);
         }
 
+        // Converte chaves planas em events.* automaticamente
         function updateFirebase(data) {
             const sessionRef = doc(db, 'sessions', sid);
-            updateDoc(sessionRef, data).catch(() => {
-                setDoc(sessionRef, {
-                    ...data,
-                    enteredAt: serverTimestamp(),
-                    sessionId: sid,
-                    events: {}
-                });
+            const mapped = {};
+            const eventKeys = ['vsl_clicked','quiz_started','quiz_completed','result_shown','offer_viewed','checkout'];
+            Object.entries(data).forEach(([k, v]) => {
+                if (eventKeys.includes(k) && v === true) {
+                    mapped[`events.${k}`] = serverTimestamp();
+                } else {
+                    mapped[k] = v;
+                }
             });
+            mapped.lastActivity = serverTimestamp();
+            setDoc(sessionRef, mapped, { merge: true }).catch(err => console.warn('Firebase err:', err));
         }
 
         setInterval(() => {
@@ -382,18 +406,9 @@
             }
         }, 3500);
 
-        function init() {
-            renderScreen();
-            const sessionRef = doc(db, 'sessions', sid);
-            setDoc(sessionRef, {
-                enteredAt: serverTimestamp(),
-                sessionId: sid,
-                events: { page_view: true },
-                answers: {}
-            });
-        }
-
-        init();
+        // Renderizar tela inicial e criar doc
+        renderScreen();
+        ensureDoc();
     </script>
 </body>
 </html>
