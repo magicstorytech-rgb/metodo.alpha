@@ -96,7 +96,67 @@
     </style>
 </head>
 <body>
-    eu so preciso que você melhore a tela 0 de instrução
+   <div id="screen-0" class="screen">
+    <div class="card" style="text-align:center;">
+
+        <!-- Faixa topo -->
+        <div style="background: linear-gradient(90deg, #ef4444, #dc2626); border-radius: 10px; padding: 10px 16px; margin-bottom: 16px;">
+            <span style="font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 0.5px;">
+                🔥 OFERTA EXCLUSIVA · APENAS HOJE
+            </span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="headline" style="text-align:center; font-size:22px; margin-bottom:6px;">
+            Espera! Você tem um<br>
+            <span style="color: var(--green); font-size: 1.25em; text-shadow: 0 0 20px rgba(34,197,94,0.5);">
+                DESCONTO DE 40%
+            </span><br>
+            <span style="font-size: 0.65em; color: #ccc; font-weight: 700;">reservado para você agora</span>
+        </h1>
+
+        <!-- Preço riscado -->
+        <div style="background: rgba(34,197,94,0.1); border: 2px solid var(--green); border-radius: 14px; padding: 14px 20px; margin: 12px 0;">
+            <div style="font-size: 11px; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">De</div>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;">
+                <span style="font-size: 20px; color: #666; text-decoration: line-through; font-weight: 700;">R$ 97,00</span>
+                <span style="background: var(--primary); color: #fff; padding: 3px 10px; border-radius: 6px; font-size: 13px; font-weight: 900;">-40% OFF</span>
+                <span style="font-size: 30px; color: var(--green); font-weight: 900; text-shadow: 0 0 15px rgba(34,197,94,0.4);">R$ 57,00</span>
+            </div>
+            <div style="font-size: 11px; color: var(--green); margin-top: 8px; font-weight: 700;">
+                ✓ Desconto aplicado automaticamente no navegador
+            </div>
+        </div>
+
+        <!-- Instrução -->
+        <div style="background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.4); border-radius: 12px; padding: 12px 14px; margin-bottom: 12px;">
+            <div style="font-size: 14px; font-weight: 900; color: #fff; margin-bottom: 10px;">
+                📲 Siga os passos para garantir o desconto:
+            </div>
+            <img
+                src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAcHBwcIBwgJCQgMDAsMDBEQDg4QERoSFBIUEhonGB0YGB0YJyMqIiAiKiM+MSsrMT5IPDk8SFdOTldtaG2Pj8ABBwcHBwgHCAkJCAwMCwwMERAODhARGhIUEhQSGicYHRgYHRgnIyoiICIqIz4xKysxPkg8OTxIV05OV21obY+PwP/CABEIBLACTgMBIgACEQEDEQH/xAAcAAEAAQUBAQAAAAAAAAAAAAAABQIDBAYHCAH/2gAIAQEAAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAABG2bE+ANb2KohLq1Nw+blgAAABiQW0AAA1/Vc/Ks1WMGXxs+CmYabwrmxY2t2J6BzG0SwAAABic+2v7K5YAAgqdZu3sbZdZl4tYkcCXwr27WNDtbpp8hjbPLAADXZmLpm7gLeh7dVmXAAAAYmubReAAAAAiZLCokqgLcBsYAAAW8POqpVMa+xGbiZYAAAAAAAA"
+                alt="Abrir no navegador"
+                style="width:100%; max-width:340px; border-radius:12px; margin: 8px auto; display:block;"
+            />
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-box">
+            ⏱️ Desconto reservado por:
+            <span class="countdown-time" id="countdown-timer">10:00</span>
+        </div>
+
+        <p style="color:#aaa; font-size:13px; margin-bottom:6px; line-height:1.6;">
+            Ao abrir no navegador, seu <strong style="color:#22c55e;">desconto de 40%</strong> será aplicado automaticamente.
+        </p>
+
+        <!-- Botão skip levemente mais visível -->
+        <button class="tela0-skip" onclick="skipToFunil()" style="color:#666; font-size:12px; margin-top:6px;">
+            continuar sem desconto →
+        </button>
+
+    </div>
+</div>
         <!-- TELA 1: GANCHO -->
         <div id="screen-1" class="screen">
             <div class="card">
